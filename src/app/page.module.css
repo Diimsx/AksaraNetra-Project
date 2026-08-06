@@ -73,19 +73,19 @@
   margin: 0;
 }
 
-.cardsRow {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
 .exampleCard {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 23px 24px 24px 24px;
+  gap: 6px;
+  padding: 20px 24px;
   text-align: left;
+  cursor: pointer;
 }
 
 .cardTitle {
@@ -96,14 +96,29 @@
 }
 
 .cardDesc {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   color: var(--color-text);
   margin: 0;
 }
 
-@media (max-width: 768px) {
-  .cardsRow {
-    flex-direction: column;
+.cardUrl {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  word-break: break-all;
+  margin-top: 4px;
+}
+
+@media (max-width: 1024px) {
+  .cardsGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
+
+@media (max-width: 640px) {
+  .cardsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+

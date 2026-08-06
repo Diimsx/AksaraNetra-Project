@@ -18,29 +18,45 @@ function ResultPageContent() {
 
   const [state, setState] = useState<'processing' | 'result' | 'error'>('processing');
   const [data, setData] = useState<ProcessResult | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   useEffect(() => {
     if (!urlParam) {
+      setErrorMessage('Tidak ada URL yang diberikan.');
       setState('error');
       return;
     }
 
+    const controller = new AbortController();
+
     const processUrl = async () => {
       try {
-        const response = await fetch('/api/process?url=' + encodeURIComponent(urlParam));
+        const response = await fetch('/api/process?url=' + encodeURIComponent(urlParam), {
+          signal: controller.signal,
+        });
+
         if (!response.ok) {
-          throw new Error('Failed to process URL');
+          const errorData = await response.json().catch(() => null);
+          const msg = errorData?.error || `Server merespons dengan status ${response.status}`;
+          setErrorMessage(msg);
+          setState('error');
+          return;
         }
+
         const resultData: ProcessResult = await response.json();
         setData(resultData);
         setState('result');
-      } catch (error) {
+      } catch (error: any) {
+        if (error.name === 'AbortError') return;
         console.error('Processing error:', error);
+        setErrorMessage(error.message || 'Terjadi kesalahan yang tidak terduga.');
         setState('error');
       }
     };
 
     processUrl();
+
+    return () => controller.abort();
   }, [urlParam]);
 
   if (state === 'processing') {
@@ -69,8 +85,7 @@ function ResultPageContent() {
         </div>
         <h1 className={styles.errorTitle}>Ups! Terjadi Kendala.</h1>
         <p className={styles.errorExplanation}>
-          Maaf, kami tidak dapat mengakses halaman tersebut. Ini mungkin karena URL tidak valid, 
-          situs membatasi akses, atau halaman memerlukan kata sandi.
+          {errorMessage || 'Maaf, kami tidak dapat mengakses halaman tersebut. Ini mungkin karena URL tidak valid, situs membatasi akses, atau halaman memerlukan kata sandi.'}
         </p>
         <div className={styles.errorDivider}></div>
         <p className={styles.errorSuggestion}>
