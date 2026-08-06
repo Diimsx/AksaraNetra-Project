@@ -1,0 +1,153 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 100px 24px 64px 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+  background-color: #f9f9ff;
+  min-height: 100vh;
+}
+
+.hero {
+  padding: 64px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 800px;
+}
+
+.heroTitle {
+  font-size: 40px;
+  font-weight: 800;
+  color: #001e40;
+  margin: 0;
+}
+
+.heroSubtitle {
+  font-size: 20px;
+  font-weight: 400;
+  color: #141b2b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #dce2f7;
+  border: none;
+  margin: 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 0;
+}
+
+.sectionTitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: #141b2b;
+  margin: 0;
+}
+
+.stepsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.stepCard {
+  background-color: #ffffff;
+  border: 2px solid #dce2f7;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stepHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.stepBadge {
+  width: 32px;
+  height: 32px;
+  background-color: #001e40;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.stepTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #141b2b;
+  margin: 0;
+}
+
+.stepDescription {
+  font-size: 18px;
+  font-weight: 400;
+  color: #43474f;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.standardsContainer {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.standardCard {
+  background-color: #f1f3ff;
+  border-radius: 12px;
+  padding: 24px;
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.standardTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #141b2b;
+  margin: 0;
+}
+
+.standardDescription {
+  font-size: 18px;
+  font-weight: 400;
+  color: #43474f;
+  margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 32px;
+  }
+  .heroSubtitle {
+    font-size: 18px;
+  }
+  .sectionTitle {
+    font-size: 28px;
+  }
+  .standardsContainer {
+    flex-direction: column;
+  }
+}

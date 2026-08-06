@@ -1,0 +1,367 @@
+/* Processing State */
+.processingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f9f9ff;
+  text-align: center;
+  padding: 24px;
+}
+
+.spinner {
+  width: 64px;
+  height: 64px;
+  border: 6px solid #dce2f7;
+  border-top: 6px solid #001e40;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 32px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.processingTitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: #141b2b;
+  margin: 0 0 16px 0;
+}
+
+.processingText {
+  font-size: 18px;
+  font-weight: 400;
+  color: #43474f;
+  margin: 0 0 32px 0;
+}
+
+.cancelButton {
+  font-size: 16px;
+  font-weight: 600;
+  color: #001e40;
+  background-color: transparent;
+  border: 1px solid #001e40;
+  border-radius: 8px;
+  padding: 12px 30px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.cancelButton:hover {
+  background-color: #f0f4f8;
+}
+
+/* Result State */
+.resultContainer {
+  background-color: #f9f9ff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.actionBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-bottom: 1px solid #dce2f7;
+  padding: 16px 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.actionLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.warningIcon {
+  color: #43474f;
+  flex-shrink: 0;
+}
+
+.disclaimer {
+  font-size: 16px;
+  font-weight: 700;
+  color: #43474f;
+  margin: 0;
+}
+
+.actionRight {
+  display: flex;
+  gap: 16px;
+}
+
+.backButton {
+  font-size: 16px;
+  font-weight: 400;
+  color: #001e40;
+  background-color: transparent;
+  border: 1px solid #001e40;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.backButton:hover {
+  background-color: #f0f4f8;
+}
+
+.downloadButton {
+  font-size: 16px;
+  font-weight: 400;
+  color: #ffffff;
+  background-color: #001e40;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.downloadButton:hover {
+  background-color: #001126;
+}
+
+.articleWrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 64px 64px 128px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+.articleTitle {
+  font-size: 40px;
+  font-weight: 800;
+  color: #141b2b;
+  margin: 0 0 16px 0;
+}
+
+.articleDescription {
+  font-size: 16px;
+  font-weight: 400;
+  color: #43474f;
+  margin: 0;
+}
+
+.articleContent {
+  color: #141b2b;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.articleContent h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 48px;
+  margin-bottom: 24px;
+}
+
+.articleContent h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 32px;
+  margin-bottom: 16px;
+}
+
+.articleContent p {
+  margin-bottom: 24px;
+}
+
+.articleContent ul,
+.articleContent ol {
+  margin-bottom: 24px;
+  padding-left: 24px;
+}
+
+.articleContent li {
+  margin-bottom: 8px;
+}
+
+.articleContent blockquote {
+  border-left: 4px solid #001e40;
+  padding-left: 16px;
+  margin: 24px 0;
+  color: #43474f;
+  font-style: italic;
+}
+
+.articleContent table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.articleContent th,
+.articleContent td {
+  border: 1px solid #dce2f7;
+  padding: 12px;
+  text-align: left;
+}
+
+.feedbackSection {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px solid #dce2f7;
+}
+
+.feedbackTitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: #141b2b;
+  margin: 0 0 24px 0;
+}
+
+.feedbackForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.feedbackLabel {
+  font-size: 18px;
+  font-weight: 600;
+  color: #141b2b;
+  margin: 0;
+}
+
+.feedbackTextarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 16px;
+  border: 1px solid #dce2f7;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 16px;
+  resize: vertical;
+}
+
+.feedbackTextarea:focus {
+  outline: 2px solid #001e40;
+  outline-offset: -1px;
+}
+
+.feedbackHint {
+  font-size: 14px;
+  color: #737780;
+  margin: 0;
+}
+
+.feedbackSubmit {
+  align-self: flex-start;
+  font-size: 16px;
+  font-weight: 400;
+  color: #ffffff;
+  background-color: #001e40;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  cursor: pointer;
+}
+
+.feedbackSubmit:hover {
+  background-color: #001126;
+}
+
+/* Error State */
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f9f9ff;
+  text-align: center;
+  padding: 24px;
+}
+
+.errorIcon {
+  width: 80px;
+  height: 80px;
+  background-color: #dce2f7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  color: #001e40;
+}
+
+.errorTitle {
+  font-size: 40px;
+  font-weight: 800;
+  color: #141b2b;
+  margin: 0 0 24px 0;
+}
+
+.errorExplanation {
+  font-size: 20px;
+  font-weight: 400;
+  color: #43474f;
+  margin: 0 0 32px 0;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.errorDivider {
+  width: 80px;
+  height: 2px;
+  background-color: #dce2f7;
+  margin: 0 auto 32px auto;
+}
+
+.errorSuggestion {
+  font-size: 18px;
+  font-weight: 400;
+  color: #737780;
+  margin: 0 0 40px 0;
+}
+
+.errorButton {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #001e40;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 32px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.errorButton:hover {
+  background-color: #001126;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .actionBar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .actionRight {
+    width: 100%;
+    justify-content: stretch;
+  }
+  
+  .backButton, .downloadButton {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .articleWrapper {
+    padding: 32px 24px 64px 24px;
+    gap: 40px;
+  }
+}

@@ -1,0 +1,148 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 100px 24px 64px 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.heroSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 64px 0;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 800;
+  color: #001e40;
+  margin: 0;
+}
+
+.missionText {
+  font-size: 20px;
+  font-weight: 400;
+  color: #141b2b;
+  max-width: 800px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 0;
+}
+
+.sectionTitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: #141b2b;
+  margin: 0;
+}
+
+.sectionTitleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cardsContainer {
+  display: flex;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .cardsContainer {
+    flex-direction: column;
+  }
+}
+
+.card {
+  flex: 1;
+  background-color: #f1f3ff;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cardTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #141b2b;
+  margin: 0;
+}
+
+.cardText {
+  font-size: 18px;
+  font-weight: 400;
+  color: #43474f;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.limitationExplanation {
+  font-size: 18px;
+  font-weight: 400;
+  color: #43474f;
+  max-width: 800px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.limitationsContainer {
+  background-color: #f1f3ff;
+  border-left: 3px solid #ba1a1a;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.limitationItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.limitationHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.limitationTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #141b2b;
+  margin: 0;
+}
+
+.limitationText {
+  font-size: 18px;
+  font-weight: 400;
+  color: #43474f;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.warningIcon {
+  color: #ba1a1a;
+  flex-shrink: 0;
+}
