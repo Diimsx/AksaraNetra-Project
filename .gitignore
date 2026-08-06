@@ -50,7 +50,3 @@ next-env.d.ts
 *.report.html
 playwright-report/
 test-results/
-
-AGENTS.md
-CLAUDE.md
-PRD_Implementasi_Modul_AksaraNetra.md
