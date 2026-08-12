@@ -379,10 +379,12 @@ function ResultPageContent() {
     if (jobParam) {
       const saved = readJobToken(jobParam);
       if (!saved) {
-        setMessage(
-          "Token audit tidak ditemukan di browser ini. Mulai audit baru dari beranda.",
-        );
-        setPhase("error");
+        queueMicrotask(() => {
+          setMessage(
+            "Token audit tidak ditemukan di browser ini. Mulai audit baru dari beranda.",
+          );
+          setPhase("error");
+        });
         return;
       }
       setJobId(jobParam);
