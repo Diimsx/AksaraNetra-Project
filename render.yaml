@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: aksaranetra-backend
+    runtime: docker
+    dockerfilePath: backend/Dockerfile
+    dockerContext: .
+    region: singapore
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 8787
+      - key: BACKEND_DATA_DIR
+        value: /data
+      - key: BACKEND_SECRET
+        generateValue: true
+      - key: FRONTEND_ORIGINS
+        value: https://aksara-netra-project.vercel.app
+      - key: TRUST_PROXY
+        value: "1"
+      - key: AUDIT_TIMEOUT_MS
+        value: "180000"
+      - key: RESULT_RETENTION_MS
+        value: "604800000"
+      - key: AUDIT_RATE_LIMIT
+        value: "5"
+    # CATATAN: free tier Render tidak mendukung Persistent Disk.
+    # /data tetap dipakai (lihat Dockerfile), tapi jadi storage sementara —
+    # isinya (jobs.sqlite + artefak audit) hilang tiap kali service tidur
+    # (idle >15 menit) atau redeploy. Untuk keperluan lomba/demo ini oke,
+    # karena yang penting sistem jalan real-time saat diuji.
+    # Kalau nanti mau upgrade ke persisten, tinggal tambah kembali:
+    # plan: starter
+    # disk:
+    #   name: aksaranetra-data
+    #   mountPath: /data
+    #   sizeGB: 5
