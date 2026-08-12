@@ -1,0 +1,24 @@
+[Unit]
+Description=AksaraNetra audit backend
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=aksaranetra
+Group=aksaranetra
+WorkingDirectory=/opt/aksaranetra
+EnvironmentFile=/etc/aksaranetra/backend.env
+ExecStart=/usr/bin/node backend/src/server.mjs
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/aksaranetra
+LimitNOFILE=4096
+
+[Install]
+WantedBy=multi-user.target

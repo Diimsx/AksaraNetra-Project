@@ -1,0 +1,19 @@
+{
+  "name": "project-a-remediation-engine",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/fetcher.test.mjs tests/snapshot.test.mjs tests/serializer.test.mjs tests/guard.test.mjs tests/api.test.mjs tests/guarantees.test.mjs tests/history.test.mjs tests/decisions.test.mjs tests/engine.test.mjs",
+    "test:fast": "node --test tests/fetcher.test.mjs tests/snapshot.test.mjs tests/serializer.test.mjs tests/guard.test.mjs tests/api.test.mjs tests/guarantees.test.mjs tests/history.test.mjs tests/decisions.test.mjs",
+    "test:engine": "node scripts/test-engine.mjs",
+    "build:data": "node scripts/build-data.mjs",
+    "test:ui": "node scripts/test-ui.mjs",
+    "test:reader": "node scripts/test-reader.mjs",
+    "serve": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "playwright": "^1.54.1"
+  }
+}

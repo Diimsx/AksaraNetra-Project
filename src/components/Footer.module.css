@@ -1,0 +1,35 @@
+/*
+  Footer satu baris.
+
+  Sengaja dibuat setenang mungkin. Footer bukan tempat penting, dan footer yang
+  ramai menarik perhatian dari isi halaman yang sebenarnya.
+*/
+
+.footer {
+  margin-top: var(--space-xl);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.footerContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px var(--space-sm);
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-md);
+}
+
+.copyright {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.penyangkalan {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  max-width: var(--reading-width);
+}

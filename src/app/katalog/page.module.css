@@ -1,0 +1,224 @@
+/*
+ * Gaya halaman katalog hasil audit.
+ *
+ * Warna diambil dari palet yang sudah dipakai halaman lain supaya tampilannya
+ * tidak terasa ditempel. Semua ukuran memakai satuan relatif supaya ikut
+ * membesar saat pengguna memperbesar teks browser.
+ */
+
+.main {
+  padding-block: 2rem 4rem;
+}
+
+.h1 {
+  font-size: 2rem;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+
+.pengantar {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  max-width: 42rem;
+}
+
+.pemberitahuan {
+  background: #e1e8fd;
+  border-left: 4px solid #001e40;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  max-width: 42rem;
+}
+
+.pemberitahuan p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.keterangan {
+  color: #43474f;
+  font-size: 0.9375rem;
+}
+
+.daftar {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.kartu {
+  border: 1px solid #c9ced8;
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: #ffffff;
+}
+
+.judulSitus {
+  font-size: 1.375rem;
+  line-height: 1.3;
+  margin: 0 0 0.5rem;
+}
+
+.judulKecil {
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+.status {
+  margin: 0 0 0.75rem;
+  color: #43474f;
+  font-size: 0.9375rem;
+}
+
+/*
+ * Status katalog ditandai dengan teks, bukan hanya warna. Pengguna yang tidak
+ * bisa membedakan warna harus tetap tahu mana yang terverifikasi.
+ */
+.labelTerverifikasi,
+.labelKandidat {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.125rem 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  margin-right: 0.375rem;
+}
+
+.labelTerverifikasi {
+  background: #d8f0dd;
+  color: #14532d;
+}
+
+.labelKandidat {
+  background: #fdf0d5;
+  color: #6b3f04;
+}
+
+.angka {
+  margin: 0 0 0.5rem;
+  line-height: 1.6;
+}
+
+.angkaBesar {
+  font-size: 1.5rem;
+}
+
+.rincian {
+  margin: 0 0 0.5rem;
+  color: #43474f;
+  line-height: 1.6;
+}
+
+.riwayat {
+  margin: 0.75rem 0;
+}
+
+.riwayat > summary {
+  cursor: pointer;
+  padding: 0.375rem 0;
+  font-weight: 600;
+}
+
+.riwayat > summary:focus-visible {
+  outline: 3px solid #b32d00;
+  outline-offset: 2px;
+}
+
+.waktu {
+  color: #43474f;
+  font-size: 0.9375rem;
+  margin: 0.75rem 0;
+}
+
+.tindakan {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin: 1rem 0 0;
+}
+
+.tombolUtama {
+  display: inline-block;
+  background: #001e40;
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.tombolUtama:hover,
+.tombolUtama:focus-visible {
+  text-decoration: underline;
+}
+
+.kotakGagal {
+  border: 2px solid #7a1f1f;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  background: #fdecec;
+  max-width: 42rem;
+}
+
+.bagianGagal {
+  margin-top: 2.5rem;
+  max-width: 42rem;
+}
+
+.pemberitahuanBawah {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #c9ced8;
+  color: #43474f;
+  max-width: 42rem;
+  line-height: 1.6;
+}
+
+/* Keadaan kosong. Bukan kerusakan, jadi warnanya netral, bukan merah. */
+
+.kotakKosong {
+  max-width: 640px;
+  margin: var(--space-md) 0;
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  background: var(--color-card-light);
+}
+
+.kosongTeks {
+  margin: 0 0 var(--space-sm);
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.langkahKosong {
+  margin: 0 0 var(--space-sm);
+  padding-left: 22px;
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.langkahKosong li + li {
+  margin-top: 6px;
+}
+
+.perintah {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: #ffffff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 15px;
+  overflow-x: auto;
+}
+
+.tautanKembali {
+  margin: 0;
+  font-size: 16px;
+}

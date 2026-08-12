@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8">
+    <title>Fixture area gulir tanpa heading section</title>
+    <style>
+      .scrollable {
+        width: 300px;
+        height: 40px;
+        overflow: auto;
+      }
+      .content {
+        width: 500px;
+        height: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <!--
+        Section tetangga yang punya heading. Area gulir di section berikutnya
+        tidak boleh memakai heading ini sebagai namanya.
+      -->
+      <section>
+        <h2>Indikator Makro Daerah</h2>
+        <p>Ringkasan indikator.</p>
+      </section>
+
+      <section>
+        <div class="scrollable">
+          <div class="content">
+            <h3>49 Ruas Jalan Program MYP Pemprov Dalam Tahap Pengerjaan</h3>
+            <p>Isi berita pertama.</p>
+            <h3>Berita kedua</h3>
+            <p>Isi berita kedua.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

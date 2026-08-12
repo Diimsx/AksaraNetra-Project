@@ -1,0 +1,32 @@
+{
+  "name": "project-a",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "engine:install": "cd engine && npm install && npx playwright install chromium",
+    "engine:test": "cd engine && npm test",
+    "build:data": "cd engine && DATA_DIR=../public/data node scripts/build-data.mjs",
+    "test:reader": "cd engine && READER_FILE=../public/data/sulselprov/reader.html node scripts/test-reader.mjs",
+    "backend:start": "cd backend && npm start",
+    "backend:test": "cd backend && npm test",
+    "backend:check": "cd backend && npm run check",
+    "test:frontend": "node --test tests/frontend-contract.test.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.0",
+    "typescript": "^5"
+  }
+}

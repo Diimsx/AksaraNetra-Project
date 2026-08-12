@@ -1,0 +1,191 @@
+/*
+  Navbar.
+
+  Dua batasan yang dipatuhi di sini:
+
+  1. Tinggi navbar tidak boleh melebihi seperlima tinggi layar. Pada layar
+     pendek dan pada perbesaran halaman 200 persen, navbar yang menempel dan
+     tinggi bisa memakan separuh ruang baca.
+
+  2. Bayangan hanya muncul setelah halaman digulir. Bayangan yang selalu ada
+     membuat navbar terlihat mengambang tanpa alasan saat halaman di posisi
+     paling atas.
+*/
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition-sedang), box-shadow var(--transition-sedang),
+    background var(--transition-sedang);
+}
+
+.headerDigulir {
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  width: 100%;
+  max-width: var(--max-width);
+  min-height: var(--header-height);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+  transition: min-height var(--transition-sedang);
+}
+
+.headerDigulir .headerContainer {
+  min-height: var(--header-height-compact);
+}
+
+/* --- Merek --- */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+.brand:hover {
+  opacity: 1;
+}
+
+/*
+  Tanda merek berupa dua huruf. Diberi aria-hidden di komponen karena huruf
+  AN sendirian tidak berarti apa apa kalau dibacakan, sementara nama lengkap
+  sudah ada tepat di sebelahnya.
+*/
+.brandTanda {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-mid) 100%);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0;
+  flex: none;
+}
+
+.brandNama {
+  line-height: 1;
+}
+
+/* --- Navigasi --- */
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  transition: background var(--transition-cepat), color var(--transition-cepat);
+}
+
+.navLink:hover {
+  opacity: 1;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+/*
+  Halaman yang sedang dibuka ditandai tiga cara sekaligus: warna, latar, dan
+  huruf yang lebih tebal. Ditambah aria-current di komponen untuk pembaca layar.
+  Warna saja tidak cukup, karena pengguna buta warna tidak bisa membedakannya.
+*/
+.navLinkActive {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-weight: 800;
+}
+
+/* --- Indikator posisi baca --- */
+
+.jalurKemajuan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 3px;
+  background: transparent;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.isiKemajuan {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-bright) 100%);
+  transition: width var(--transition-cepat);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .isiKemajuan {
+    transition: none;
+  }
+}
+
+/* --- Layar sempit --- */
+
+@media (max-width: 640px) {
+  .headerContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 10px var(--space-sm);
+    min-height: 0;
+  }
+
+  /*
+    Di layar sempit navbar berhenti menempel. Susunan dua baris yang menempel
+    akan memakan terlalu banyak ruang, dan pada perbesaran tinggi bisa
+    menutupi hampir seluruh layar.
+  */
+  .header {
+    position: static;
+  }
+
+  .nav {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 2px;
+  }
+
+  .navLink {
+    padding: 8px 10px;
+    font-size: 15px;
+  }
+
+  .brandTanda {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+}

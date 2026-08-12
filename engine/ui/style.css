@@ -1,0 +1,375 @@
+/*
+  Warna diambil dari READER_TOKENS di src/serializer/reader.mjs.
+
+  Angkanya sengaja disamakan supaya kontras di UI dan di tampilan mudah dibaca
+  tidak pernah berbeda. Kalau token di reader view diubah, nilai di sini harus
+  ikut diubah, dan npm run test:ui yang akan menangkap kalau kontrasnya jatuh.
+*/
+:root {
+  --latar: #ffffff;
+  --teks: #1a1a1a;
+  --tautan: #0b3d91;
+  --tautan-dikunjungi: #5b2a86;
+  --fokus: #b32d00;
+  --redup: #3f3f3f;
+  --garis: #767676;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--latar);
+  color: var(--teks);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  margin: 0 auto;
+  max-width: 52rem;
+  padding: 1.5rem 1.25rem 4rem;
+}
+
+/*
+  Semua ukuran memakai rem dan tidak ada tinggi yang dipaku, supaya pada zoom
+  200 persen isi halaman hanya memanjang ke bawah dan tidak ada yang terpotong.
+*/
+
+a {
+  color: var(--tautan);
+}
+
+a:visited {
+  color: var(--tautan-dikunjungi);
+}
+
+/* Fokus keyboard harus terlihat jelas, bukan bayangan tipis. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--fokus);
+  outline-offset: 2px;
+}
+
+.lewati {
+  background: var(--latar);
+  border: 2px solid var(--teks);
+  display: inline-block;
+  left: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  position: absolute;
+  top: -4rem;
+  z-index: 10;
+}
+
+.lewati:focus {
+  top: 0.5rem;
+}
+
+header {
+  border-bottom: 1px solid var(--garis);
+  padding-bottom: 1rem;
+}
+
+.nama-alat {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 1.625rem;
+  line-height: 1.3;
+  margin: 0.25rem 0 0;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+h3 {
+  font-size: 1.0625rem;
+  margin-bottom: 0.25rem;
+}
+
+.judul-kecil {
+  font-size: 1rem;
+  margin-top: 2rem;
+}
+
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.catatan {
+  color: var(--redup);
+}
+
+.status {
+  border-left: 4px solid var(--garis);
+  margin: 1rem 0;
+  padding: 0.5rem 0.75rem;
+}
+
+.status[data-jenis="gagal"] {
+  border-left-color: var(--fokus);
+}
+
+.daftar-situs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.tombol-situs {
+  background: var(--latar);
+  border: 2px solid var(--teks);
+  color: var(--teks);
+  cursor: pointer;
+  display: block;
+  font: inherit;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  width: 100%;
+}
+
+.tombol-situs[aria-pressed="true"] {
+  border-left-width: 8px;
+}
+
+.tombol-situs .nama-situs {
+  display: block;
+  font-weight: 700;
+}
+
+.tombol-situs .angka-situs {
+  color: var(--redup);
+  display: block;
+}
+
+.tombol-situs[data-status="gagal"] {
+  border-style: dashed;
+}
+
+.angka-besar {
+  font-size: 1.375rem;
+  font-weight: 700;
+}
+
+.ringkasan {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+}
+
+.ringkasan > li {
+  min-width: 8rem;
+}
+
+.ringkasan .label {
+  color: var(--redup);
+  display: block;
+}
+
+/*
+  Tabel bisa lebih lebar daripada layar pada zoom besar, jadi pembungkusnya
+  dibuat bisa digulir. Karena bisa digulir, pembungkus itu wajib bisa menerima
+  fokus keyboard. Ini persis masalah scrollable-region-focusable yang engine ini
+  perbaiki di situs lain, jadi memalukan kalau kita sendiri melakukannya.
+  Aturannya ada di bawah, setelah aturan form mode langsung.
+*/
+/*
+  Bagian mode langsung.
+
+  Label ditaruh di baris sendiri, bukan di samping kotak isian, supaya pada zoom
+  200 persen label dan kotaknya tidak saling menghimpit.
+*/
+#form-langsung label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+#form-langsung input {
+  /* Lebar memakai persen dengan batas maksimum, bukan lebar tetap dalam piksel,
+     supaya kotak isian tetap utuh saat halaman diperbesar. */
+  width: 100%;
+  max-width: 32rem;
+  padding: 0.6rem 0.7rem;
+  font: inherit;
+  color: var(--teks);
+  background-color: var(--latar);
+  border: 2px solid var(--garis);
+  border-radius: 0.25rem;
+}
+
+.tombol-utama {
+  margin-top: 0.75rem;
+  padding: 0.65rem 1.1rem;
+  font: inherit;
+  font-weight: 700;
+  color: var(--latar);
+  background-color: var(--tautan);
+  border: 2px solid var(--tautan);
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.tombol-utama:hover {
+  /* Perubahan tampilan tidak boleh hanya warna, jadi garis bawah ikut muncul. */
+  text-decoration: underline;
+}
+
+.tombol-utama[disabled] {
+  color: var(--teks);
+  background-color: var(--latar);
+  border-color: var(--redup);
+  cursor: progress;
+}
+
+.pembungkus-tabel {
+  margin: 1rem 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  min-width: 24rem;
+  width: 100%;
+}
+
+caption {
+  text-align: left;
+  padding-bottom: 0.5rem;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--garis);
+  padding: 0.5rem 0.75rem 0.5rem 0;
+  text-align: left;
+}
+
+td.angka,
+th.angka {
+  text-align: right;
+}
+
+.tindakan {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.tautan-tombol {
+  border: 2px solid var(--tautan);
+  display: inline-block;
+  padding: 0.625rem 1rem;
+}
+
+.kotak-gagal {
+  border: 2px solid var(--fokus);
+  padding: 0.75rem 1rem;
+}
+
+footer {
+  border-top: 1px solid var(--garis);
+  margin-top: 3rem;
+  padding-top: 0.5rem;
+}
+
+/*
+ * Bagian baru di layar hasil: jaminan, keputusan, dan riwayat.
+ *
+ * Ketiganya memakai details dan summary bawaan peramban, bukan tombol buatan
+ * sendiri. Alasannya bukan hemat kode. Buka tutup bawaan sudah benar untuk
+ * keyboard dan sudah diumumkan pembaca layar sebagai keadaan terbuka atau
+ * tertutup, sedangkan tiruan dengan div dan aria-expanded harus diuji ulang
+ * dari nol dan hampir selalu ada yang terlewat.
+ */
+.jaminan,
+.keputusan,
+.riwayat {
+  margin-top: 2rem;
+  border-top: 1px solid var(--garis);
+  padding-top: 1rem;
+}
+
+.jaminan h4,
+.keputusan h4,
+.riwayat h4 {
+  margin-bottom: 0.25rem;
+}
+
+.daftar-jaminan {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.daftar-jaminan > li {
+  margin-bottom: 0.5rem;
+}
+
+details {
+  border: 1px solid var(--garis);
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+/*
+ * Penanda buka tutup diberi kursor dan tebal, tetapi TIDAK diberi warna
+ * berbeda sebagai satu satunya penanda. Membedakan sesuatu hanya dengan warna
+ * adalah pelanggaran WCAG 1.4.1, dan itu justru hal yang kami cari di situs
+ * orang lain.
+ */
+details > summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0.25rem 0;
+}
+
+details > summary:hover {
+  text-decoration: underline;
+}
+
+details[open] > summary {
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--garis);
+}
+
+details > p {
+  margin: 0.5rem 0;
+}
+
+/* Tabel keputusan lebih lebar daripada tabel rule, jadi selnya dirapatkan. */
+.keputusan table th,
+.keputusan table td {
+  font-size: 0.9375rem;
+}
+
+/*
+ * Selector CSS dan nama rule adalah teks teknis yang tidak boleh dipenggal di
+ * tengah, karena penggalan membuatnya salah dibaca. Diberi ruang sendiri.
+ */
+.keputusan table td:first-of-type {
+  white-space: nowrap;
+}

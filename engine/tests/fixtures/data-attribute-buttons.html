@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8">
+    <title>Fixture tombol dengan atribut data dan ikon font</title>
+    <style>
+      .ctrl {
+        width: 40px;
+        height: 40px;
+        border-radius: 9999px;
+        border: 1px solid #333;
+        background: #fff;
+      }
+      .ctrl i {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section>
+        <h2>Indikator</h2>
+        <button type="button" data-macro-prev class="ctrl">
+          <i class="ph-bold ph-caret-left"></i>
+        </button>
+        <button type="button" data-macro-next class="ctrl">
+          <i class="ph-bold ph-caret-right"></i>
+        </button>
+      </section>
+
+      <button type="button" id="closeServiceModal" class="ctrl">
+        <i class="ph-bold ph-x"></i>
+      </button>
+    </main>
+  </body>
+</html>

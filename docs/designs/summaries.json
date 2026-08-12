@@ -1,0 +1,1153 @@
+{
+  "5:293": {
+    "id": "5:293",
+    "name": "Error - Project A",
+    "type": "FRAME",
+    "textElements": [
+      {
+        "characters": "Ups! Terjadi Kendala.",
+        "fontSize": 40,
+        "fontWeight": 800,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Maaf, kami tidak dapat mengakses halaman tersebut. Ini\nmungkin karena URL tidak valid, situs membatasi akses, atau\nhalaman memerlukan kata sandi.",
+        "fontSize": 20,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Silakan periksa kembali URL Anda atau coba situs publik lainnya.",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.45098039507865906,
+          "g": 0.46666666865348816,
+          "b": 0.501960813999176,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Kembali ke Beranda",
+        "fontSize": 16,
+        "fontWeight": 600,
+        "fill": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Project A",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "© 2024 Project A - Layanan Aksesibilitas Digital Indonesia",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Tentang & Keterbatasan",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Cara Kerja",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Kontak",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Project A",
+        "fontSize": 24,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Beranda",
+        "fontSize": 16,
+        "fontWeight": 600,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Cara Kerja",
+        "fontSize": 16,
+        "fontWeight": 600,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      }
+    ],
+    "children": []
+  },
+  "5:109": {
+    "id": "5:109",
+    "name": "Result - Project A",
+    "type": "FRAME",
+    "textElements": [
+      {
+        "characters": "Ini adalah versi tidak resmi yang dihasilkan Project A. Bukan situs resmi pemerintah.",
+        "fontSize": 16,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Kembali ke Beranda",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Unduh Laporan",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Panduan Pendaftaran Layanan Publik\nDigital Terpadu",
+        "fontSize": 40,
+        "fontWeight": 800,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Dokumen ini telah diremediasi oleh Project A untuk memastikan aksesibilitas digital tingkat lanjut, mematuhi\nstandar WCAG 2.1 AAA.",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "1. Persiapan Dokumen",
+        "fontSize": 32,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Sebelum memulai proses pendaftaran, pastikan Anda telah menyiapkan dokumen-dokumen berikut dalam\nformat digital yang jelas dan terbaca:",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Kartu Tanda Penduduk (KTP) Elektronik.",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": " ",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Kartu Keluarga (KK).",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": " ",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Surat Keterangan Domisili (jika alamat domisili berbeda dengan KTP).",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": " ",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "2. Langkah-langkah Pendaftaran",
+        "fontSize": 32,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Langkah 2.1: Pembuatan Akun",
+        "fontSize": 24,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Akses portal resmi layanan publik. Pilih opsi \"Buat Akun Baru\". Anda akan diminta untuk memasukkan Nomor\nInduk Kependudukan (NIK) dan alamat email yang aktif. Sistem akan mengirimkan tautan verifikasi ke email\nAnda.",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "[Perkiraan AI]",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Tangkapan layar form pendaftaran. Menampilkan dua kolom input teks (NIK dan\nEmail) dan satu tombol aksi utama berwarna biru.",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Langkah 2.2: Pengisian Data Diri",
+        "fontSize": 24,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Setelah verifikasi email berhasil, login menggunakan kredensial yang telah dibuat. Isi formulir data diri\ndengan lengkap sesuai dengan dokumen resmi Anda. Pastikan tidak ada kolom wajib yang terlewat.",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Catatan Penting",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Gunakan format tanggal lahir (Hari-Bulan-Tahun) saat mengisi formulir. Kesalahan format dapat\nmenyebabkan penolakan pendaftaran.",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Umpan Balik Aksesibilitas",
+        "fontSize": 32,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Apakah format remediated ini membantu Anda?",
+        "fontSize": 16,
+        "fontWeight": 600,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Masukan Anda membantu kami meningkatkan kualitas konversi aksesibilitas di masa depan.",
+        "fontSize": 14,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Kirim Masukan",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Project A",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Tentang & Keterbatasan",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Cara Kerja",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Kontak",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "© 2024 Project A - Layanan Aksesibilitas Digital Indonesia",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Project A",
+        "fontSize": 24,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Beranda",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Cara Kerja",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      }
+    ],
+    "children": []
+  },
+  "5:64": {
+    "id": "5:64",
+    "name": "Processing - Project A",
+    "type": "FRAME",
+    "textElements": [
+      {
+        "characters": "Memvalidasi URL...",
+        "fontSize": 32,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Mohon tunggu, proses ini membutuhkan waktu beberapa\nsaat.",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Batalkan",
+        "fontSize": 16,
+        "fontWeight": 600,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "© 2024 Project A - Layanan Aksesibilitas Digital Indonesia",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Tentang & Keterbatasan",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Cara Kerja",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Kontak",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Project A",
+        "fontSize": 24,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Beranda",
+        "fontSize": 16,
+        "fontWeight": 600,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Cara Kerja",
+        "fontSize": 16,
+        "fontWeight": 600,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Skip to Main Content",
+        "fontSize": 16,
+        "fontWeight": 600,
+        "fill": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      }
+    ],
+    "children": []
+  },
+  "5:2": {
+    "id": "5:2",
+    "name": "Home - Project A",
+    "type": "FRAME",
+    "textElements": [
+      {
+        "characters": "Project A",
+        "fontSize": 24,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Beranda",
+        "fontSize": 16,
+        "fontWeight": 600,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Cara Kerja",
+        "fontSize": 16,
+        "fontWeight": 600,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Project A – Versi Aksesibel Halaman\nPublik",
+        "fontSize": 40,
+        "fontWeight": 800,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Alat bantu aksesibilitas untuk membantu tunanetra mengakses layanan publik\npemerintah Indonesia dengan versi yang lebih mudah dibaca dan navigasi ramah\npembaca layar.",
+        "fontSize": 20,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Masukkan URL Situs Pemerintah (Halaman Publik)",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "https://...",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.41960784792900085,
+          "g": 0.4470588266849518,
+          "b": 0.501960813999176,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Hanya mendukung halaman publik (tanpa login).",
+        "fontSize": 16,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Buat Versi Aksesibel",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Atau pilih dari contoh situs pemerintah:",
+        "fontSize": 24,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Portal Nasional",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Informasi umum dan layanan\nterpadu.",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Dinas Kependudukan",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Layanan KTP, KK, dan\ncatatan sipil.",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Layanan Kesehatan",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Informasi puskesmas dan\nfasilitas kesehatan.",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "© 2024 Project A - Layanan Aksesibilitas Digital Indonesia",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Tentang & Keterbatasan",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Cara Kerja",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Kontak",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Skip to Main Content",
+        "fontSize": 16,
+        "fontWeight": 600,
+        "fill": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      }
+    ],
+    "children": []
+  },
+  "5:209": {
+    "id": "5:209",
+    "name": "About - Project A",
+    "type": "FRAME",
+    "textElements": [
+      {
+        "characters": "Tentang Project A",
+        "fontSize": 40,
+        "fontWeight": 800,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Misi kami adalah memastikan setiap layanan publik digital di Indonesia dapat diakses oleh\nsemua warga negara tanpa hambatan. Kami membangun antarmuka yang mengutamakan\nkejelasan kognitif, navigasi pembaca layar, dan kontras visual tinggi, berpedoman pada\nstandar aksesibilitas internasional tertinggi.",
+        "fontSize": 20,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Apa yang Project A Lakukan?",
+        "fontSize": 32,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Peningkatan Kontras & Kejelasan",
+        "fontSize": 24,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Menyederhanakan tata letak dan meningkatkan rasio kontras warna\nsecara sistematis untuk mendukung pengguna dengan penglihatan\nrendah. Menghapus elemen dekoratif yang tidak perlu untuk\nmengurangi beban kognitif.",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Optimasi Pembaca Layar",
+        "fontSize": 24,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Memastikan struktur HTML logis, elemen interaktif memiliki label\nARIA yang jelas, dan indikator fokus yang sangat kontras untuk\npengguna yang bernavigasi menggunakan keyboard atau teknologi\nbantu.",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Keterbatasan Saat Ini",
+        "fontSize": 32,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Dalam upaya kami untuk terus mengembangkan layanan ini, kami menjunjung tinggi transparansi\nmengenai kemampuan sistem saat ini. Berikut adalah beberapa keterbatasan teknis yang mungkin\nAnda temui:",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Tidak Mendukung Autentikasi / Login",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Saat ini sistem belum dirancang untuk memproses login pengguna, manajemen sesi, atau portal layanan pribadi yang memerlukan autentikasi\nkeamanan tingkat lanjut.",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Kendala pada Formulir Kompleks",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Sistem mungkin mengalami kesulitan dalam menstruktur ulang formulir berlapis, formulir dengan logika bersyarat yang rumit, atau langkah-\nlangkah transaksional yang panjang.",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Estimasi Deskripsi Gambar (AI)",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.0784313753247261,
+          "g": 0.10588235408067703,
+          "b": 0.16862745583057404,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Label teks alternatif (alt-text) yang dihasilkan untuk gambar bergantung pada interpretasi kecerdasan buatan. Deskripsi ini bersifat estimasi\ndan mungkin tidak selalu menangkap konteks atau detail spesifik dengan akurasi 100%.",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "© 2024 Project A - Layanan Aksesibilitas Digital Indonesia",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Tentang & Keterbatasan",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Cara Kerja",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Kontak",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Project A",
+        "fontSize": 24,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0,
+          "g": 0.11764705926179886,
+          "b": 0.250980406999588,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Beranda",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Cara Kerja",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 0.26274511218070984,
+          "g": 0.27843138575553894,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      },
+      {
+        "characters": "Skip to Main Content",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "fill": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      }
+    ],
+    "children": []
+  }
+}

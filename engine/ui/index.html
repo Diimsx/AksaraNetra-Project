@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aksara Netra, hasil audit aksesibilitas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!--
+    Teks pemberitahuan, daftar situs, dan seluruh angka sengaja tidak ditulis di
+    berkas ini. Semuanya diisi oleh app.mjs dari data/index.json dan
+    data/<id>/snapshot.json. Kalau teks pemberitahuan ditulis dua kali, satu di
+    HTML dan satu di data, suatu hari keduanya akan berbeda.
+  -->
+  <a class="lewati" href="#utama">Lewati ke isi utama</a>
+
+  <header>
+    <p class="nama-alat">Aksara Netra</p>
+    <h1>Hasil audit aksesibilitas halaman informasi publik</h1>
+  </header>
+
+  <nav aria-label="Navigasi halaman">
+    <ul>
+      <!--
+        Butir ini tersembunyi sampai app.mjs memastikan ada server lokal. Menaruh
+        tautan ke bagian yang tersembunyi hanya akan menyesatkan pemakai keyboard.
+      -->
+      <li id="nav-langsung" hidden><a href="#langsung">Audit alamat baru</a></li>
+      <li><a href="#daftar">Daftar situs</a></li>
+      <li><a href="#hasil">Hasil audit</a></li>
+      <li><a href="#batasan">Batasan alat ini</a></li>
+    </ul>
+  </nav>
+
+  <main id="utama">
+    <!--
+      Bagian ini sengaja diberi atribut hidden di berkas ini, bukan disembunyikan
+      lewat CSS. Alasannya: audit hanya bisa berjalan kalau ada server lokal yang
+      menjalankan Chromium. Kalau halaman ini dibuka dari hosting statis, form ini
+      tidak akan pernah bisa bekerja, jadi lebih jujur kalau ia tidak ada sama
+      sekali daripada terlihat tapi selalu gagal.
+    -->
+    <section id="langsung" aria-labelledby="judul-langsung" hidden>
+      <h2 id="judul-langsung">Audit alamat baru</h2>
+      <p class="catatan">
+        Bagian ini muncul karena halaman ini dibuka lewat server lokal. Audit
+        dijalankan di komputer ini, jadi hasilnya tidak dikirim ke mana pun.
+      </p>
+
+      <form id="form-langsung">
+        <label for="alamat">Alamat halaman informasi publik yang mau diaudit</label>
+        <input
+          id="alamat"
+          name="alamat"
+          type="url"
+          inputmode="url"
+          autocomplete="url"
+          required
+          placeholder="https://contoh.go.id"
+          aria-describedby="petunjuk-alamat">
+        <p id="petunjuk-alamat" class="catatan">
+          Harus diawali http atau https. Hanya halaman publik tanpa login. Satu
+          audit berjalan sekitar 30 sampai 90 detik.
+        </p>
+        <button type="submit" id="tombol-audit" class="tombol-utama">Audit alamat ini</button>
+      </form>
+
+      <p id="status-langsung" class="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="daftar" aria-labelledby="judul-daftar">
+      <h2 id="judul-daftar">Daftar situs</h2>
+      <p id="catatan-cakupan" class="catatan"></p>
+
+      <!--
+        Satu satunya tempat pengumuman perubahan isi. Dipakai untuk keadaan
+        sedang memuat, berhasil, dan gagal, supaya pembaca layar tidak perlu
+        menyapu ulang halaman untuk tahu ada yang berubah.
+      -->
+      <p id="status" class="status" role="status" aria-live="polite">Sedang memuat daftar situs.</p>
+
+      <ul id="daftar-situs" class="daftar-situs"></ul>
+    </section>
+
+    <section id="hasil" aria-labelledby="judul-hasil">
+      <h2 id="judul-hasil">Hasil audit</h2>
+      <div id="isi-hasil">
+        <p>Pilih salah satu situs di daftar atas untuk melihat hasil auditnya.</p>
+      </div>
+    </section>
+
+    <section id="batasan" aria-labelledby="judul-batasan">
+      <h2 id="judul-batasan">Batasan alat ini</h2>
+      <ul>
+        <li>Hanya tiga jenis masalah yang diperbaiki otomatis, bukan seluruh WCAG.</li>
+        <li>Satu kali audit hanya potret sesaat. Angkanya bisa berbeda esok hari.</li>
+        <li>Perbaikan kontras dan urutan judul hanya berlaku di tampilan mudah dibaca, bukan di halaman aslinya.</li>
+        <li>Website asli tidak diubah sama sekali.</li>
+        <li>Belum ada pengujian dengan pengguna tunanetra sungguhan.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <h2 class="judul-kecil">Pemberitahuan</h2>
+    <p id="pemberitahuan"></p>
+    <p id="keterangan-data" class="catatan"></p>
+  </footer>
+
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>
