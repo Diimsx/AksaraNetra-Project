@@ -14,9 +14,16 @@ import {
   createAudit,
   getAudit,
   getAuditResult,
+  presentAuditError,
   readJobToken,
   saveJobToken,
 } from "@/lib/audit-api";
+import {
+  RECENT_AUDIT_VERSION,
+  findRecentAudit,
+  recentAuditFromJob,
+  saveRecentAudit,
+} from "@/lib/recent-audits";
 
 type Phase =
   | "initial"
@@ -29,6 +36,12 @@ type Phase =
   | "result"
   | "cancelled"
   | "error";
+
+type Failure = {
+  title: string;
+  message: string;
+  actionLabel: string;
+};
 
 const BULAN = [
   "Januari",
@@ -44,6 +57,7 @@ const BULAN = [
   "November",
   "Desember",
 ];
+
 function waktu(iso?: string | null) {
   if (!iso) return "Belum tercatat";
   const date = new Date(iso);
@@ -51,10 +65,64 @@ function waktu(iso?: string | null) {
   return `${date.getDate()} ${BULAN[date.getMonth()]} ${date.getFullYear()}, ${String(date.getHours()).padStart(2, "0")}.${String(date.getMinutes()).padStart(2, "0")}`;
 }
 
-function errorText(error: unknown) {
-  return error instanceof Error
-    ? error.message
-    : "Terjadi kesalahan yang tidak terduga.";
+function count(value: unknown) {
+  return typeof value === "number" && Number.isFinite(value) ? value : 0;
+}
+
+function friendlyStage(stage?: string, status?: AuditJob["status"]) {
+  if (status === "queued") return "Menyiapkan halaman";
+  const value = (stage || "").toLowerCase();
+  if (/reader/.test(value)) return "Menyiapkan tampilan reader";
+  if (/report|pdf|artifact|summary|ringkas/.test(value))
+    return "Merangkum hasil";
+  if (/patch|apply|verify|verif|rollback|perbaikan/.test(value)) {
+    return "Menguji perbaikan";
+  }
+  if (/audit|axe|scan|rule|hambatan/.test(value)) {
+    return "Memeriksa hambatan aksesibilitas";
+  }
+  return "Menyiapkan halaman";
+}
+
+function conclusion(snapshot: Snapshot) {
+  const before = count(snapshot.summary.beforeTotal);
+  const after = count(snapshot.summary.afterTotal);
+  const fixed = count(snapshot.counts.fixed);
+  const unresolved =
+    after +
+    count(snapshot.counts.review) +
+    count(snapshot.counts.skipped) +
+    count(snapshot.counts.rolledBack);
+
+  if (before === 0 && fixed === 0 && unresolved === 0) {
+    return {
+      title: "Tidak perlu perbaikan otomatis",
+      text: "Pemeriksaan ini tidak menemukan hambatan yang dapat diperbaiki otomatis. Hasil ini tidak berarti halaman sudah sepenuhnya aksesibel.",
+      tone: "neutral",
+    } as const;
+  }
+
+  if (unresolved > 0) {
+    return {
+      title: "Masih ada hambatan yang perlu ditinjau",
+      text: "Beberapa hambatan belum aman untuk diperbaiki otomatis dan memerlukan pemeriksaan lebih lanjut. Kesimpulan ini terbatas pada pemeriksaan yang dilakukan.",
+      tone: "attention",
+    } as const;
+  }
+
+  if (fixed > 0 && after < before) {
+    return {
+      title: "Sebagian besar hambatan berhasil diperbaiki",
+      text: `${fixed} perbaikan berhasil diverifikasi. Tidak ada masalah baru yang ditemukan setelah perbaikan pada pemeriksaan ini.`,
+      tone: "success",
+    } as const;
+  }
+
+  return {
+    title: "Perbaikan otomatis belum dapat diterapkan",
+    text: "Hambatan ditemukan, tetapi belum ada perbaikan yang dapat diterapkan dengan aman. Kesimpulan ini terbatas pada pemeriksaan yang dilakukan.",
+    tone: "attention",
+  } as const;
 }
 
 function ProgressPanel({
@@ -64,36 +132,49 @@ function ProgressPanel({
   job: AuditJob | null;
   onCancel: () => void;
 }) {
-  const progress = job?.progress ?? 0;
+  const progress = count(job?.progress);
+  const stage = friendlyStage(job?.stage, job?.status);
+
   return (
     <section className={styles.statusCard} aria-labelledby="status-title">
       <div className={styles.statusTop}>
-        <div>
-          <p className={styles.eyebrow}>
-            {job?.status === "queued" ? "Dalam antrean" : "Audit berjalan"}
+        <div className={styles.stageColumn}>
+          <p className={styles.statusLabel}>
+            <span className={styles.activeDot} aria-hidden="true" />
+            {job?.status === "queued"
+              ? "Dalam antrean"
+              : "Pemeriksaan berjalan"}
           </p>
-          <h1 id="status-title">{job?.stage || "Menyiapkan audit"}</h1>
+          <div className={styles.stageArea}>
+            <h1 id="status-title" key={stage}>
+              {stage}
+            </h1>
+          </div>
         </div>
         <strong className={styles.percent}>{progress}%</strong>
       </div>
+
       <progress className={styles.progress} max="100" value={progress}>
         {progress}%
       </progress>
+
       <div className={styles.statusMeta}>
         <span>
           {job?.queuePosition
             ? `Posisi antrean: ${job.queuePosition}`
-            : "Satu audit dijalankan pada satu waktu"}
+            : "Satu pemeriksaan dijalankan pada satu waktu"}
         </span>
         <span>Percobaan {Math.max(job?.attempts ?? 1, 1)} dari 2</span>
       </div>
+
       <p className={styles.statusNote}>
-        Halaman ini boleh ditutup. Buka kembali URL yang sama untuk melanjutkan
+        Halaman ini boleh ditutup. Buka URL yang sama untuk melanjutkan
         pemantauan.
       </p>
+
       {job?.canCancel && (
         <button className="btn btn-secondary" type="button" onClick={onCancel}>
-          Batalkan audit
+          Batalkan pemeriksaan
         </button>
       )}
     </section>
@@ -101,24 +182,22 @@ function ProgressPanel({
 }
 
 function Comparison({ snapshot }: { snapshot: Snapshot }) {
-  const before = snapshot.summary.beforeTotal;
-  const after = snapshot.summary.afterTotal;
+  const before = count(snapshot.summary.beforeTotal);
+  const after = count(snapshot.summary.afterTotal);
   const maximum = Math.max(before, after, 1);
+  const reduction = count(snapshot.summary.reductionPercent);
+
   return (
     <section className={styles.section} aria-labelledby="comparison-title">
       <div className={styles.sectionHeading}>
-        <div>
-          <p className={styles.eyebrow}>Pengukuran target</p>
-          <h2 id="comparison-title">Sebelum dan sesudah patch</h2>
-        </div>
-        <strong className={styles.reduction}>
-          {snapshot.summary.reductionPercent}% berkurang
-        </strong>
+        <h2 id="comparison-title">Sebelum dan sesudah perbaikan</h2>
+        <strong className={styles.reduction}>{reduction}% berkurang</strong>
       </div>
+
       <div
         className={styles.chart}
         role="img"
-        aria-label={`${before} temuan sebelum dan ${after} temuan setelah patch`}
+        aria-label={`${before} temuan sebelum dan ${after} temuan setelah perbaikan`}
       >
         <div className={styles.chartRow}>
           <span>Sebelum</span>
@@ -138,17 +217,18 @@ function Comparison({ snapshot }: { snapshot: Snapshot }) {
           <strong>{after}</strong>
         </div>
       </div>
+
       <div
         className={styles.tableWrap}
         role="region"
-        aria-label="Perbandingan per rule"
+        aria-label="Perbandingan per aturan"
         tabIndex={0}
       >
         <table className={styles.table}>
-          <caption>Jumlah node bermasalah untuk setiap rule target</caption>
+          <caption>Jumlah elemen bermasalah untuk setiap aturan target</caption>
           <thead>
             <tr>
-              <th scope="col">Rule</th>
+              <th scope="col">Aturan</th>
               <th scope="col">Sebelum</th>
               <th scope="col">Sesudah</th>
               <th scope="col">Perubahan</th>
@@ -160,9 +240,9 @@ function Comparison({ snapshot }: { snapshot: Snapshot }) {
                 <th scope="row">
                   <code>{rule}</code>
                 </th>
-                <td>{value.before}</td>
-                <td>{value.after}</td>
-                <td>{value.before - value.after}</td>
+                <td>{count(value.before)}</td>
+                <td>{count(value.after)}</td>
+                <td>{count(value.before) - count(value.after)}</td>
               </tr>
             ))}
           </tbody>
@@ -174,18 +254,28 @@ function Comparison({ snapshot }: { snapshot: Snapshot }) {
 
 function ResultView({ data }: { data: AuditResult }) {
   const snapshot = data.result.snapshot;
+  const summary = conclusion(snapshot);
+  const fixed = count(snapshot.counts.fixed);
+  const rolledBack = count(snapshot.counts.rolledBack);
+  const skipped = count(snapshot.counts.skipped);
   const links = Object.fromEntries(
     Object.entries(data.links).map(([key, value]) => [key, artifactUrl(value)]),
   ) as Record<keyof AuditResult["links"], string>;
+
   return (
-    <div className={styles.resultContainer}>
+    <main className={styles.resultContainer}>
       <div className={styles.notice}>
         <span aria-hidden="true">i</span>
-        <p>{snapshot.disclaimer}</p>
+        <p>
+          Anda sedang melihat tampilan alternatif yang dibuat AksaraNetra.
+          Kontennya tetap berasal dari situs terkait dan situs asli tidak
+          diubah.
+        </p>
       </div>
+
       <header className={styles.resultHeader}>
-        <p className={styles.eyebrow}>Audit terukur selesai</p>
-        <h1>{snapshot.source.title || "Hasil audit halaman"}</h1>
+        <p className={styles.statusLabel}>Pemeriksaan selesai</p>
+        <h1>{snapshot.source.title || "Hasil pemeriksaan halaman"}</h1>
         <p className={styles.source}>
           Sumber:{" "}
           <a
@@ -197,7 +287,8 @@ function ResultView({ data }: { data: AuditResult }) {
           </a>
         </p>
         <p className={styles.timestamp}>
-          Diuji {waktu(snapshot.capturedAt)} · Engine {snapshot.engineVersion}
+          Diperiksa {waktu(snapshot.capturedAt)} · Engine{" "}
+          {snapshot.engineVersion}
         </p>
       </header>
 
@@ -224,81 +315,96 @@ function ResultView({ data }: { data: AuditResult }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Lihat halaman dipatch
+          Lihat halaman hasil
         </a>
       </section>
 
-      <section className={styles.metricGrid} aria-label="Ringkasan audit">
+      <section className={styles.metricGrid} aria-label="Ringkasan pemeriksaan">
         <article>
           <span>Temuan awal</span>
-          <strong>{snapshot.summary.beforeTotal}</strong>
+          <strong>{count(snapshot.summary.beforeTotal)}</strong>
         </article>
         <article>
           <span>Temuan akhir</span>
-          <strong>{snapshot.summary.afterTotal}</strong>
+          <strong>{count(snapshot.summary.afterTotal)}</strong>
         </article>
         <article>
-          <span>Patch terverifikasi</span>
-          <strong>{snapshot.counts.fixed}</strong>
+          <span>Perbaikan terverifikasi</span>
+          <strong>{fixed}</strong>
         </article>
         <article>
-          <span>Perlu review</span>
-          <strong>{snapshot.counts.review}</strong>
+          <span>Perlu ditinjau</span>
+          <strong>{count(snapshot.counts.review)}</strong>
         </article>
+      </section>
+
+      <section
+        className={`${styles.conclusionCard} ${styles[summary.tone]}`}
+        aria-labelledby="conclusion-title"
+      >
+        <h2 id="conclusion-title">{summary.title}</h2>
+        <p>{summary.text}</p>
       </section>
 
       <Comparison snapshot={snapshot} />
 
       <section className={styles.section} aria-labelledby="verification-title">
         <div className={styles.sectionHeading}>
-          <div>
-            <p className={styles.eyebrow}>Verifikasi</p>
-            <h2 id="verification-title">Status kualitas patch</h2>
-          </div>
+          <h2 id="verification-title">Hasil pemeriksaan perbaikan</h2>
           <span
             className={
               snapshot.warnings.wcagRegressionClean
                 ? styles.goodBadge
-                : styles.warningBadge
+                : styles.attentionBadge
             }
           >
             {snapshot.warnings.wcagRegressionClean
-              ? "Tidak ada regresi WCAG luas"
-              : "Perlu pemeriksaan regresi"}
+              ? "Tidak ada masalah baru setelah perbaikan"
+              : "Masih memerlukan pemeriksaan"}
           </span>
         </div>
+
         <div className={styles.verificationGrid}>
           <div>
-            <strong>{snapshot.counts.fixed}</strong>
-            <span>berhasil diverifikasi per elemen</span>
+            <strong>{fixed}</strong>
+            <span>Perbaikan terverifikasi</span>
           </div>
           <div>
-            <strong>{snapshot.counts.rolledBack}</strong>
-            <span>patch dibatalkan</span>
+            <strong>{rolledBack}</strong>
+            <span>Perbaikan dibatalkan</span>
           </div>
           <div>
-            <strong>{snapshot.counts.skipped}</strong>
-            <span>kandidat dilewati</span>
+            <strong>{skipped}</strong>
+            <span>Kandidat dilewati</span>
           </div>
         </div>
+
         <details className={styles.details}>
-          <summary>Lihat detail teknis dan peringatan</summary>
+          <summary>Lihat detail pemeriksaan</summary>
           <dl>
             <div>
               <dt>Strict improvement</dt>
               <dd>{snapshot.summary.strictImprovement ? "Ya" : "Tidak"}</dd>
             </div>
             <div>
-              <dt>Regresi rule target</dt>
+              <dt>Regresi WCAG pada rule target</dt>
               <dd>{snapshot.summary.noRegression ? "Tidak ada" : "Ada"}</dd>
             </div>
             <div>
-              <dt>Override manusia</dt>
-              <dd>{snapshot.counts.verifiedOverrides}</dd>
+              <dt>Human override</dt>
+              <dd>{count(snapshot.counts.verifiedOverrides)}</dd>
             </div>
             <div>
-              <dt>Override kedaluwarsa</dt>
-              <dd>{snapshot.warnings.staleOverrides.length}</dd>
+              <dt>Stale override</dt>
+              <dd>{snapshot.warnings.staleOverrides?.length ?? 0}</dd>
+            </div>
+            <div>
+              <dt>Verifikasi per elemen</dt>
+              <dd>{fixed}</dd>
+            </div>
+            <div>
+              <dt>Detail axe</dt>
+              <dd>Tersedia di laporan PDF</dd>
             </div>
           </dl>
         </details>
@@ -306,10 +412,10 @@ function ResultView({ data }: { data: AuditResult }) {
 
       <section className={styles.evidenceCard}>
         <div>
-          <h2>Bukti audit</h2>
+          <h2>Bukti pemeriksaan</h2>
           <p>
-            Screenshot memperlihatkan DOM setelah patch. Detail axe tersedia di
-            laporan PDF.
+            Screenshot memperlihatkan halaman setelah perbaikan. Detail axe
+            tersedia di laporan PDF.
           </p>
         </div>
         <a
@@ -324,13 +430,13 @@ function ResultView({ data }: { data: AuditResult }) {
 
       <div className={styles.bottomActions}>
         <Link href="/" className="btn btn-primary">
-          Audit halaman lain
+          Periksa halaman lain
         </Link>
-        <Link href="/cara-kerja" className="btn btn-secondary">
-          Pelajari cara kerja
+        <Link href="/katalog" className="btn btn-secondary">
+          Kembali ke riwayat
         </Link>
       </div>
-    </div>
+    </main>
   );
 }
 
@@ -339,6 +445,7 @@ function ResultPageContent() {
   const router = useRouter();
   const urlParam = params.get("url");
   const jobParam = params.get("job");
+  const directOpen = params.get("open") === "1";
   const [phase, setPhase] = useState<Phase>("initial");
   const [jobId, setJobId] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
@@ -348,31 +455,73 @@ function ResultPageContent() {
     capturedAt: string | null;
     expiresAt: string | null;
   } | null>(null);
-  const [message, setMessage] = useState("");
+  const [failure, setFailureState] = useState<Failure>({
+    title: "Pemeriksaan belum berhasil",
+    message: "Terjadi kendala yang tidak terduga.",
+    actionLabel: "Kembali ke beranda",
+  });
   const [liveStage, setLiveStage] = useState("");
   const creatingAudit = useRef(false);
   const lastStage = useRef("");
+
+  const fail = useCallback((error: unknown) => {
+    const presented = presentAuditError(error);
+    setFailureState(presented);
+    setPhase("error");
+  }, []);
+
+  const loadResult = useCallback(
+    async (targetJobId: string, accessToken: string) => {
+      setPhase("loading-result");
+      try {
+        const nextResult = await getAuditResult(targetJobId, accessToken);
+        setResult(nextResult);
+        const previous = findRecentAudit(targetJobId);
+        saveRecentAudit({
+          ...recentAuditFromJob(nextResult.job, previous),
+          title:
+            nextResult.result.snapshot.source.title ||
+            previous?.title ||
+            undefined,
+        });
+        setPhase("result");
+      } catch (error) {
+        fail(error);
+      }
+    },
+    [fail],
+  );
 
   const beginAudit = useCallback(
     async (reuseExisting: boolean) => {
       if (!urlParam || creatingAudit.current) return;
       creatingAudit.current = true;
       setPhase("creating");
-      setMessage("");
       try {
         const created = await createAudit(urlParam, reuseExisting);
+        const now = new Date().toISOString();
         saveJobToken(created.jobId, created.accessToken);
+        saveRecentAudit({
+          version: RECENT_AUDIT_VERSION,
+          jobId: created.jobId,
+          sourceUrl: urlParam,
+          status: created.status,
+          stage: "Menyiapkan halaman",
+          progress: 0,
+          createdAt: now,
+          updatedAt: now,
+          expiresAt: created.expiresAt,
+        });
         setJobId(created.jobId);
         setToken(created.accessToken);
         setPhase("tracking");
         router.replace(`/result?job=${encodeURIComponent(created.jobId)}`);
       } catch (error) {
         creatingAudit.current = false;
-        setMessage(errorText(error));
-        setPhase("error");
+        fail(error);
       }
     },
-    [router, urlParam],
+    [fail, router, urlParam],
   );
 
   useEffect(() => {
@@ -380,25 +529,38 @@ function ResultPageContent() {
       const saved = readJobToken(jobParam);
       if (!saved) {
         queueMicrotask(() => {
-          setMessage(
-            "Token audit tidak ditemukan di browser ini. Mulai audit baru dari beranda.",
-          );
+          setFailureState({
+            title: "Hasil tidak dapat dibuka",
+            message:
+              "Token pemeriksaan tidak ditemukan di perangkat ini. Jalankan pemeriksaan ulang dari beranda.",
+            actionLabel: "Periksa ulang",
+          });
           setPhase("error");
         });
         return;
       }
       setJobId(jobParam);
       setToken(saved);
-      setPhase("tracking");
-      return;
-    }
-    if (!urlParam) {
-      if (!urlParam && !jobParam) {
-        setMessage("URL audit tidak ditemukan.");
-        setPhase("error");
+      if (directOpen) {
+        void loadResult(jobParam, saved);
+      } else {
+        setPhase("tracking");
       }
       return;
     }
+
+    if (!urlParam) {
+      queueMicrotask(() => {
+        setFailureState({
+          title: "Alamat pemeriksaan tidak ditemukan",
+          message: "Mulai pemeriksaan baru dari beranda.",
+          actionLabel: "Kembali ke beranda",
+        });
+        setPhase("error");
+      });
+      return;
+    }
+
     let active = true;
     setPhase("checking-cache");
     checkAuditCache(urlParam)
@@ -412,35 +574,41 @@ function ResultPageContent() {
         }
       })
       .catch((error) => {
-        if (!active) return;
-        setMessage(errorText(error));
-        setPhase("error");
+        if (active) fail(error);
       });
+
     return () => {
       active = false;
     };
-  }, [beginAudit, jobParam, urlParam]);
+  }, [beginAudit, directOpen, fail, jobParam, loadResult, urlParam]);
 
   useEffect(() => {
     if (phase !== "tracking" || !jobId || !token) return;
     let active = true;
     let timer: ReturnType<typeof setTimeout>;
+
     const poll = async () => {
       try {
         const response = await getAudit(jobId, token);
         if (!active) return;
         setJob(response.job);
-        if (response.job.stage !== lastStage.current) {
-          lastStage.current = response.job.stage;
-          setLiveStage(response.job.stage);
+        saveRecentAudit(
+          recentAuditFromJob(response.job, findRecentAudit(jobId)),
+        );
+        const nextStage = friendlyStage(
+          response.job.stage,
+          response.job.status,
+        );
+        if (nextStage !== lastStage.current) {
+          lastStage.current = nextStage;
+          setLiveStage(nextStage);
         }
         if (response.job.status === "completed") {
           setPhase("ready");
           return;
         }
         if (response.job.status === "failed") {
-          setMessage(response.job.error?.message || "Audit gagal.");
-          setPhase("error");
+          fail(response.job.error);
           return;
         }
         if (response.job.status === "cancelled") {
@@ -449,39 +617,26 @@ function ResultPageContent() {
         }
         timer = setTimeout(poll, 1500);
       } catch (error) {
-        if (!active) return;
-        setMessage(errorText(error));
-        setPhase("error");
+        if (active) fail(error);
       }
     };
+
     void poll();
     return () => {
       active = false;
       clearTimeout(timer);
     };
-  }, [jobId, phase, token]);
-
-  const openResult = async () => {
-    if (!jobId || !token) return;
-    setPhase("loading-result");
-    try {
-      setResult(await getAuditResult(jobId, token));
-      setPhase("result");
-    } catch (error) {
-      setMessage(errorText(error));
-      setPhase("error");
-    }
-  };
+  }, [fail, jobId, phase, token]);
 
   const stopAudit = async () => {
     if (!jobId || !token) return;
     try {
       const response = await cancelAudit(jobId, token);
       setJob(response.job);
+      saveRecentAudit(recentAuditFromJob(response.job, findRecentAudit(jobId)));
       setPhase("cancelled");
     } catch (error) {
-      setMessage(errorText(error));
-      setPhase("error");
+      fail(error);
     }
   };
 
@@ -492,27 +647,27 @@ function ResultPageContent() {
       <p className={styles.srOnly} aria-live="polite" aria-atomic="true">
         {liveStage}
       </p>
+
       {(phase === "checking-cache" ||
         phase === "creating" ||
         phase === "initial") && (
         <section className={styles.centerCard}>
           <div className={styles.spinner} aria-hidden="true" />
-          <p className={styles.eyebrow}>Menyiapkan</p>
           <h1>
             {phase === "checking-cache"
               ? "Memeriksa hasil tersimpan"
-              : "Membuat job audit"}
+              : "Menyiapkan pemeriksaan"}
           </h1>
-          <p>Belum ada pengukuran yang diklaim pada tahap ini.</p>
+          <p>Belum ada hasil yang diklaim pada tahap ini.</p>
         </section>
       )}
+
       {phase === "cache-choice" && (
         <section className={styles.centerCard}>
-          <p className={styles.eyebrow}>Hasil tersimpan tersedia</p>
-          <h1>Pilih hasil lama atau audit ulang</h1>
+          <h1>Hasil tersimpan tersedia</h1>
           <p>
-            Hasil tersimpan dibuat {waktu(cacheInfo?.capturedAt)} dan tersedia
-            sampai {waktu(cacheInfo?.expiresAt)}.
+            Hasil dibuat {waktu(cacheInfo?.capturedAt)} dan tersedia sampai{" "}
+            {waktu(cacheInfo?.expiresAt)}.
           </p>
           <div className={styles.choiceActions}>
             <button
@@ -525,54 +680,60 @@ function ResultPageContent() {
               className="btn btn-secondary"
               onClick={() => void beginAudit(false)}
             >
-              Audit ulang
+              Periksa ulang
             </button>
           </div>
         </section>
       )}
+
       {phase === "tracking" && (
         <ProgressPanel job={job} onCancel={() => void stopAudit()} />
       )}
+
       {phase === "ready" && (
         <section className={styles.centerCard}>
-          <div className={styles.doneMark} aria-hidden="true">
-            ✓
-          </div>
-          <p className={styles.eyebrow}>Audit selesai</p>
+          <p className={styles.statusLabel}>Pemeriksaan selesai</p>
           <h1>Reader dan laporan sudah siap</h1>
-          <p>
-            Hasil tidak dibuka otomatis agar kamu tetap memegang kendali
-            navigasi.
-          </p>
-          <button className="btn btn-primary" onClick={() => void openResult()}>
+          <p>Hasil dibuka setelah Anda memilih tindakan berikutnya.</p>
+          <button
+            className="btn btn-primary"
+            onClick={() => jobId && token && void loadResult(jobId, token)}
+          >
             Buka hasil
           </button>
         </section>
       )}
+
       {phase === "loading-result" && (
-        <section className={styles.centerCard}>
+        <section className={styles.centerCard} role="status">
           <div className={styles.spinner} aria-hidden="true" />
-          <h1>Membuka hasil audit</h1>
+          <h1>Membuka hasil pemeriksaan</h1>
+          <p>Reader dan laporan sedang disiapkan.</p>
         </section>
       )}
+
       {phase === "cancelled" && (
         <section className={styles.centerCard}>
-          <p className={styles.eyebrow}>Dibatalkan</p>
-          <h1>Audit telah dibatalkan</h1>
+          <h1>Pemeriksaan dibatalkan</h1>
           <p>Artefak sementara sudah dihapus.</p>
           <Link href="/" className="btn btn-primary">
             Kembali ke beranda
           </Link>
         </section>
       )}
+
       {phase === "error" && (
         <section className={`${styles.centerCard} ${styles.errorCard}`}>
-          <p className={styles.eyebrow}>Tidak dapat melanjutkan</p>
-          <h1>Audit belum berhasil</h1>
-          <p>{message}</p>
-          <Link href="/" className="btn btn-primary">
-            Coba lagi
-          </Link>
+          <h1>{failure.title}</h1>
+          <p>{failure.message}</p>
+          <div className={styles.choiceActions}>
+            <Link href="/" className="btn btn-primary">
+              {failure.actionLabel}
+            </Link>
+            <Link href="/katalog" className="btn btn-secondary">
+              Kembali ke riwayat
+            </Link>
+          </div>
         </section>
       )}
     </main>
@@ -585,7 +746,7 @@ export default function ResultPage() {
       fallback={
         <main className={styles.shell}>
           <section className={styles.centerCard}>
-            <h1>Memuat audit</h1>
+            <h1>Memuat pemeriksaan</h1>
           </section>
         </main>
       }

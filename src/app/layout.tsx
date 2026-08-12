@@ -13,11 +13,18 @@ const atkinson = Atkinson_Hyperlegible({
 
 export const metadata: Metadata = {
   title: {
-    default: "AksaraNetra — Aksesibilitas Digital Indonesia",
+    default: "AksaraNetra | Aksesibilitas Digital Indonesia",
     template: "%s | AksaraNetra",
   },
   description:
-    "Alat bantu aksesibilitas untuk membantu tunanetra mengakses layanan publik pemerintah Indonesia dengan versi yang lebih mudah dibaca dan navigasi ramah pembaca layar.",
+    "Periksa hambatan aksesibilitas pada halaman publik, uji perbaikan yang aman, dan siapkan tampilan reader tanpa mengubah situs asli.",
+  openGraph: {
+    title: "AksaraNetra",
+    description:
+      "Pemeriksaan aksesibilitas untuk halaman publik dengan hasil yang dapat ditinjau.",
+    type: "website",
+    locale: "id_ID",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -1,285 +1,290 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import styles from './page.module.css';
+import { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import styles from "./page.module.css";
+import {
+  AuditApiError,
+  getAudit,
+  readJobToken,
+  removeJobToken,
+} from "@/lib/audit-api";
+import {
+  RecentAudit,
+  readRecentAudits,
+  recentAuditFromJob,
+  removeRecentAudit,
+  saveRecentAudit,
+} from "@/lib/recent-audits";
 
-/**
- * Halaman katalog hasil audit terukur.
- *
- * Halaman ini tidak memanggil engine. Ia hanya membaca berkas statis
- * public/data/index.json yang ditulis oleh `npm run build:data` di folder
- * engine. Pemisahan ini disengaja: engine butuh Chromium, dan Chromium tidak
- * bisa dijalankan di dalam permintaan web pada hosting gratis.
- *
- * Akibatnya angka di sini selalu berasal dari audit yang benar benar pernah
- * dijalankan, lengkap dengan waktunya, bukan dari perhitungan saat halaman
- * dibuka.
- */
+const ACTIVE = new Set(["queued", "running"]);
 
-interface RecentRun {
-  capturedAt: string;
-  beforeTotal: number | null;
-  afterTotal: number | null;
+function readableDate(iso: string) {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "Waktu tidak tersedia";
+  return new Intl.DateTimeFormat("id-ID", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
 }
 
-interface Stability {
-  runs: number;
-  beforeMin: number | null;
-  beforeMax: number | null;
-  spread: number | null;
-  stable: boolean;
-  note: string;
-}
-
-interface DecisionCounts {
-  applied: number;
-  review: number;
-  skipped: number;
-}
-
-interface SiteEntry {
-  id: string;
-  name: string;
-  shortName?: string;
-  sourceUrl: string;
-  catalogStatus: 'verified' | 'candidate';
-  baselineRuns: number;
-  status: 'berhasil' | 'gagal';
-  capturedAt: string;
-  beforeTotal: number | null;
-  afterTotal: number | null;
-  reductionPercent: number | null;
-  guardBlocked?: number | null;
-  decisionCounts?: DecisionCounts;
-  stability?: Stability;
-  recentRuns?: RecentRun[];
-  failure?: { code: string; message: string; stageName: string };
-}
-
-interface IndexData {
-  generatedAt: string;
-  engineVersion: string;
-  disclaimer: string;
-  scopeNote?: string;
-  counts?: { total: number; succeeded: number; failed: number };
-  sites: SiteEntry[];
-}
-
-const CATATAN_CAKUPAN_CADANGAN =
-  'Angka penurunan di halaman ini hanya menghitung tiga hal yang diperbaiki otomatis: nama tautan, nama tombol, dan area gulir yang bisa dijangkau keyboard. Angka ini bukan penilaian aksesibilitas menyeluruh.';
-
-const BULAN = [
-  'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-  'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
-];
-
-/**
- * Tanggal diformat manual, bukan dengan toLocaleString.
- *
- * toLocaleString bergantung pada data lokal yang tersedia di lingkungan yang
- * menjalankannya. Server Node dan browser pengguna bisa memberi hasil berbeda
- * untuk masukan yang sama, dan React melaporkannya sebagai hydration mismatch.
- * Format manual selalu memberi hasil yang sama di kedua sisi.
- */
-function waktuTerbaca(iso: string): string {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) {
-    return iso;
+function host(url: string) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
   }
-  const jam = String(d.getHours()).padStart(2, '0');
-  const menit = String(d.getMinutes()).padStart(2, '0');
-  return d.getDate() + ' ' + BULAN[d.getMonth()] + ' ' + d.getFullYear() + ', ' + jam + '.' + menit;
 }
 
-export default function KatalogPage() {
-  const [keadaan, setKeadaan] = useState<'memuat' | 'siap' | 'gagal'>('memuat');
-  const [data, setData] = useState<IndexData | null>(null);
-  const [pesanGagal, setPesanGagal] = useState('');
+function statusLabel(item: RecentAudit) {
+  if (item.status === "queued") return "Dalam antrean";
+  if (item.status === "running") return "Sedang berjalan";
+  if (item.status === "completed") return "Selesai";
+  if (item.status === "failed") return "Gagal";
+  return "Dibatalkan";
+}
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    fetch('/data/index.json', { signal: controller.signal })
-      .then((tanggapan) => {
-        if (!tanggapan.ok) {
-          throw new Error(
-            'Berkas hasil audit belum ada. Jalankan npm run build:data di folder engine terlebih dahulu.',
-          );
-        }
-        return tanggapan.json();
-      })
-      .then((isi: IndexData) => {
-        setData(isi);
-        setKeadaan('siap');
-      })
-      .catch((galat: Error) => {
-        if (galat.name === 'AbortError') return;
-        setPesanGagal(galat.message);
-        setKeadaan('gagal');
-      });
-
-    return () => controller.abort();
-  }, []);
-
-  if (keadaan === 'memuat') {
-    return (
-      <main className={`container ${styles.main}`}>
-        <h1 className={styles.h1}>Hasil audit terukur</h1>
-        <p role="status">Memuat hasil audit...</p>
-      </main>
-    );
-  }
-
-  if (keadaan === 'gagal' || !data) {
-    return (
-      <main className={`container ${styles.main}`}>
-        <h1 className={styles.h1}>Hasil audit terukur</h1>
-        <div className={styles.kotakKosong}>
-          <h2 className={styles.judulKecil}>Data audit belum dibuat</h2>
-          <p className={styles.kosongTeks} role="status">
-            {pesanGagal}
-          </p>
-          <ol className={styles.langkahKosong}>
-            <li>Buka terminal di folder proyek ini.</li>
-            <li>
-              Jalankan perintah berikut. Prosesnya makan beberapa menit karena
-              setiap situs benar benar dibuka lalu diperiksa dua kali.
-            </li>
-            <li>Muat ulang halaman ini.</li>
-          </ol>
-          <pre className={styles.perintah}>
-            <code>npm run build:data</code>
-          </pre>
-        </div>
-        <p className={styles.tautanKembali}>
-          <Link href="/">Kembali ke beranda</Link>
-        </p>
-      </main>
-    );
-  }
-
-  const berhasil = data.sites.filter((situs) => situs.status === 'berhasil');
-  const gagal = data.sites.filter((situs) => situs.status === 'gagal');
+function AuditCard({
+  item,
+  onRemove,
+}: {
+  item: RecentAudit;
+  onRemove: (jobId: string) => void;
+}) {
+  const active = ACTIVE.has(item.status);
+  const completed = item.status === "completed";
+  const resultHref = `/result?job=${encodeURIComponent(item.jobId)}${completed ? "&open=1" : ""}`;
 
   return (
-    <main className={`container ${styles.main}`}>
-      <h1 className={styles.h1}>Hasil audit terukur</h1>
-
-      <p className={styles.pengantar}>
-        Setiap angka di halaman ini berasal dari audit yang benar benar pernah
-        dijalankan, bukan dari perkiraan. Waktu pengambilannya ditulis apa adanya
-        supaya bisa diperiksa ulang.
-      </p>
-
-      <div className={styles.pemberitahuan} role="note">
-        <p>{data.scopeNote || CATATAN_CAKUPAN_CADANGAN}</p>
+    <article className={styles.auditCard}>
+      <div className={styles.cardTop}>
+        <div className={styles.domainBlock}>
+          <h3>{item.title || host(item.sourceUrl)}</h3>
+          <p title={item.sourceUrl}>{item.sourceUrl}</p>
+        </div>
+        <span className={`${styles.status} ${styles[item.status]}`}>
+          {statusLabel(item)}
+        </span>
       </div>
 
-      <p className={styles.keterangan}>
-        Data dibuat {waktuTerbaca(data.generatedAt)} memakai engine versi{' '}
-        {data.engineVersion}.
-      </p>
+      <dl className={styles.cardMeta}>
+        <div>
+          <dt>Dibuat</dt>
+          <dd>{readableDate(item.createdAt)}</dd>
+        </div>
+        <div>
+          <dt>Tahap terakhir</dt>
+          <dd>{item.stage}</dd>
+        </div>
+      </dl>
 
-      {berhasil.length === 0 && (
-        <p role="alert">Belum ada satu pun situs yang berhasil diaudit.</p>
+      {active && (
+        <div className={styles.progressBlock}>
+          <div className={styles.progressLabel}>
+            <span>Progress pemeriksaan</span>
+            <strong>{item.progress}%</strong>
+          </div>
+          <progress max="100" value={item.progress}>
+            {item.progress}%
+          </progress>
+        </div>
       )}
 
-      <ul className={styles.daftar}>
-        {berhasil.map((situs) => (
-          <li key={situs.id} className={styles.kartu}>
-            <h2 className={styles.judulSitus}>{situs.name}</h2>
+      <div className={styles.cardActions}>
+        <Link className="btn btn-primary" href={resultHref}>
+          {active
+            ? "Lanjutkan pemeriksaan"
+            : completed
+              ? "Buka hasil"
+              : "Lihat status"}
+        </Link>
+        <Link
+          className="btn btn-secondary"
+          href={`/?url=${encodeURIComponent(item.sourceUrl)}`}
+        >
+          Periksa ulang
+        </Link>
+        <button
+          className={styles.removeButton}
+          type="button"
+          onClick={() => onRemove(item.jobId)}
+        >
+          Hapus dari perangkat ini
+        </button>
+      </div>
+    </article>
+  );
+}
 
-            <p className={styles.status}>
-              {situs.catalogStatus === 'verified' ? (
-                <span className={styles.labelTerverifikasi}>Terverifikasi</span>
-              ) : (
-                <span className={styles.labelKandidat}>Kandidat</span>
-              )}{' '}
-              {situs.baselineRuns} baseline tercatat
-            </p>
+export default function RiwayatAuditPage() {
+  const [items, setItems] = useState<RecentAudit[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [warning, setWarning] = useState("");
 
-            <p className={styles.angka}>
-              <strong className={styles.angkaBesar}>
-                {situs.beforeTotal} ke {situs.afterTotal}
-              </strong>{' '}
-              node bermasalah, turun {situs.reductionPercent} persen
-            </p>
+  const refresh = useCallback(async () => {
+    const stored = readRecentAudits();
+    if (stored.length === 0) {
+      setItems([]);
+      setLoading(false);
+      return;
+    }
 
-            {situs.decisionCounts && (
-              <p className={styles.rincian}>
-                {situs.decisionCounts.applied} perbaikan diterapkan,{' '}
-                {situs.decisionCounts.review} perlu diperiksa orang,{' '}
-                {situs.decisionCounts.skipped} dilewati
-              </p>
-            )}
+    const verified: RecentAudit[] = [];
+    let connectionFailed = false;
+    for (const item of stored) {
+      const token = readJobToken(item.jobId);
+      if (!token) {
+        removeRecentAudit(item.jobId);
+        continue;
+      }
+      try {
+        const response = await getAudit(item.jobId, token);
+        const next = recentAuditFromJob(response.job, item);
+        saveRecentAudit(next);
+        verified.push(next);
+      } catch (error) {
+        if (
+          error instanceof AuditApiError &&
+          (error.code === "AUDIT_NOT_FOUND" || error.code === "RESULT_EXPIRED")
+        ) {
+          removeRecentAudit(item.jobId);
+          removeJobToken(item.jobId);
+          continue;
+        }
+        connectionFailed = true;
+        verified.push(item);
+      }
+    }
+    setItems(verified);
+    setWarning(
+      connectionFailed
+        ? "Sebagian status belum dapat dikonfirmasi. Data terakhir di perangkat tetap ditampilkan."
+        : "",
+    );
+    setLoading(false);
+  }, []);
 
-            {situs.stability && (
-              <p className={styles.rincian}>
-                {situs.stability.stable
-                  ? `Stabil pada ${situs.stability.runs} audit.`
-                  : `Belum stabil. ${situs.stability.note}`}
-              </p>
-            )}
+  useEffect(() => {
+    void refresh();
+  }, [refresh]);
 
-            {situs.recentRuns && situs.recentRuns.length > 1 && (
-              <details className={styles.riwayat}>
-                <summary>Riwayat audit terakhir</summary>
-                <ul>
-                  {situs.recentRuns.map((jalan) => (
-                    <li key={jalan.capturedAt}>
-                      {waktuTerbaca(jalan.capturedAt)}: {jalan.beforeTotal} ke{' '}
-                      {jalan.afterTotal}
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            )}
+  const groups = useMemo(
+    () => ({
+      active: items.filter((item) => ACTIVE.has(item.status)),
+      completed: items.filter((item) => item.status === "completed"),
+      ended: items.filter(
+        (item) => item.status === "failed" || item.status === "cancelled",
+      ),
+    }),
+    [items],
+  );
 
-            <p className={styles.waktu}>Diambil {waktuTerbaca(situs.capturedAt)}</p>
+  const handleRemove = (jobId: string) => {
+    removeRecentAudit(jobId);
+    removeJobToken(jobId);
+    setItems((current) => current.filter((item) => item.jobId !== jobId));
+  };
 
-            <p className={styles.tindakan}>
-              <a
-                className={styles.tombolUtama}
-                href={`/data/${situs.id}/reader.html`}
-              >
-                Buka tampilan mudah dibaca {situs.shortName || situs.name}
-              </a>{' '}
-              <a
-                href={situs.sourceUrl}
-                rel="noreferrer nofollow"
-                target="_blank"
-              >
-                Buka halaman aslinya {situs.shortName || situs.name} (tab baru)
-              </a>
-            </p>
-          </li>
-        ))}
-      </ul>
-
-      {gagal.length > 0 && (
-        <section aria-labelledby="judul-gagal" className={styles.bagianGagal}>
-          <h2 id="judul-gagal" className={styles.judulKecil}>
-            Situs yang gagal diaudit
-          </h2>
-
+  return (
+    <main className={styles.main} aria-busy={loading}>
+      <section className={styles.hero}>
+        <div>
+          <h1>Riwayat pemeriksaan tujuh hari terakhir</h1>
           <p>
-            Kegagalan ditampilkan apa adanya. Situs yang gagal diaudit bukan
-            berarti situs yang bersih.
+            Lanjutkan proses aktif atau buka hasil yang masih tersedia di
+            perangkat ini.
           </p>
+        </div>
+        <Link href="/" className="btn btn-primary">
+          Mulai pemeriksaan baru
+        </Link>
+      </section>
 
-          <ul>
-            {gagal.map((situs) => (
-              <li key={situs.id}>
-                <strong>{situs.name}</strong>: {situs.failure?.message} (langkah{' '}
-                {situs.failure?.stageName})
-              </li>
-            ))}
-          </ul>
-        </section>
+      {warning && (
+        <p className={styles.warning} role="status">
+          {warning}
+        </p>
       )}
 
-      <p className={styles.pemberitahuanBawah}>{data.disclaimer}</p>
+      {loading ? (
+        <section className={styles.loadingState} role="status">
+          <span className={styles.spinner} aria-hidden="true" />
+          <div>
+            <h2>Memeriksa riwayat</h2>
+            <p>Status dikonfirmasi sebelum hasil ditampilkan.</p>
+          </div>
+        </section>
+      ) : items.length === 0 ? (
+        <section className={styles.emptyState}>
+          <h2>Belum ada riwayat pemeriksaan</h2>
+          <p>
+            Masukkan alamat halaman publik di beranda. Tidak ada perintah atau
+            persiapan teknis yang perlu dijalankan.
+          </p>
+          <Link href="/" className="btn btn-primary">
+            Mulai dari beranda
+          </Link>
+        </section>
+      ) : (
+        <div className={styles.sections}>
+          {groups.active.length > 0 && (
+            <section aria-labelledby="active-title">
+              <div className={styles.sectionHeading}>
+                <h2 id="active-title">Sedang berlangsung</h2>
+                <span>{groups.active.length}</span>
+              </div>
+              <div className={styles.auditList}>
+                {groups.active.map((item) => (
+                  <AuditCard
+                    key={item.jobId}
+                    item={item}
+                    onRemove={handleRemove}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {groups.completed.length > 0 && (
+            <section aria-labelledby="completed-title">
+              <div className={styles.sectionHeading}>
+                <h2 id="completed-title">Hasil tersedia</h2>
+                <span>{groups.completed.length}</span>
+              </div>
+              <div className={styles.auditList}>
+                {groups.completed.map((item) => (
+                  <AuditCard
+                    key={item.jobId}
+                    item={item}
+                    onRemove={handleRemove}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {groups.ended.length > 0 && (
+            <section aria-labelledby="ended-title">
+              <div className={styles.sectionHeading}>
+                <h2 id="ended-title">Tidak selesai</h2>
+                <span>{groups.ended.length}</span>
+              </div>
+              <div className={styles.auditList}>
+                {groups.ended.map((item) => (
+                  <AuditCard
+                    key={item.jobId}
+                    item={item}
+                    onRemove={handleRemove}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+      )}
     </main>
   );
 }

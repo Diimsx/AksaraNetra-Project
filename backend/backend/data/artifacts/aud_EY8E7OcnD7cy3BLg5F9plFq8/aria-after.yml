@@ -1,0 +1,533 @@
+- banner:
+  - navigation:
+    - link "BERANDA":
+      - /url: https://www.malukuprov.go.id
+    - link "PROFIL":
+      - /url: "#"
+    - link "Publikasi":
+      - /url: "#"
+    - link "Informasi":
+      - /url: "#"
+    - link "IPKD":
+      - /url: "#"
+    - link "DATA PENGELOLAAN KEU. DAERAH":
+      - /url: https://malukuprov.go.id/laporan-keuangan/
+    - link "SAKIP":
+      - /url: "#"
+    - link "Dokumen Publikasi":
+      - /url: "#"
+    - link "RPJPD":
+      - /url: https://malukuprov.go.id/rpjpd-provinsi-maluku-2025-2045/
+  - heading "SELAMAT DATANG DI PORTAL RESMI" [level=1]
+  - heading "Pemerintah Provinsi Maluku" [level=1]
+- main:
+  - region "Slider":
+    - note: Gub
+  - search:
+    - text: Search ...
+    - searchbox "Search ..."
+    - button "Search submit"
+  - img "WhatsApp-Image-2025-12-23-at-8.43.16-AM"
+  - text: Gubernur Maluku, Hendrik Lewerissa Mengantarkan Provinsi Maluku Masuk Zona Hijau MCSP KPK
+  - link "Selengkapnya...":
+    - /url: https://mediacenter.malukuprov.go.id/gubernur-maluku-hendrik-lewerissa-mengantarkan-provinsi-maluku-masuk-zona-hijau-mcsp-kpk/
+  - img "IMG_1258-2048x1365"
+  - text: Gubernur Maluku Hadiri Agenda Nasional di IKN
+  - link "Selengkapnya...":
+    - /url: https://mediacenter.malukuprov.go.id/gubernur-maluku-hadiri-agenda-nasional-di-ikn/
+  - img "IMG-20251023-WA0080-2048x1152"
+  - text: Gubernur HL Hadiri Munas ke-VII APPSI Tahun 2025
+  - link "Selengkapnya...":
+    - /url: https://mediacenter.malukuprov.go.id/gubernur-hl-hadiri-munas-ke-vii-appsi-tahun-2025/
+  - img "WhatsApp-Image-2025-11-07-at-6.45.16-AM"
+  - text: "Bukan Sekadar Perak: Gubernur Lewerissa Merangkul Harapan Maluku, Mengukir Janji Emas Menuju PON 2028"
+  - link "Selengkapnya...":
+    - /url: https://mediacenter.malukuprov.go.id/bukan-sekadar-perak-gubernur-lewerissa-merangkul-harapan-maluku-mengukir-janji-emas-menuju-pon-2028/
+  - img "WhatsApp-Image-2025-11-07-at-3.22.00-PM"
+  - text: "Wagub Maluku: Pemuda Muhammadiyah Harus Jadi Mitra Strategis Bangun Daerah"
+  - img "IMG-20251023-WA0080-2048x1152"
+  - text: Gubernur HL Hadiri Munas ke-VII APPSI Tahun 2025
+  - link "Selengkapnya...":
+    - /url: https://mediacenter.malukuprov.go.id/gubernur-hl-hadiri-munas-ke-vii-appsi-tahun-2025/
+  - tablist:
+    - tab "Layanan" [expanded]
+    - tab "Kabupaten Kota"
+    - tab "Instansi"
+    - tab "TAUTAN"
+  - tabpanel:
+    - link "Buka W B SINSPEKTORAT":
+      - /url: https://docs.google.com/forms/d/e/1FAIpQLSdJGuM5KGxE9-o93LwqXbXgQeKJHp2e5XivnlBz6voX46KDZA/viewform
+    - heading "W B S INSPEKTORAT" [level=2]:
+      - link "W B S INSPEKTORAT":
+        - /url: https://docs.google.com/forms/d/e/1FAIpQLSdJGuM5KGxE9-o93LwqXbXgQeKJHp2e5XivnlBz6voX46KDZA/viewform
+    - link "Buka W B SINSPEKTORAT":
+      - /url: https://corona.malukuprov.go.id
+    - heading "INFO COVID-19 DISKOMINFO" [level=2]:
+      - link "INFO COVID-19 DISKOMINFO":
+        - /url: https://corona.malukuprov.go.id
+    - link "Buka W B SINSPEKTORAT":
+      - /url: http://mediacenter.malukuprov.go.id
+    - heading "MEDIA CENTER DISKOMINFO" [level=2]:
+      - link "MEDIA CENTER DISKOMINFO":
+        - /url: http://mediacenter.malukuprov.go.id/
+    - link "Buka W B SINSPEKTORAT":
+      - /url: https://spse.inaproc.id/malukuprov
+    - heading "LPSE" [level=2]:
+      - link "LPSE":
+        - /url: https://spse.inaproc.id/malukuprov
+    - link "Buka W B SINSPEKTORAT":
+      - /url: https://malukuprov.go.id/laporan-keuangan/
+    - heading "LAPORAN KEUANGAN" [level=2]:
+      - link "LAPORAN KEUANGAN":
+        - /url: https://malukuprov.go.id/laporan-keuangan/
+    - link "Buka W B SINSPEKTORAT":
+      - /url: http://kotaku.pu.go.id/
+    - heading "KOTAKU" [level=2]:
+      - link "KOTAKU":
+        - /url: http://kotaku.pu.go.id/
+    - link "Buka JDIHBIRO HUKUM":
+      - /url: http://jdih.malukuprov.go.id/
+    - heading "JDIH BIRO HUKUM" [level=2]:
+      - link "JDIH BIRO HUKUM":
+        - /url: http://jdih.malukuprov.go.id/
+    - link "Buka JDIHBIRO HUKUM":
+      - /url: https://simpeg.malukuprov.go.id/web/aspx/akun/login.aspx
+    - heading "SIMPEG BKD" [level=2]:
+      - link "SIMPEG BKD":
+        - /url: https://simpeg.malukuprov.go.id/web/aspx/akun/login.aspx
+    - link "Buka JDIHBIRO HUKUM":
+      - /url: https://www.bmkg.go.id/cuaca/prakiraan-cuaca-indonesia.bmkg?Prov=20&NamaProv=Maluku
+    - heading "BMKG" [level=2]:
+      - link "BMKG":
+        - /url: https://www.bmkg.go.id/cuaca/prakiraan-cuaca-indonesia.bmkg?Prov=20&NamaProv=Maluku
+    - link "Buka JDIHBIRO HUKUM":
+      - /url: https://sipd-ri.kemendagri.go.id/
+    - heading "SIPD" [level=2]:
+      - link "SIPD":
+        - /url: https://sipd-ri.kemendagri.go.id/
+    - link "Buka JDIHBIRO HUKUM":
+      - /url: https://www.lapor.go.id/instansi/pemerintah-provinsi-maluku
+    - heading "LAPOR" [level=2]:
+      - link "LAPOR":
+        - /url: https://www.lapor.go.id/instansi/pemerintah-provinsi-maluku
+    - link "Buka JDIHBIRO HUKUM":
+      - /url: https://esamsat.malukuprov.go.id/
+    - heading "e-SAMSAT BAPENDA" [level=2]:
+      - link "e-SAMSAT BAPENDA":
+        - /url: https://esamsat.malukuprov.go.id/
+    - link "Buka MANISE CORPUBPSDM":
+      - /url: https://manisecorpu.malukuprov.go.id/public/
+    - heading "MANISE CORPU BPSDM" [level=2]:
+      - link "MANISE CORPU BPSDM":
+        - /url: https://manisecorpu.malukuprov.go.id/public/
+    - link "Buka MANISE CORPUBPSDM":
+      - /url: https://so.malukuprov.go.id/
+    - heading "SMART OFFICE DISKOMINFO" [level=2]:
+      - link "SMART OFFICE DISKOMINFO":
+        - /url: https://so.malukuprov.go.id/
+    - link "PPID":
+      - /url: https://ppid.malukuprov.go.id/
+      - img "PPID"
+    - heading "PPID UTAMA DISKOMINFO" [level=2]:
+      - link "PPID UTAMA DISKOMINFO":
+        - /url: https://ppid.malukuprov.go.id/
+    - link "Buka MANISE CORPUBPSDM":
+      - /url: https://disketapang.malukuprov.go.id/daftar-harga-pangan/
+    - heading "SIPANGAN DISKETAPANG" [level=2]:
+      - link "SIPANGAN DISKETAPANG":
+        - /url: https://disketapang.malukuprov.go.id/daftar-harga-pangan/
+    - link "Buka MANISE CORPUBPSDM":
+      - /url: https://malukuprov.go.id/daftar-pengumuman/
+    - heading "PENGUMUMAN" [level=2]:
+      - link "PENGUMUMAN":
+        - /url: "#"
+    - link "Buka MANISE CORPUBPSDM":
+      - /url: https://webmail.malukuprov.go.id/
+    - heading "WEBMAIL" [level=2]:
+      - link "WEBMAIL":
+        - /url: https://webmail.malukuprov.go.id/
+    - link "Buka BUSSBIRO UMUM":
+      - /url: https://buss.malukuprov.go.id/beranda
+    - heading "BUSS BIRO UMUM" [level=2]:
+      - link "BUSS BIRO UMUM":
+        - /url: https://buss.malukuprov.go.id/beranda
+    - link "Buka BUSSBIRO UMUM":
+      - /url: https://absensi.malukuprov.go.id/
+    - heading "ABSENSI BKD" [level=2]:
+      - link "ABSENSI BKD":
+        - /url: https://absensi.malukuprov.go.id/
+    - link "Buka BUSSBIRO UMUM":
+      - /url: http://temanku.dpupr.malukuprov.go.id/
+    - heading "TEMANKU DPUPR" [level=2]:
+      - link "TEMANKU DPUPR":
+        - /url: http://temanku.dpupr.malukuprov.go.id/
+    - link "Buka BUSSBIRO UMUM":
+      - /url: https://radio.malukuprov.go.id/
+    - heading "RADIO DISKOMINFO" [level=2]:
+      - link "RADIO DISKOMINFO":
+        - /url: https://radio.malukuprov.go.id/
+    - link "Buka BUSSBIRO UMUM":
+      - /url: https://database.disdikbud.malukuprov.go.id/login
+    - heading "DATABASE DISDIKBUD" [level=2]:
+      - link "DATABASE DISDIKBUD":
+        - /url: https://database.disdikbud.malukuprov.go.id/login
+    - link "Buka YouTube":
+      - /url: https://www.youtube.com/channel/UCAZQKIoRTUU2S2hpdLg3zQg
+    - heading "MALUKU TV CHANNEL DISKOMINFO" [level=2]:
+      - link "MALUKU TV CHANNEL DISKOMINFO":
+        - /url: https://www.youtube.com/channel/UCAZQKIoRTUU2S2hpdLg3zQg
+    - link "Buka SATU DATA INDONESIA PROVINSI MALUKU":
+      - /url: https://satudataindonesia.malukuprov.go.id/
+    - heading "SATU DATA INDONESIA PROVINSI MALUKU" [level=2]:
+      - link "SATU DATA INDONESIA PROVINSI MALUKU":
+        - /url: https://satudataindonesia.malukuprov.go.id/
+    - heading "DISKOMINFO" [level=2]:
+      - link "DISKOMINFO":
+        - /url: https://malukuprov.go.id/statistik-sektoral-maluku
+    - link "Buka SATU DATA INDONESIA PROVINSI MALUKU":
+      - /url: https://geohub-singkap-tali-gisdlh-promaluku.hub.arcgis.com/
+    - heading "SINGKAP TALI DLH" [level=2]:
+      - link "SINGKAP TALI DLH":
+        - /url: https://geohub-singkap-tali-gisdlh-promaluku.hub.arcgis.com/
+    - link "Buka SATU DATA INDONESIA PROVINSI MALUKU":
+      - /url: http://cat.malukuprov.go.id/
+    - heading "CAT BKD" [level=2]:
+      - link "CAT BKD":
+        - /url: http://cat.malukuprov.go.id/
+    - link "Buka SATU DATA INDONESIA PROVINSI MALUKU":
+      - /url: https://timistaaga.malukuprov.go.id/public/login
+    - heading "TIMISTAAGA INSPEKTORAT" [level=2]:
+      - link "TIMISTAAGA INSPEKTORAT":
+        - /url: https://timistaaga.malukuprov.go.id/public/login
+    - link "Buka SATU DATA INDONESIA PROVINSI MALUKU":
+      - /url: https://app.esamsat.malukuprov.go.id
+    - heading "App e-Samsat BAPENDA" [level=2]:
+      - link "App e-Samsat BAPENDA":
+        - /url: https://app.esamsat.malukuprov.go.id
+    - link "Buka SATU DATA INDONESIA PROVINSI MALUKU":
+      - /url: https://asnmail.malukuprov.go.id
+    - heading "ASN MAIL" [level=2]:
+      - link "ASN MAIL":
+        - /url: https://asnmail.malukuprov.go.id
+    - link "Buka SPORADISBKD":
+      - /url: https://sporadis.bkd.malukuprov.go.id
+    - heading "SPORADIS BKD" [level=2]:
+      - link "SPORADIS BKD":
+        - /url: https://sporadis.bkd.malukuprov.go.id
+    - link "Buka SPORADISBKD":
+      - /url: http://siga.malukuprov.go.id
+    - heading "SIGA DP3A" [level=2]:
+      - link "SIGA DP3A":
+        - /url: http://siga.malukuprov.go.id
+    - link "Buka SPORADISBKD":
+      - /url: http://sempe.bkd.malukuprov.go.id
+    - heading "SEMPE BKD" [level=2]:
+      - link "SEMPE BKD":
+        - /url: http://sempe.bkd.malukuprov.go.id
+    - link "Buka SPORADISBKD":
+      - /url: https://sites.google.com/view/samsat-ambon/beranda
+    - heading "SAMSAT AMBON" [level=2]:
+      - link "SAMSAT AMBON":
+        - /url: https://sites.google.com/view/samsat-ambon/beranda
+  - text: LAYANAN
+  - link "Rank Math Google Logo & Login":
+    - /url: http://siga.malukuprov.go.id/
+    - img "Rank Math Google Logo & Login"
+  - link "SIGA":
+    - /url: http://siga.malukuprov.go.id/
+  - link "Rank Math Google Logo & Login":
+    - /url: https://sporadis.bkd.malukuprov.go.id/
+    - img "Rank Math Google Logo & Login"
+  - link "SPORADIS":
+    - /url: https://sporadis.bkd.malukuprov.go.id/
+  - link "Rank Math Google Logo & Login":
+    - /url: https://asnmail.malukuprov.go.id/
+    - img "Rank Math Google Logo & Login"
+  - link "ASN Mail":
+    - /url: https://asnmail.malukuprov.go.id/
+  - link "Rank Math Google Logo & Login":
+    - /url: https://app.esamsat.malukuprov.go.id/
+    - img "Rank Math Google Logo & Login"
+  - link "App e-SAMSAT":
+    - /url: https://app.esamsat.malukuprov.go.id/
+  - link "Rank Math Google Logo & Login":
+    - /url: https://timistaaga.malukuprov.go.id/public/login
+    - img "Rank Math Google Logo & Login"
+  - link "TIMISTAAGA":
+    - /url: https://timistaaga.malukuprov.go.id/public/login
+  - link "Rank Math Google Logo & Login":
+    - /url: http://cat.malukuprov.go.id/
+    - img "Rank Math Google Logo & Login"
+  - link "CAT":
+    - /url: http://cat.malukuprov.go.id/
+  - link "MORE":
+    - /url: /informasi-layanan
+  - text: INSTANSI Inspektorat
+  - link:
+    - /url: ""
+  - text: Sekretariat DPRD
+  - link:
+    - /url: ""
+  - text: Satuan Polisi Pamong Praja
+  - link:
+    - /url: ""
+  - text: Rumah Sakit Khusus Daerah
+  - link:
+    - /url: ""
+  - text: RSUD Dr. Ishak Umarella
+  - link:
+    - /url: ""
+  - text: RSUD Dr. M. Haulussy
+  - link:
+    - /url: https://rsudhaulussy.malukuprov.go.id/
+  - text: Biro Perekonomian
+  - link:
+    - /url: ""
+  - text: Biro Administrasi Pembangunan dan Pengadaan Barang Jasa
+  - link:
+    - /url: ""
+  - text: Biro Hukum dan HAM
+  - link:
+    - /url: ""
+  - text: Biro Kesejahteraan Rakyat
+  - link:
+    - /url: ""
+  - text: Biro Administrasi Pimpinan
+  - link:
+    - /url: ""
+  - text: Biro Umum
+  - link:
+    - /url: ""
+  - text: Biro Organisasi
+  - link:
+    - /url: ""
+  - text: Biro Pemerintahan
+  - link:
+    - /url: ""
+  - text: Badan Kesatuan Bangsa dan Politik
+  - link:
+    - /url: ""
+  - text: Badan Perencanaan Pembangunan Daerah
+  - link:
+    - /url: ""
+  - text: Badan Pengelolaan Keuangan dan Aset Daerah
+  - link:
+    - /url: ""
+  - text: Badan Kepegawaian Daerah
+  - link:
+    - /url: ""
+  - text: Badan Pengembangan Sumber Daya Manusia
+  - link:
+    - /url: https://bpsdm.malukuprov.go.id
+  - text: Badan Pendapatan Daerah
+  - link:
+    - /url: ""
+  - text: Badan Pengelola Perbatasan Negara
+  - link:
+    - /url: ""
+  - text: Badan Penanggulangan Bencana Daerah
+  - link:
+    - /url: ""
+  - text: Dinas Kependudukan dan Pencatatan Sipil
+  - link:
+    - /url: ""
+  - text: Dinas Energi Sumber Daya Mineral
+  - link:
+    - /url: ""
+  - text: Dinas Pertanian
+  - link:
+    - /url: ""
+  - text: Dinas Perhubungan
+  - link:
+    - /url: ""
+  - text: Dinas Kelautan dan Perikanan
+  - link:
+    - /url: ""
+  - text: Dinas Perumahan dan Kawasan Permukiman
+  - link:
+    - /url: ""
+  - text: Dinas Pariwisata
+  - link:
+    - /url: ""
+  - text: Dinas Kehutanan
+  - link:
+    - /url: ""
+  - text: Dinas Pekerjaan Umum dan Penataan Ruang
+  - link:
+    - /url: ""
+  - text: Dinas Kesehatan
+  - link:
+    - /url: ""
+  - text: Dinas Pemuda dan Olahraga
+  - link:
+    - /url: ""
+  - text: Dinas Sosial
+  - link:
+    - /url: ""
+  - text: Dinas Koperasi, Usaha Kecil dan Menengah
+  - link:
+    - /url: ""
+  - text: Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu
+  - link:
+    - /url: ""
+  - text: Dinas Lingkungan Hidup
+  - link:
+    - /url: ""
+  - text: Dinas Ketahanan Pangan
+  - link:
+    - /url: ""
+  - text: Dinas Perpustakaan dan Kearsipan
+  - link:
+    - /url: ""
+  - text: Dinas Ketenagakerjaan dan Transmigrasi
+  - link:
+    - /url: "#"
+  - text: Dinas Perindustrian dan Perdagangan
+  - link:
+    - /url: "#"
+  - text: Dinas Pemberdayaan Perempuan dan Perlindungan Anak
+  - link:
+    - /url: "#"
+  - text: Dinas Pendidikan dan Kebudayaan
+  - link:
+    - /url: "#"
+  - text: Dinas Pemberdayaan Masyarakat dan Desa
+  - link:
+    - /url: "#"
+  - text: Dinas Komunikasi dan Informatika
+  - link:
+    - /url: "#"
+  - link "MORE":
+    - /url: "#"
+  - text: TAUTAN
+  - img "KEMENKOPOLHUKAM"
+  - text: POLKAM
+  - link:
+    - /url: https://malukuprov.go.id/board-tautan/polkam/
+  - img "RISTEKDIKTI"
+  - text: RISTEKDIKTI
+  - link:
+    - /url: https://malukuprov.go.id/board-tautan/ristekdikti/
+  - img "KEMKOMINFO"
+  - text: KEMKOMINFO
+  - link:
+    - /url: https://malukuprov.go.id/board-tautan/kemkominfo/
+  - img "KEMENDAGRI"
+  - text: KEMENDAGRI
+  - link:
+    - /url: https://malukuprov.go.id/board-tautan/kemendagri/
+  - link "MORE":
+    - /url: "#"
+  - text: KABUPATEN-KOTA
+  - img "SBT"
+  - text: Seram Bagian Timur
+  - img "SBB"
+  - text: Seram Bagian Barat
+  - img "MALTENG"
+  - text: Maluku Tengah
+  - img "AMBON"
+  - text: Kota Ambon
+  - link "MORE":
+    - /url: "#"
+  - region "Slider":
+    - note: Hari Bakti TNI AU 2026
+  - heading "POTENSI PROVINSI MALUKU" [level=2]
+  - heading "SOSIAL MEDIA" [level=2]
+  - heading "Maluku Prov" [level=3]
+  - paragraph: Akun Facebook Pemerintah Provinsi Maluku
+  - link "Facebook":
+    - /url: https://www.facebook.com/dinas.kominfopromal.3
+  - heading "@malukuprov" [level=3]
+  - paragraph: Akun X Pemerintah Provinsi Maluku
+  - link "Twitter":
+    - /url: "#"
+  - heading "@malukuprov" [level=3]
+  - paragraph: Akun Instagram Pemerintah Provinsi Maluku
+  - link "Instagram":
+    - /url: https://www.instagram.com/tifasiwalima/
+  - heading "Maluku Prov TV" [level=3]
+  - paragraph: Akun Youtube Pemerintah Provinsi Maluku
+  - link "Youtube":
+    - /url: https://www.youtube.com/channel/UCE0XB855AgK6HKHIUkWqa3Q
+  - heading "#" [level=3]
+  - paragraph: Akun TikTok Pemerintah Provinsi Maluku
+  - link "TikTok":
+    - /url: "#"
+- contentinfo:
+  - heading "ALAMAT" [level=2]
+  - text: "Alamat : Jln. Pattimura No. 1 Telepon : 0911-343424 Email : kominfo@malukuprov.go.id"
+  - heading "STATISTIK" [level=2]
+  - list:
+    - listitem:
+      - text: "Hari ini :"
+      - code:
+        - img
+        - text: "Views: 61"
+    - listitem:
+      - text: "Kemarin :"
+      - code:
+        - img
+        - text: "Views: 450"
+    - listitem:
+      - text: "Minggu ini :"
+      - code:
+        - img
+        - text: "Views: 1,683"
+    - listitem:
+      - text: "Bulan ini :"
+      - code:
+        - img
+        - text: "Views: 4,705"
+    - listitem:
+      - text: "Tahun ini :"
+      - code
+      - code:
+        - img
+        - text: "Views: 20,881"
+  - heading "GPR" [level=2]
+  - heading "Copyright © 2023 - Pemerintah Provinsi maluku" [level=2]
+  - heading "Versi 2.3" [level=2]
+- link "Skip to content":
+  - /url: "#content"
+- navigation "Accessibility Toolbar":
+  - button "Open toolbar Sarana":
+    - text: Open toolbar
+    - img "Sarana"
+  - paragraph: Sarana
+  - list:
+    - listitem:
+      - button "Perbesar Teks Perbesar Teks":
+        - img "Perbesar Teks"
+        - text: Perbesar Teks
+    - listitem:
+      - button "Perkecil Teks Perkecil Teks":
+        - img "Perkecil Teks"
+        - text: Perkecil Teks
+    - listitem:
+      - button "Skala Abu-abu Skala Abu-abu":
+        - img "Skala Abu-abu"
+        - text: Skala Abu-abu
+    - listitem:
+      - button "Kontras Kontras":
+        - img "Kontras"
+        - text: Kontras
+    - listitem:
+      - button "Klise Klise":
+        - img "Klise"
+        - text: Klise
+    - listitem:
+      - button "Latar Terang Latar Terang":
+        - img "Latar Terang"
+        - text: Latar Terang
+    - listitem:
+      - button "Garis Bawahi Tautan Garis Bawahi Tautan":
+        - img "Garis Bawahi Tautan"
+        - text: Garis Bawahi Tautan
+    - listitem:
+      - button "Tulisan terbaca Tulisan terbaca":
+        - img "Tulisan terbaca"
+        - text: Tulisan terbaca
+    - listitem:
+      - button "Reset Reset":
+        - img "Reset"
+        - text: Reset

@@ -4,6 +4,8 @@ import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "Cara kerja",
+  description:
+    "Lima tahap pemeriksaan AksaraNetra, dari validasi alamat sampai tampilan reader dan hasil terukur.",
 };
 
 /**
@@ -59,7 +61,6 @@ export default function CaraKerjaPage() {
     <main className={styles.container}>
       <section className={styles.hero}>
         <div className={styles.heroIsi}>
-          <p className={styles.heroLabel}>Cara kerja</p>
           <h1 className={styles.heroJudul}>
             Lima langkah, dari alamat sampai halaman yang bisa dibaca
           </h1>
@@ -129,14 +130,14 @@ export default function CaraKerjaPage() {
         <h2 className={styles.ajakanJudul}>Coba langsung</h2>
         <p className={styles.ajakanTeks}>
           Tempel alamat halaman publik di beranda, atau lihat hasil pengukuran
-          situs yang sudah ada di katalog.
+          pemeriksaan yang masih tersedia di riwayat.
         </p>
         <div className={styles.ajakanTombolBaris}>
           <Link href="/" className={styles.tombolUtama}>
             Tempel alamat
           </Link>
           <Link href="/katalog" className={styles.tombolKedua}>
-            Lihat hasil audit
+            Buka riwayat
           </Link>
         </div>
       </section>
