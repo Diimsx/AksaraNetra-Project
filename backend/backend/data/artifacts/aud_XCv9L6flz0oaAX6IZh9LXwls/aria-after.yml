@@ -1,0 +1,523 @@
+- navigation:
+  - link "Logo Pemerintah Provinsi Pemerintah Provinsi Kepulauan Riau":
+    - /url: https://kepriprov.go.id/
+    - img "Logo Pemerintah Provinsi"
+    - heading "Pemerintah Provinsi" [level=1]
+    - paragraph: Kepulauan Riau
+  - list:
+    - listitem:
+      - link "Beranda":
+        - /url: https://kepriprov.go.id/
+    - listitem:
+      - link "Profil Pemda":
+        - /url: https://kepriprov.go.id/laman/tentang-kami
+    - listitem:
+      - link "Layanan":
+        - /url: https://kepriprov.go.id/layanan
+    - listitem:
+      - link "Publikasi":
+        - /url: https://kepriprov.go.id/
+    - listitem:
+      - link "Dokumen & Peraturan":
+        - /url: https://kepriprov.go.id/dokumen
+  - link "Pencarian":
+    - /url: https://kepriprov.go.id/pencarian
+- main:
+  - heading "Bersauh Marwah, Menuju Kepri Gemilang" [level=1]
+  - paragraph: Melayani masyarakat dengan transparansi, inovasi, dan dedikasi. Jelajahi pesona, layanan, dan perkembangan Kepulauan Riau.
+  - textbox "Cari informasi layanan atau berita..."
+  - button "Cari"
+  - button "Media sebelumnya"
+  - button "Media berikutnya"
+  - link "Profil Profil":
+    - /url: https://kepriprov.go.id/laman/tentang-kepri
+    - img "Profil"
+    - text: Profil
+  - link "Berita Berita":
+    - /url: https://kepriprov.go.id/berita
+    - img "Berita"
+    - text: Berita
+  - link "Siaran Pers Siaran Pers":
+    - /url: https://kepriprov.go.id/siaran-pers
+    - img "Siaran Pers"
+    - text: Siaran Pers
+  - link "Layanan Layanan":
+    - /url: https://kepriprov.go.id/layanan
+    - img "Layanan"
+    - text: Layanan
+  - link "Instansi Instansi":
+    - /url: https://kepriprov.go.id/instansi
+    - img "Instansi"
+    - text: Instansi
+  - link "IPKD IPKD":
+    - /url: https://kepriprov.go.id/dokumen
+    - img "IPKD"
+    - text: IPKD
+  - link "Lapor Lapor":
+    - /url: https://kepri.lapor.go.id/
+    - img "Lapor"
+    - text: Lapor
+  - link "PPID PPID":
+    - /url: https://ppid.kepriprov.go.id/
+    - img "PPID"
+    - text: PPID
+  - heading "Layanan Publik" [level=2]
+  - paragraph: Akses cepat layanan pemerintahan dan fasilitas publik Kepulauan Riau.
+  - link "Semua Layanan":
+    - /url: https://kepriprov.go.id/layanan
+  - link "Informasi Publik":
+    - /url: https://kepriprov.go.id/layanan
+    - heading "Informasi Publik" [level=3]
+    - paragraph
+  - link "Layanan SPBE":
+    - /url: https://kepriprov.go.id/layanan
+    - heading "Layanan SPBE" [level=3]
+    - paragraph
+  - link "Layanan Kesehatan":
+    - /url: https://kepriprov.go.id/layanan
+    - heading "Layanan Kesehatan" [level=3]
+    - paragraph
+  - link "Layanan Pendidikan":
+    - /url: https://kepriprov.go.id/layanan
+    - heading "Layanan Pendidikan" [level=3]
+    - paragraph
+  - link "Info Pajak & Harga":
+    - /url: https://kepriprov.go.id/layanan
+    - heading "Info Pajak & Harga" [level=3]
+    - paragraph
+  - link "Investasi & Perizinan":
+    - /url: https://kepriprov.go.id/layanan
+    - heading "Investasi & Perizinan" [level=3]
+    - paragraph
+  - img "Gubernur Kepulauan Riau"
+  - img "Wakil Gubernur Kepulauan Riau"
+  - link "Perencanaan Dokumen RPJMD":
+    - /url: https://kepriprov.go.id/dokumen/dokumen-perencanaan/rencana-pembangunan-jangka-menengah-daerah-rpjmd-provinsi-kepulauan-riau-tahun-20252029
+  - link "Perencanaan Dokumen RKPD":
+    - /url: https://kepriprov.go.id/dokumen/dokumen-perencanaan/rencana-kerja-pemerintah-daerah-rkpd-provinsi-kepulauan-riau-tahun-2026
+  - link "SAKIP Kepri Akuntabilitas Kinerja":
+    - /url: https://performance.kepriprov.go.id
+  - link "Tata Kelola Struktur Organisasi":
+    - /url: https://kepriprov.go.id/dokumen/produk-hukum/peraturan-gubernur-pergub-provinsi-kepulauan-riau-nomor-12-tahun-2023
+  - heading "Visi & Misi Pembangunan Daerah" [level=2]
+  - img
+  - heading "Visi" [level=3]
+  - paragraph: "\"KEPULAUAN RIAU MAJU, MAKMUR, DAN MERATA\""
+  - heading "Misi" [level=3]
+  - list:
+    - listitem:
+      - paragraph: Meningkatkan Pertumbuhan dan Pemerataan Ekonomi Berbasis Maritim dan Keunggulan Wilayah
+    - listitem:
+      - paragraph: Meningkatkan Pemerataan Pembangunan Infrastruktur dan Konektivitas Antar Wilayah
+    - listitem:
+      - paragraph: Mewujudkan Pemerataan dan Meningkatkan Kualitas Sumber Daya Manusia yang berdaya Saing dan berkarakter
+    - listitem:
+      - paragraph: Melaksanakan Tata Kelola Pemerintahan yang Bersih, Demokratis, Terbuka, Berbasis Teknologi Informasi dan Berorientasi Pelayanan
+    - listitem:
+      - paragraph: Mengembangkan dan Melestarikan Budaya Melayu dan Nasional serta Ekologi dalam Mendukung Pembangunan Berkelanjutan
+  - heading "Proyek & Program Unggulan" [level=2]
+  - paragraph: Kawal bersama perkembangan infrastruktur dan program strategis Kepri.
+  - link "Semua Proyek":
+    - /url: https://kepriprov.go.id/proyek
+  - 'link "Tugu Bahasa Nasional di Pulau Penyengat: Simbol Abadi Akar Bahasa Indonesia, Ikon Wisata Budaya Kepulauan Riau Tugu Bahasa Nasional di Pulau Penyengat: Simbol Abadi Akar Bahasa Indonesia, Ikon Wisata Budaya Kepulauan Riau"':
+    - /url: https://kepriprov.go.id/proyek/tugu-bahasa-nasional-di-pulau-penyengat-simbol-abadi-akar-bahasa-indonesia-ikon-wisata-budaya-kepulauan-riau
+    - 'img "Tugu Bahasa Nasional di Pulau Penyengat: Simbol Abadi Akar Bahasa Indonesia, Ikon Wisata Budaya Kepulauan Riau"'
+    - 'heading "Tugu Bahasa Nasional di Pulau Penyengat: Simbol Abadi Akar Bahasa Indonesia, Ikon Wisata Budaya Kepulauan Riau" [level=3]'
+  - 'link "KEK Galang Batang: Dari Bintan untuk Indonesia - Mengolah Kekayaan Bumi Menjadi Nilai Tambah Bangsa KEK Galang Batang: Dari Bintan untuk Indonesia - Mengolah Kekayaan Bumi Menjadi Nilai Tambah Bangsa"':
+    - /url: https://kepriprov.go.id/proyek/kek-galang-batang-dari-bintan-untuk-indonesia-mengolah-kekayaan-bumi-menjadi-nilai-tambah-bangsa
+    - 'img "KEK Galang Batang: Dari Bintan untuk Indonesia - Mengolah Kekayaan Bumi Menjadi Nilai Tambah Bangsa"'
+    - 'heading "KEK Galang Batang: Dari Bintan untuk Indonesia - Mengolah Kekayaan Bumi Menjadi Nilai Tambah Bangsa" [level=3]'
+  - 'link "Rumah Singgah Kepri: Ketika Negara Hadir di Sisi Pasien - Gratis, Nyaman, dan Penuh Kepedulian Rumah Singgah Kepri: Ketika Negara Hadir di Sisi Pasien - Gratis, Nyaman, dan Penuh Kepedulian"':
+    - /url: https://kepriprov.go.id/proyek/rumah-singgah-kepri-ketika-negara-hadir-di-sisi-pasien-gratis-nyaman-dan-penuh-kepedulian
+    - 'img "Rumah Singgah Kepri: Ketika Negara Hadir di Sisi Pasien - Gratis, Nyaman, dan Penuh Kepedulian"'
+    - 'heading "Rumah Singgah Kepri: Ketika Negara Hadir di Sisi Pasien - Gratis, Nyaman, dan Penuh Kepedulian" [level=3]'
+  - heading "Indikator Makro Daerah" [level=2]
+  - button "Konten sebelumnya"
+  - button "Konten berikutnya"
+  - region "Area gulir Indikator Makro Daerah":
+    - paragraph: Jumlah Penduduk Miskin, September 2025
+    - heading "114,55" [level=4]
+    - text: Ribu Jiwa
+    - paragraph: Pertumbuhan Ekonomi (C to C), Triwulan I 2026
+    - heading "7,04" [level=4]
+    - text: Persen
+    - paragraph: Pertumbuhan Ekonomi (Q to Q), Triwulan I 2026
+    - heading "-3,54" [level=4]
+    - text: Persen
+    - paragraph: Pertumbuhan Ekonomi (Y on Y), Triwulan I 2026
+    - heading "7,04" [level=4]
+    - text: Persen
+    - paragraph: Pertumbuhan Ekonomi (Tahunan), 2025
+    - heading "6,94" [level=4]
+    - text: Persen
+    - paragraph: Tingkat Pengangguran Terbuka, Februari 2026
+    - heading "6,87" [level=4]
+    - text: Persen
+    - paragraph: Inflasi Batam, Juni 2026
+    - heading "0,68" [level=4]
+    - text: Persen
+    - paragraph: Inflasi Tanjungpinang, Juni 2026
+    - heading "0,49" [level=4]
+    - text: Persen
+    - paragraph: Inflasi Karimun, Juni 2026
+    - heading "0,05" [level=4]
+    - text: Persen
+    - paragraph: Inflasi Kepulauan Riau, Juni 2026
+    - heading "0,60" [level=4]
+    - text: Persen
+    - paragraph: Persentase Penduduk Miskin, September 2025
+    - heading "4,26" [level=4]
+    - text: Persen
+    - paragraph: Indeks Pembangunan Manusia, 2025
+    - heading "80,53" [level=4]
+    - text: Tidak Ada Satuan
+    - paragraph: Gini Rasio, September 2025
+    - heading "0,39" [level=4]
+    - text: Tidak Ada Satuan
+    - paragraph: Nilai Ekspor Kepri, Mei 2026
+    - heading "2.050,08 Juta" [level=4]
+    - text: US$
+    - paragraph: Nilai Impor Kepri, Mei 2026
+    - heading "2.611,00 Juta" [level=4]
+    - text: US$
+    - paragraph: Jumlah Kunjungan Wisman, Mei 2026
+    - heading "211.996" [level=4]
+    - text: Kunjungan
+    - paragraph: Nilai Tukar Petani, Juni 2026
+    - heading "107,82" [level=4]
+    - text: Tidak Ada Satuan
+    - paragraph: Indeks Pembangunan Gender (IPG) (menggunakan UHH hasil SP2020 LF), 2024
+    - heading "95,11" [level=4]
+    - text: Tidak Ada Satuan
+    - paragraph: Indeks Ketimpangan Gender (IKG), 2025
+    - heading "0,29" [level=4]
+    - text: Tidak Ada Satuan
+    - paragraph: Indeks Pemberdayaan Gender (IDG), 2024
+    - heading "65,21" [level=4]
+    - text: Tidak Ada Satuan
+  - heading "Publikasi Statistik Pemda" [level=3]
+  - paragraph: Dokumen dan laporan statistik resmi instansi daerah.
+  - link "Lihat Semua":
+    - /url: https://kepriprov.go.id/statistik
+  - link "Potret Statistik - Perkembangan Realisasi Investasi Provinsi Kepulauan Riau Tahun 2023–Triwulan I 2026 30 Jul 2026 • Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu Provinsi Kepulauan Riau":
+    - /url: https://kepriprov.go.id/statistik/potret-statistik-perkembangan-realisasi-investasi-provinsi-kepulauan-riau-tahun-2023-triwulan-i-2026-2026
+    - img
+    - heading "Potret Statistik - Perkembangan Realisasi Investasi Provinsi Kepulauan Riau Tahun 2023–Triwulan I 2026" [level=4]
+    - text: 30 Jul 2026 • Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu Provinsi Kepulauan Riau
+  - link "Potret Statistik - Graduasi dari Kemiskinan Provinsi Kepulauan Riau Tahun 2025 11 Jun 2026 • Dinas Sosial Provinsi Kepulauan Riau":
+    - /url: https://kepriprov.go.id/statistik/potret-statistik-graduasi-dari-kemiskinan-provinsi-kepulauan-riau-tahun-2025-2026
+    - img
+    - heading "Potret Statistik - Graduasi dari Kemiskinan Provinsi Kepulauan Riau Tahun 2025" [level=4]
+    - text: 11 Jun 2026 • Dinas Sosial Provinsi Kepulauan Riau
+  - link "Potret Statistik - Jumlah Kunjungan Wisatawan Mancanegara Provinsi Kepulauan Riau Tahun 2021–2025 11 Mei 2026 • Dinas Pariwisata Provinsi Kepulauan Riau":
+    - /url: https://kepriprov.go.id/statistik/potret-statistik-jumlah-kunjungan-wisatawan-mancanegara-provinsi-kepulauan-riau-tahun-2021-2025-2026
+    - img
+    - heading "Potret Statistik - Jumlah Kunjungan Wisatawan Mancanegara Provinsi Kepulauan Riau Tahun 2021–2025" [level=4]
+    - text: 11 Mei 2026 • Dinas Pariwisata Provinsi Kepulauan Riau
+  - link "Potret Statistik - Ketersediaan Stok Ikan Provinsi Kepulauan Riau Semester 1 Tahun 2024 dan 2025 14 Apr 2026 • Dinas Kelautan dan Perikanan Provinsi Kepulauan Riau":
+    - /url: https://kepriprov.go.id/statistik/potret-statistik-ketersediaan-stok-ikan-provinsi-kepulauan-riau-semester-1-tahun-2024-dan-2025-2026
+    - img
+    - heading "Potret Statistik - Ketersediaan Stok Ikan Provinsi Kepulauan Riau Semester 1 Tahun 2024 dan 2025" [level=4]
+    - text: 14 Apr 2026 • Dinas Kelautan dan Perikanan Provinsi Kepulauan Riau
+  - heading "Publikasi Statistik BPS Kepri" [level=3]
+  - paragraph: Data dan publikasi resmi dari BPS Provinsi Kepulauan Riau.
+  - link "Lihat Semua":
+    - /url: https://www.bps.go.id/id/publication
+  - link "Statistik Ekspor Provinsi Kepulauan Riau 2025 31 Jul 2026 • BPS Provinsi Kepulauan Riau":
+    - /url: https://webapi.bps.go.id/download.php?f=/ww/5GV8RnEHfc5qrUi7qHQzOHhWdncrQVhyRnY4TURtS0cxTmtBUHQ2cENxaEpsSm1GTEFJS0VibmhhRWdERjVPWi9lZ1FCZE9SbXVtUjZFazRFQkgvVGNKM2NPMWF4VFJDeUUyR3VsbTVzbG5aWDRxTkhxR3QyMHZ3NE9OS1ZIT3pIOEZYN1JseEtQRTAvRkRkck5VQVN5VmliZDROejhYNTdYQmVZazZ6bWFYQ1VMK3g3dzUvNGswWXUya1dSY1d6cFhtZWIwalVOdVJ1eGVKc0UwbG1jcnJTYUdYWG9XdjR2ZnVLZ2NVclllNGNEVlpwNzdPdGFXZTFlcnpNYUxESHpZNkUzeW1KdThiTFZXMHgrUUhDWWc3Q1h2REF0RU1zU2JRPT0=
+    - img
+    - heading "Statistik Ekspor Provinsi Kepulauan Riau 2025" [level=4]
+    - text: 31 Jul 2026 • BPS Provinsi Kepulauan Riau
+  - link "Pola Konsumsi Penduduk Provinsi Kepulauan Riau September 2025 31 Jul 2026 • BPS Provinsi Kepulauan Riau":
+    - /url: https://webapi.bps.go.id/download.php?f=4LrkGzrxXzAgZS40FJ7YgDh2RUxrUWthajZtK3dBOVVEa1VoNFpZY2RhMWJaRy9GdGNLNnZoVHpnTDF5V3o0Y2g5WDFTSW8zcU82dG1md3dPMHgvVGlMdWdDYnBPN2dLSE1mUGNZWC9HNDhGMzhJczAvWk1wRHhGUEkycmgwM1RSMDJ5QzFud0x1V3hDeVM4UUdPdlp4aUZOckU4dENWSWxXVDZzeExLNXdXNGt5MkgyUFlBK2FZZDRGUlNIZTU5Q2p1ZTlwdmxwQWhwMHd2Z3FGSnkvekdBaU5STlBVQnY0bE1YN3NBMVpMSnFvWWhoU1p3d2RGMTdPOTJQUFBIWmxwbkZON0Qwbk4rMzlNRHd4NXd3QUoyTnJvYldSUFc2L2ZiQm8yMDUwV0dLYUJDUlB4NVlMRDEvOXIwPQ==
+    - img
+    - heading "Pola Konsumsi Penduduk Provinsi Kepulauan Riau September 2025" [level=4]
+    - text: 31 Jul 2026 • BPS Provinsi Kepulauan Riau
+  - link "Statistik Impor Provinsi Kepulauan Riau 2025 31 Jul 2026 • BPS Provinsi Kepulauan Riau":
+    - /url: https://webapi.bps.go.id/download.php?f=R6l+OgQ3lVzJbyPkTApVdHdQNkZpb0RkK2ViK1RLNEUwWDlYVHQ5eXhDOEl2amt5U2tCZW5sNTFyVkprTEl3aGgrUGwrQU43WTE3dzF6YmVDb2NuUmtoejNuZ0w0MlVxUFdtL3cvVktPVlJaMGhBMU8xbmsrZjNNUXJGVjVCUUxqd0xlTGQyR2NiYVBmcG1iL3I0WnA1elZtVCtJcmt4OW1NQzdxcjRyS2l4SmN6bUJHeXcvNk1YdUI2cXZHcksxQUQ2RFJhYWZmeGNWclhycDBZWnR3dGZaK2VhemF1VEtBOVgyeDNjQTE4Z29EVk1tMmRVQjZwNVpYS3oxZUdFM0JySmU2K3hsWHFleXJPUmJvM3FrcTNScC8xZUhtNVlPTTRIamp3PT0=
+    - img
+    - heading "Statistik Impor Provinsi Kepulauan Riau 2025" [level=4]
+    - text: 31 Jul 2026 • BPS Provinsi Kepulauan Riau
+  - link "Indikator Ketenagakerjaan Provinsi Kepulauan Riau 2025 29 Mei 2026 • BPS Provinsi Kepulauan Riau":
+    - /url: https://webapi.bps.go.id/download.php?f=wcQwNtu+EfTK2TpmTHqAeFozckpYVDNQM0lnVGtYOGt5c2N5aW1nOG5iaFZFNW9oTExUNkZETExHeEc4Y3hXTEdFd3FXMmltaXRHU2tWVU9hZFV3MFVwM3NIYzRJMjYwemJ2dXlGSXJGeC9kUXpkTnF5SE1FT2dDWlMyVkl1ZTE5TjNJQXpCcy9aNnFHTFE1dDcrYjRMUFpGT2taUU45bk1aNHlLa0o4Y0dnZnN6aWp2Zi9aSWZ3TVRZOU81eStsSURCYm5TeGJxdFcyRmp4VnFmVzQ4ZWIyZS9rM1NnWkJuNXhsY0N2eHFrdUdQOG1SMDE0Z1RqaUVMQ1dzQXlzcHFtZGlWVlZmdUhDVmlOaGJDZ2xVZUp5OW1aZzVzajlxbzRVTXVnPT0=
+    - img
+    - heading "Indikator Ketenagakerjaan Provinsi Kepulauan Riau 2025" [level=4]
+    - text: 29 Mei 2026 • BPS Provinsi Kepulauan Riau
+  - link "Dasbor Keuangan":
+    - /url: "#"
+  - link "Harga Bahan Pokok":
+    - /url: https://inbok.disperindag.kepriprov.go.id/
+  - link "Fasilitas Kesehatan":
+    - /url: https://sibadang.kepriprov.go.id/#map
+  - link "Satu Data Kepri":
+    - /url: https://satudata.kepriprov.go.id/
+  - heading "Kabar Kepri" [level=2]
+  - paragraph: Berita dan informasi pemerintahan daerah terkini.
+  - link "Indeks Berita":
+    - /url: https://kepriprov.go.id/berita
+  - link "Satgas PASTI Hentikan Aktivitas PT Malahayati Nusantara Raya, Masyarakat Diimbau Waspada Jasa Penyelesaian Pinjol Berita Utama Pemprov Kepri 28 Apr 2026 Satgas PASTI Hentikan Aktivitas PT Malahayati Nusantara Raya, Masyarakat Diimbau Waspada Jasa Penyelesaian Pinjol DISKOMINFO KEPRI – Satuan Tugas Pemberantasan Aktivitas Keuangan Ilegal (Satgas PASTI) menghentikan kegiatan PT Malahayati Nusanta...":
+    - /url: https://kepriprov.go.id/berita/pemprov-kepri/satgas-pasti-hentikan-aktivitas-pt-malahayati-nusantara-raya-masyarakat-diimbau-waspada-jasa-penyelesaian-pinjol
+    - img "Satgas PASTI Hentikan Aktivitas PT Malahayati Nusantara Raya, Masyarakat Diimbau Waspada Jasa Penyelesaian Pinjol"
+    - text: Berita Utama Pemprov Kepri 28 Apr 2026
+    - heading "Satgas PASTI Hentikan Aktivitas PT Malahayati Nusantara Raya, Masyarakat Diimbau Waspada Jasa Penyelesaian Pinjol" [level=3]
+    - paragraph: DISKOMINFO KEPRI – Satuan Tugas Pemberantasan Aktivitas Keuangan Ilegal (Satgas PASTI) menghentikan kegiatan PT Malahayati Nusanta...
+  - link "Gubernur Ansar Ikuti Rakor Forkopimda Regional Sumatera 2026, Dipimpin Meko Polkam, Mendagri dan Kepala Bakom Gubernur 12 Agu 2026 Gubernur Ansar Ikuti Rakor Forkopimda Regional Sumatera 2026, Dipimpin Meko Polkam, Mendagri dan Kepala Bakom":
+    - /url: https://kepriprov.go.id/berita/gubernur/gubernur-ansar-ikuti-rakor-forkopimda-regional-sumatera-2026-dipimpin-meko-polkam-mendagri-dan-kepala-bakom
+    - img "Gubernur Ansar Ikuti Rakor Forkopimda Regional Sumatera 2026, Dipimpin Meko Polkam, Mendagri dan Kepala Bakom"
+    - text: Gubernur 12 Agu 2026
+    - heading "Gubernur Ansar Ikuti Rakor Forkopimda Regional Sumatera 2026, Dipimpin Meko Polkam, Mendagri dan Kepala Bakom" [level=3]
+  - link "Gubernur Kepri Apresiasi Sinergi Aparat Ungkap Penyelundupan 1,3 Ton Ketamine di Perairan Bintan Gubernur 12 Agu 2026 Gubernur Kepri Apresiasi Sinergi Aparat Ungkap Penyelundupan 1,3 Ton Ketamine di Perairan Bintan":
+    - /url: https://kepriprov.go.id/berita/gubernur/gubernur-kepri-apresiasi-sinergi-aparat-ungkap-penyelundupan-13-ton-ketamine-di-perairan-bintan
+    - img "Gubernur Kepri Apresiasi Sinergi Aparat Ungkap Penyelundupan 1,3 Ton Ketamine di Perairan Bintan"
+    - text: Gubernur 12 Agu 2026
+    - heading "Gubernur Kepri Apresiasi Sinergi Aparat Ungkap Penyelundupan 1,3 Ton Ketamine di Perairan Bintan" [level=3]
+  - link "Kepri Raih Predikat Kinerja Penuh, Perkuat Peran Mentor Pengadaan di Wilayah Perbatasan Wakil Gubernur 11 Agu 2026 Kepri Raih Predikat Kinerja Penuh, Perkuat Peran Mentor Pengadaan di Wilayah Perbatasan":
+    - /url: https://kepriprov.go.id/berita/wakil-gubernur/kepri-raih-predikat-kinerja-penuh-perkuat-peran-mentor-pengadaan-di-wilayah-perbatasan
+    - img "Kepri Raih Predikat Kinerja Penuh, Perkuat Peran Mentor Pengadaan di Wilayah Perbatasan"
+    - text: Wakil Gubernur 11 Agu 2026
+    - heading "Kepri Raih Predikat Kinerja Penuh, Perkuat Peran Mentor Pengadaan di Wilayah Perbatasan" [level=3]
+  - link "Wagub Nyanyang Terima Anugerah Bintang Veteran pada Peringatan Hari Veteran Nasional 2026 Wakil Gubernur 10 Agu 2026 Wagub Nyanyang Terima Anugerah Bintang Veteran pada Peringatan Hari Veteran Nasional 2026":
+    - /url: https://kepriprov.go.id/berita/wakil-gubernur/wagub-nyanyang-terima-anugerah-bintang-veteran-pada-peringatan-hari-veteran-nasional-2026
+    - img "Wagub Nyanyang Terima Anugerah Bintang Veteran pada Peringatan Hari Veteran Nasional 2026"
+    - text: Wakil Gubernur 10 Agu 2026
+    - heading "Wagub Nyanyang Terima Anugerah Bintang Veteran pada Peringatan Hari Veteran Nasional 2026" [level=3]
+  - link "Peringati Hari Veteran, Pemprov Kepri Gelar Upacara dan Ziarah Tabur Bunga di TMP Pusara Bhakti Sekretariat Daerah 10 Agu 2026 Peringati Hari Veteran, Pemprov Kepri Gelar Upacara dan Ziarah Tabur Bunga di TMP Pusara Bhakti":
+    - /url: https://kepriprov.go.id/berita/sekretariat-daerah/peringati-hari-veteran-pemprov-kepri-gelar-upacara-dan-ziarah-tabur-bunga-di-tmp-pusara-bhakti
+    - img "Peringati Hari Veteran, Pemprov Kepri Gelar Upacara dan Ziarah Tabur Bunga di TMP Pusara Bhakti"
+    - text: Sekretariat Daerah 10 Agu 2026
+    - heading "Peringati Hari Veteran, Pemprov Kepri Gelar Upacara dan Ziarah Tabur Bunga di TMP Pusara Bhakti" [level=3]
+  - heading "Agenda Pemda" [level=3]
+  - paragraph: Jadwal Kegiatan Terkini
+  - link "APR 27 Pengambilan Sumpah dan Pelantikan Sekretaris Daerah Provinsi Kepulauan Riau Tahun 2026":
+    - /url: https://kepriprov.go.id/agenda/pengambilan-sumpah-dan-pelantikan-sekretaris-daerah-provinsi-kepulauan-riau-tahun-2026
+    - text: APR 27
+    - heading "Pengambilan Sumpah dan Pelantikan Sekretaris Daerah Provinsi Kepulauan Riau Tahun 2026" [level=4]
+  - link "APR 19 Halal Bihalal Keluarga Besar Kepulauan Riau di Jabodetabek Tahun 2026":
+    - /url: https://kepriprov.go.id/agenda/halal-bihalal-keluarga-besar-kepulauan-riau-di-jabodetabek-tahun-2026
+    - text: APR 19
+    - heading "Halal Bihalal Keluarga Besar Kepulauan Riau di Jabodetabek Tahun 2026" [level=4]
+  - link "Seluruh Agenda":
+    - /url: https://kepriprov.go.id/agenda
+  - heading "Cek Fakta Hoaks" [level=3]
+  - paragraph: Klarifikasi informasi menyesatkan
+  - link "Waspadai Penipuan Lelang Tertutup Pengadaan Material Mengatasnamakan Dinas Perkim Kepri Waspadai Penipuan Lelang Tertutup Pengadaan Material Mengatasnamakan Dinas Perkim Kepri 10 Apr 2026":
+    - /url: https://kepriprov.go.id/berita/hoaks-disinformasi/waspadai-penipuan-lelang-tertutup-pengadaan-material-mengatasnamakan-dinas-perkim-kepri
+    - img "Waspadai Penipuan Lelang Tertutup Pengadaan Material Mengatasnamakan Dinas Perkim Kepri"
+    - heading "Waspadai Penipuan Lelang Tertutup Pengadaan Material Mengatasnamakan Dinas Perkim Kepri" [level=4]
+    - paragraph: 10 Apr 2026
+  - link "Satgas PASTI Kepri Imbau Masyarakat Waspadai Penipuan Berkedok Investasi Kripto Satgas PASTI Kepri Imbau Masyarakat Waspadai Penipuan Berkedok Investasi Kripto 30 Jul 2025":
+    - /url: https://kepriprov.go.id/berita/hoaks-disinformasi/satgas-pasti-kepri-imbau-masyarakat-waspadai-penipuan-berkedok-investasi-kripto
+    - img "Satgas PASTI Kepri Imbau Masyarakat Waspadai Penipuan Berkedok Investasi Kripto"
+    - heading "Satgas PASTI Kepri Imbau Masyarakat Waspadai Penipuan Berkedok Investasi Kripto" [level=4]
+    - paragraph: 30 Jul 2025
+  - link "Modus Penipuan Dengan Mencatut Nama Sekdaprov Kepri Adi Prihantara Beredar, Masyarakat Diminta Waspada Modus Penipuan Dengan Mencatut Nama Sekdaprov Kepri Adi Prihantara Beredar, Masyarakat Diminta Waspada 09 Okt 2024":
+    - /url: https://kepriprov.go.id/berita/hoaks-disinformasi/modus-penipuan-dengan-mencatut-nama-sekdaprov-kepri-adi-prihantara-beredar-masyarakat-diminta-waspada
+    - img "Modus Penipuan Dengan Mencatut Nama Sekdaprov Kepri Adi Prihantara Beredar, Masyarakat Diminta Waspada"
+    - heading "Modus Penipuan Dengan Mencatut Nama Sekdaprov Kepri Adi Prihantara Beredar, Masyarakat Diminta Waspada" [level=4]
+    - paragraph: 09 Okt 2024
+  - link "Awas! Waspada Penipuan Melalui WA, Oknum Mengaku Sebagai Gubernur Ansar Ahmad Awas! Waspada Penipuan Melalui WA, Oknum Mengaku Sebagai Gubernur Ansar Ahmad 30 Des 2022":
+    - /url: https://kepriprov.go.id/berita/hoaks-disinformasi/awas-waspada-penipuan-melalui-wa-oknum-mengaku-sebagai-gubernur-ansar-ahmad
+    - img "Awas! Waspada Penipuan Melalui WA, Oknum Mengaku Sebagai Gubernur Ansar Ahmad"
+    - heading "Awas! Waspada Penipuan Melalui WA, Oknum Mengaku Sebagai Gubernur Ansar Ahmad" [level=4]
+    - paragraph: 30 Des 2022
+  - link "Lihat Semua Hoaks":
+    - /url: https://kepriprov.go.id/berita/hoaks-disinformasi
+  - heading "Pengumuman" [level=2]
+  - link "13 Jul Imbauan Partisipasi Sosialisasi dan Implementasi Penggunaan Logo Resmi Peringatan HUT Ke-81 Kemerdekaan RI Tahun 2026 di Lingkungan Pemerintah Daerah Kabupaten/Kota se-Provinsi Kepulauan Riau":
+    - /url: https://kepriprov.go.id/pengumuman/imbauan-partisipasi-sosialisasi-dan-implementasi-penggunaan-logo-resmi-peringatan-hut-ke-81-kemerdekaan-ri-tahun-2026-di-lingkungan-pemerintah-daerah-kabupaten-kota-se-provinsi-kepulauan-riau
+    - text: 13 Jul
+    - heading "Imbauan Partisipasi Sosialisasi dan Implementasi Penggunaan Logo Resmi Peringatan HUT Ke-81 Kemerdekaan RI Tahun 2026 di Lingkungan Pemerintah Daerah Kabupaten/Kota se-Provinsi Kepulauan Riau" [level=4]
+  - link "18 Mei Pengumuman Hasil Seleksi Tahap II Seleksi Psikotes dan Seleksi Wawancara Calon Penerima Beasiswa Pendidikan Kedokteran Provinsi Kepulauan Riau Tahun 2026":
+    - /url: https://kepriprov.go.id/pengumuman/pengumuman-hasil-seleksi-tahap-ii-seleksi-psikotes-dan-seleksi-wawancara-calon-penerima-beasiswa-pendidikan-kedokteran-provinsi-kepulauan-riau-tahun-2026
+    - text: 18 Mei
+    - heading "Pengumuman Hasil Seleksi Tahap II Seleksi Psikotes dan Seleksi Wawancara Calon Penerima Beasiswa Pendidikan Kedokteran Provinsi Kepulauan Riau Tahun 2026" [level=4]
+  - link "07 Mei Hasil Seleksi Tahap II Seleksi Administrasi Calon Penerima Beasiswa Pendidikan Kedokteran Provinsi Kepulauan Riau Tahun 2026":
+    - /url: https://kepriprov.go.id/pengumuman/hasil-seleksi-tahap-ii-seleksi-administrasi-calon-penerima-beasiswa-pendidikan-kedokteran-provinsi-kepulauan-riau-tahun-2026
+    - text: 07 Mei
+    - heading "Hasil Seleksi Tahap II Seleksi Administrasi Calon Penerima Beasiswa Pendidikan Kedokteran Provinsi Kepulauan Riau Tahun 2026" [level=4]
+  - link "27 Apr Seleksi Tahap II Calon Penerima Beasiswa Pendidikan Kedokteran Provinsi Kepulauan Riau Tahun 2026":
+    - /url: https://kepriprov.go.id/pengumuman/seleksi-tahap-ii-calon-penerima-beasiswa-pendidikan-kedokteran-provinsi-kepulauan-riau-tahun-2026
+    - text: 27 Apr
+    - heading "Seleksi Tahap II Calon Penerima Beasiswa Pendidikan Kedokteran Provinsi Kepulauan Riau Tahun 2026" [level=4]
+  - link "27 Apr PROFIL SEKRETARIS DAERAH PROVINSI KEPULAUAN RIAU":
+    - /url: https://kepriprov.go.id/pengumuman/profil-sekretaris-daerah-provinsi-kepulauan-riau
+    - text: 27 Apr
+    - heading "PROFIL SEKRETARIS DAERAH PROVINSI KEPULAUAN RIAU" [level=4]
+  - link "Lihat Seluruh Pengumuman":
+    - /url: https://kepriprov.go.id/pengumuman
+  - heading "Transparansi Keuangan Daerah" [level=2]
+  - paragraph: Akses terbuka dokumen perencanaan, pelaksanaan anggaran, dan capaian kinerja pemerintah provinsi Kepulauan Riau.
+  - link "Perencanaan Anggaran Daerah 36 dokumen":
+    - /url: https://kepriprov.go.id/dokumen?categories=15a9e606-9b95-456a-aaf9-cd8500245cd8
+  - link "Laporan Keuangan Daerah 25 dokumen":
+    - /url: https://kepriprov.go.id/dokumen?categories=c56d18bf-bac1-4871-be7a-3822c9a90a62
+  - link "Peraturan Daerah Tentang APBD 20 dokumen":
+    - /url: https://kepriprov.go.id/dokumen?categories=b81642d5-7670-4b4d-a354-c1ba7af7d83e
+  - link "Pertanggungjawaban Keuangan 11 dokumen":
+    - /url: https://kepriprov.go.id/dokumen?categories=80a77458-2151-4bb9-ab9b-715010abb30b
+  - link "Penyelenggaraan Pemda (LPPD) 7 dokumen":
+    - /url: https://kepriprov.go.id/dokumen?categories=97ed7b50-305b-4585-a5a8-b7b422dad00a
+  - link "Kinerja Instansi Pemerintah (LKIP) 7 dokumen":
+    - /url: https://kepriprov.go.id/dokumen?categories=eb59b3ab-b3c4-403b-8f5d-b5c7954cbb88
+  - link "Seluruh Daftar Dokumen":
+    - /url: https://kepriprov.go.id/dokumen
+  - heading "Jelajahi Wisata & Budaya" [level=2]
+  - paragraph: Dari situs bersejarah hingga pantai berpasir putih, Kepulauan Riau menawarkan keajaiban alam dan kearifan lokal.
+  - button "Konten sebelumnya"
+  - button "Konten berikutnya"
+  - link "Jembatan Barelang Jembatan Barelang Kota Batam":
+    - /url: https://kepriprov.go.id/pariwisata/jembatan-barelang
+    - img "Jembatan Barelang"
+    - heading "Jembatan Barelang" [level=3]
+    - paragraph: Kota Batam
+  - link "500 Lohan Temple 500 Lohan Temple Kota Tanjung Pinang":
+    - /url: https://kepriprov.go.id/pariwisata/500-lohan-temple
+    - img "500 Lohan Temple"
+    - heading "500 Lohan Temple" [level=3]
+    - paragraph: Kota Tanjung Pinang
+  - link "Gurun Pasir & Telaga Biru Gurun Pasir & Telaga Biru Kabupaten Bintan":
+    - /url: https://kepriprov.go.id/pariwisata/gurun-pasir-telaga-biru
+    - img "Gurun Pasir & Telaga Biru"
+    - heading "Gurun Pasir & Telaga Biru" [level=3]
+    - paragraph: Kabupaten Bintan
+  - link "Telunas Beach Resort Telunas Beach Resort Kabupaten Karimun":
+    - /url: https://kepriprov.go.id/pariwisata/telunas-beach-resort
+    - img "Telunas Beach Resort"
+    - heading "Telunas Beach Resort" [level=3]
+    - paragraph: Kabupaten Karimun
+  - link "Air Terjun Resun Air Terjun Resun Kabupaten Lingga":
+    - /url: https://kepriprov.go.id/pariwisata/air-terjun-resun-2
+    - img "Air Terjun Resun"
+    - heading "Air Terjun Resun" [level=3]
+    - paragraph: Kabupaten Lingga
+  - link "Alif Stone Park Alif Stone Park Kabupaten Natuna":
+    - /url: https://kepriprov.go.id/pariwisata/alif-stone-park
+    - img "Alif Stone Park"
+    - heading "Alif Stone Park" [level=3]
+    - paragraph: Kabupaten Natuna
+  - link "Lihat Direktori Pariwisata":
+    - /url: https://kepriprov.go.id/pariwisata
+  - img
+  - img
+  - heading "Aspirasi & Informasi" [level=2]
+  - paragraph: Gunakan kanal resmi untuk memohon informasi publik atau menyampaikan aspirasi dan pengaduan layanan pemerintahan.
+  - heading "Keterbukaan Informasi (PPID)" [level=3]
+  - paragraph: Ajukan permohonan informasi publik secara transparan, mudah, dan terintegrasi sesuai amanat Undang-Undang KIP.
+  - link "Buat Permohonan":
+    - /url: https://ppid.kepriprov.go.id/
+  - heading "Sampaikan Aspirasi (Lapor SPAN)" [level=3]
+  - paragraph: Kanal resmi pengaduan pelayanan publik nasional (SP4N). Kami siap menindaklanjuti keluhan dan saran Anda.
+  - link "Lapor Sekarang":
+    - /url: https://kepri.lapor.go.id/
+  - heading "Kabupaten & Kota" [level=3]
+  - paragraph: Jelajahi portal resmi pemerintah kabupaten dan kota se-Provinsi Kepri
+  - link "Tanjungpinang Tanjungpinang":
+    - /url: https://www.tanjungpinangkota.go.id
+    - img "Tanjungpinang"
+    - text: Tanjungpinang
+  - link "Batam Batam":
+    - /url: https://batam.go.id
+    - img "Batam"
+    - text: Batam
+  - link "Bintan Bintan":
+    - /url: https://bintankab.go.id
+    - img "Bintan"
+    - text: Bintan
+  - link "Karimun Karimun":
+    - /url: https://karimunkab.go.id
+    - img "Karimun"
+    - text: Karimun
+  - link "Lingga Lingga":
+    - /url: https://linggakab.go.id
+    - img "Lingga"
+    - text: Lingga
+  - link "Natuna Natuna":
+    - /url: https://natunakab.go.id
+    - img "Natuna"
+    - text: Natuna
+  - link "Kep. Anambas Kep. Anambas":
+    - /url: https://anambaskab.go.id
+    - img "Kep. Anambas"
+    - text: Kep. Anambas
+- contentinfo:
+  - img "Logo Portal Pemerintah Provinsi Kepulauan Riau"
+  - paragraph: Portal Pemerintah Provinsi Kepulauan Riau
+  - paragraph: Pusat Pemerintahan Provinsi Kepulauan Riau Istana Kota Piring Gedung Sultan Mahmud Riayat Syah, Pulau Dompak, Kec. Bukit Bestari, Kota Tanjungpinang.
+  - paragraph: Portal ini dikembangkan dan dikelola oleh Dinas Komunikasi dan Informatika Provinsi Kepulauan Riau.
+  - heading "Navigasi Utama" [level=3]
+  - list:
+    - listitem:
+      - link "Profil Pimpinan":
+        - /url: https://kepriprov.go.id/profil
+    - listitem:
+      - link "Visi & Misi Daerah":
+        - /url: https://kepriprov.go.id/laman/visi-misi
+    - listitem:
+      - link "Berita & Siaran Pers":
+        - /url: https://kepriprov.go.id/berita
+    - listitem:
+      - link "Agenda Kegiatan":
+        - /url: https://kepriprov.go.id/agenda
+    - listitem:
+      - link "Program Unggulan":
+        - /url: https://kepriprov.go.id/program
+    - listitem:
+      - link "Proyek Strategis":
+        - /url: https://kepriprov.go.id/proyek
+    - listitem:
+      - link "Dokumen & Laporan":
+        - /url: https://kepriprov.go.id/dokumen
+    - listitem:
+      - link "Kontak & Bantuan":
+        - /url: https://kepriprov.go.id/#kontak
+  - heading "Tautan Terintegrasi" [level=3]
+  - list:
+    - listitem:
+      - link "Portal PPID Kepri":
+        - /url: https://ppid.kepriprov.go.id/
+    - listitem:
+      - link "JDIH Produk Hukum":
+        - /url: https://jdih.kepriprov.go.id/
+    - listitem:
+      - link "Satu Data Kepri":
+        - /url: https://kepri.lapor.go.id/instansi/pemerintah-provinsi-kepulauan-riau
+    - listitem:
+      - link "Portal SP4N LAPOR!":
+        - /url: https://www.lapor.go.id/
+    - listitem:
+      - link "LPSE Pengadaan":
+        - /url: https://spse.inaproc.id/kepriprov
+    - listitem:
+      - link "Beasiswa Kepri":
+        - /url: https://beasiswa.kepriprov.go.id/
+    - listitem:
+      - link "Simpadu Perizinan":
+        - /url: https://dpmptsp.kepriprov.go.id/
+    - listitem:
+      - link "Info Pajak Kendaraan":
+        - /url: https://bapenda.kepriprov.go.id/
+  - heading "Visitor" [level=3]
+  - paragraph: Online
+  - paragraph: "41"
+  - paragraph: Hari Ini
+  - paragraph: 28,259
+  - paragraph: Kemarin
+  - paragraph: 27,844
+  - paragraph: © 2026 Dinas Komunikasi & Informatika Provinsi Kepulauan Riau. Hak Cipta Dilindungi.
+  - link "Kebijakan Privasi":
+    - /url: https://kepriprov.go.id/laman/kebijakan-privasi
+  - link "Ketentuan Penggunaan":
+    - /url: https://kepriprov.go.id/laman/ketentuan-penggunaan
+- button "Survei Kepuasan Masyarakat"
+- heading "Pratinjau Gambar" [level=3]
+- paragraph
+- link "Download Gambar":
+  - /url: "#"
+- button "Tutup"
+- img "Pratinjau Gambar"
+- heading "Layanan" [level=2]
+- paragraph
+- button "Tutup"
+- link "Lihat Semua Layanan":
+  - /url: https://kepriprov.go.id/layanan
+- button "Kembali ke Atas"

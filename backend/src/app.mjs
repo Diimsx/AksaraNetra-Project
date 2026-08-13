@@ -86,8 +86,9 @@ function setCors(request, response, config) {
   if (origin && config.frontendOrigins.includes(origin)) {
     response.setHeader("access-control-allow-origin", origin);
     response.setHeader("vary", "Origin");
-    response.setHeader("access-control-allow-methods", "GET, POST, DELETE, OPTIONS");
+    response.setHeader("access-control-allow-methods", "GET, POST, PUT, DELETE, OPTIONS");
     response.setHeader("access-control-allow-headers", "Authorization, Content-Type");
+    response.setHeader("access-control-allow-credentials", "true");
     response.setHeader("access-control-max-age", "600");
     return true;
   }

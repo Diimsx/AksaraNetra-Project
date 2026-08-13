@@ -1,0 +1,342 @@
+{
+  "formatVersion": 1,
+  "id": "aud_am3l5d1xsh694OQXzBef86qQ",
+  "origin": "manual",
+  "engineVersion": "0.3.0",
+  "capturedAt": "2026-08-12T16:45:02.395Z",
+  "disclaimer": "Ini adalah tampilan aksesibilitas tidak resmi yang dihasilkan Aksara Netra. Konten berasal dari situs terkait. Aksara Netra tidak mengubah situs asli.",
+  "source": {
+    "requestedUrl": "https://kepriprov.go.id/",
+    "finalUrl": "https://kepriprov.go.id/",
+    "title": "Beranda - Portal Pemerintah Provinsi Kepulauan Riau",
+    "status": 200,
+    "siteLabel": "Kepriprov"
+  },
+  "summary": {
+    "beforeTotal": 8,
+    "afterTotal": 0,
+    "reduction": 8,
+    "reductionPercent": 100,
+    "strictImprovement": true,
+    "noRegression": true
+  },
+  "rules": {
+    "link-name": {
+      "before": 0,
+      "after": 0,
+      "reduction": 0,
+      "reductionPercent": 0
+    },
+    "button-name": {
+      "before": 7,
+      "after": 0,
+      "reduction": 7,
+      "reductionPercent": 100
+    },
+    "scrollable-region-focusable": {
+      "before": 1,
+      "after": 0,
+      "reduction": 1,
+      "reductionPercent": 100
+    }
+  },
+  "counts": {
+    "fixed": 8,
+    "review": 0,
+    "skipped": 0,
+    "verifiedOverrides": 0
+  },
+  "views": {
+    "patchedPage": "patched.html",
+    "readerView": "reader.html"
+  },
+  "warnings": {
+    "rolledBack": false,
+    "wcagRegressionClean": true,
+    "worsenedRules": [],
+    "duplicateLabels": [
+      {
+        "label": "Konten berikutnya",
+        "count": 2,
+        "selectors": [
+          "button[data-macro-next=\"\"]",
+          "button[data-pariwisata-next=\"\"]"
+        ]
+      },
+      {
+        "label": "Konten sebelumnya",
+        "count": 2,
+        "selectors": [
+          "button[data-macro-prev=\"\"]",
+          "button[data-pariwisata-prev=\"\"]"
+        ]
+      }
+    ],
+    "staleOverrides": []
+  },
+  "files": {
+    "report": "engine-result.json",
+    "patchedPage": "patched.html",
+    "readerView": "reader.html",
+    "axeBefore": "axe-before.json",
+    "axeAfter": "axe-after.json",
+    "wcagBefore": "axe-wcag-scan.json",
+    "wcagAfter": "axe-wcag-scan-after.json",
+    "ariaSnapshot": "aria-after.yml",
+    "screenshot": "after.png"
+  },
+  "guard": {
+    "allowed": 60,
+    "blocked": 9,
+    "byType": {
+      "document": {
+        "allowed": 1,
+        "blocked": 0
+      },
+      "stylesheet": {
+        "allowed": 2,
+        "blocked": 0
+      },
+      "image": {
+        "allowed": 51,
+        "blocked": 0
+      },
+      "script": {
+        "allowed": 0,
+        "blocked": 6
+      },
+      "font": {
+        "allowed": 6,
+        "blocked": 0
+      },
+      "fetch": {
+        "allowed": 0,
+        "blocked": 1
+      },
+      "media": {
+        "allowed": 0,
+        "blocked": 1
+      },
+      "xhr": {
+        "allowed": 0,
+        "blocked": 1
+      }
+    },
+    "blockedHosts": [
+      "cms.kepriprov.go.id",
+      "fonts.googleapis.com",
+      "kepriprov.go.id",
+      "static.cloudflareinsights.com",
+      "unpkg.com",
+      "www.googletagmanager.com"
+    ]
+  },
+  "readerGuarantees": {
+    "scope": "reader-view",
+    "note": "Seluruh jaminan berikut hanya berlaku untuk tampilan mudah dibaca yang kami hasilkan sendiri. Jaminan ini tidak berlaku untuk situs aslinya, dan tidak berarti situs aslinya sudah memenuhi WCAG.",
+    "measured": false,
+    "items": [
+      {
+        "id": "kontras-teks",
+        "claim": "Semua teks bisa dibaca dengan kontras tinggi.",
+        "basis": "Warna tidak diambil dari situs aslinya. Teks #1a1a1a di atas latar #ffffff berada di kisaran 17:1, jauh di atas ambang 7:1.",
+        "wcag": "1.4.6 Kontras (Lebih Tinggi), tingkat AAA",
+        "checkedBy": "npm run test:reader, aturan color-contrast dan color-contrast-enhanced"
+      },
+      {
+        "id": "urutan-heading",
+        "claim": "Tingkat judul tidak pernah melompat.",
+        "basis": "normalizeOutline menurunkan setiap judul maksimal satu tingkat dari judul sebelumnya. Halaman yang loncat dari h2 ke h5 membuat pengguna NVDA yang menekan H mengira ada bagian yang terlewat.",
+        "wcag": "1.3.1 Informasi dan Relasi",
+        "checkedBy": "npm run test:reader, aturan heading-order"
+      },
+      {
+        "id": "satu-judul-utama",
+        "claim": "Ada tepat satu judul utama, dan tidak ada judul kembar.",
+        "basis": "h1 hanya dipakai judul halaman. dedupeHeadings membuang judul yang muncul dua kali dan mempertahankan kemunculan yang punya tautan.",
+        "wcag": "2.4.6 Judul dan Label",
+        "checkedBy": "npm run test:reader, hitungan h1 dan pemeriksaan judul kembar"
+      },
+      {
+        "id": "tanpa-script",
+        "claim": "Tidak ada satu pun script dari situs aslinya yang ikut berjalan.",
+        "basis": "Serializer membuang tag script dan atribut penangan kejadian, dan pencegat di src/guard menolak jenis permintaan script sejak awal.",
+        "wcag": "",
+        "checkedBy": "npm run test:reader, pencarian tag script, atribut on, dan skema javascript:"
+      },
+      {
+        "id": "gambar-tanpa-karangan",
+        "claim": "Gambar tanpa keterangan disembunyikan dari pembaca layar, bukan dikarang.",
+        "basis": "Gambar tanpa alt diberi alt kosong dan role presentation. Nama berkas yang dibacakan huruf per huruf lebih buruk daripada diam. Kami tidak pernah menebak isi gambar.",
+        "wcag": "1.1.1 Konten Non-teks",
+        "checkedBy": "npm run test:reader, aturan image-alt"
+      },
+      {
+        "id": "bahasa-halaman",
+        "claim": "Bahasa halaman dinyatakan, sehingga pembaca layar memakai lafal yang benar.",
+        "basis": "Atribut lang selalu ditulis di tag html. Tanpa itu, NVDA berbahasa Inggris akan melafalkan teks Indonesia dengan aksen yang sulit dipahami.",
+        "wcag": "3.1.1 Bahasa Halaman",
+        "checkedBy": "npm run test:reader, aturan html-has-lang dan html-lang-valid"
+      },
+      {
+        "id": "judul-dokumen",
+        "claim": "Halaman punya judul dokumen yang berarti.",
+        "basis": "Judul diambil dari judul halaman aslinya, dan jatuh ke nama situs kalau judulnya kosong. Judul dokumen adalah hal pertama yang diucapkan pembaca layar saat halaman terbuka.",
+        "wcag": "2.4.2 Halaman Berjudul",
+        "checkedBy": "npm run test:reader, aturan document-title"
+      },
+      {
+        "id": "lewati-ke-isi",
+        "claim": "Ada tautan untuk langsung melompat ke isi utama.",
+        "basis": "Tautan lewati adalah elemen pertama yang bisa difokus, dan menunjuk ke landmark main. Tanpa itu, pengguna keyboard harus melewati seluruh bagian atas halaman setiap kali berpindah halaman.",
+        "wcag": "2.4.1 Melewati Blok",
+        "checkedBy": "npm run test:reader, aturan bypass"
+      },
+      {
+        "id": "penanda-wilayah",
+        "claim": "Halaman punya penanda wilayah, sehingga bisa dijelajahi per bagian.",
+        "basis": "header, main, dan footer selalu ada. Pengguna NVDA menekan D untuk berpindah antar wilayah, dan halaman tanpa penanda membuat tombol itu tidak berguna.",
+        "wcag": "1.3.1 Informasi dan Relasi",
+        "checkedBy": "npm run test:reader, aturan landmark-one-main dan region"
+      },
+      {
+        "id": "jarak-teks",
+        "claim": "Jarak antar baris dan antar paragraf cukup lega, dan tetap lega saat diubah.",
+        "basis": "line-height 1.7 dan jarak paragraf di atas 2em ditulis dengan satuan relatif, tanpa tinggi tetap dalam piksel. Teks tidak akan terpotong kalau pembaca memaksa jarak yang lebih besar lewat pengaturannya sendiri.",
+        "wcag": "1.4.12 Jarak Teks",
+        "checkedBy": "tests/serializer.test.mjs, pemeriksaan aturan CSS yang wajib ada"
+      },
+      {
+        "id": "satu-kolom",
+        "claim": "Isi tetap terbaca di layar sempit dan pada perbesaran 200 persen.",
+        "basis": "Tata letaknya satu kolom dengan lebar maksimum dalam satuan rem, tanpa lebar tetap dalam piksel, sehingga tidak pernah muncul gulir mendatar.",
+        "wcag": "1.4.10 Penataan Ulang",
+        "checkedBy": "npm run test:reader, pemindaian pada lebar 320 piksel"
+      },
+      {
+        "id": "tautan-sumber",
+        "claim": "Tautan ke halaman aslinya selalu ada, di awal dan di akhir.",
+        "basis": "Tampilan ini tidak resmi dan bisa saja tertinggal dari situs aslinya. Pembaca harus selalu punya jalan untuk memeriksa sendiri ke sumbernya.",
+        "wcag": "",
+        "checkedBy": "tests/serializer.test.mjs, pemeriksaan tautan sumber"
+      }
+    ]
+  },
+  "decisions": {
+    "maxPerGroup": 25,
+    "applied": {
+      "total": 8,
+      "truncated": false,
+      "items": [
+        {
+          "rule": "button-name",
+          "selector": ".left-2",
+          "confidence": 0.95,
+          "source": "agreeing-signals",
+          "reason": "Independent signals agree on \"previous\": carousel-position, data-attribute-name, recognized-icon",
+          "label": "Media sebelumnya",
+          "attributes": [
+            "aria-label"
+          ],
+          "status": "applied"
+        },
+        {
+          "rule": "button-name",
+          "selector": "button[data-quick-next=\"\"]",
+          "confidence": 0.95,
+          "source": "agreeing-signals",
+          "reason": "Independent signals agree on \"next\": carousel-position, data-attribute-name, recognized-icon",
+          "label": "Media berikutnya",
+          "attributes": [
+            "aria-label"
+          ],
+          "status": "applied"
+        },
+        {
+          "rule": "button-name",
+          "selector": "button[data-macro-prev=\"\"]",
+          "confidence": 0.95,
+          "source": "agreeing-signals",
+          "reason": "Independent signals agree on \"previous\": data-attribute-name, recognized-icon",
+          "label": "Konten sebelumnya",
+          "attributes": [
+            "aria-label"
+          ],
+          "status": "applied"
+        },
+        {
+          "rule": "button-name",
+          "selector": "button[data-macro-next=\"\"]",
+          "confidence": 0.95,
+          "source": "agreeing-signals",
+          "reason": "Independent signals agree on \"next\": data-attribute-name, recognized-icon",
+          "label": "Konten berikutnya",
+          "attributes": [
+            "aria-label"
+          ],
+          "status": "applied"
+        },
+        {
+          "rule": "button-name",
+          "selector": "button[data-pariwisata-prev=\"\"]",
+          "confidence": 0.95,
+          "source": "agreeing-signals",
+          "reason": "Independent signals agree on \"previous\": data-attribute-name, recognized-icon",
+          "label": "Konten sebelumnya",
+          "attributes": [
+            "aria-label"
+          ],
+          "status": "applied"
+        },
+        {
+          "rule": "button-name",
+          "selector": "button[data-pariwisata-next=\"\"]",
+          "confidence": 0.95,
+          "source": "agreeing-signals",
+          "reason": "Independent signals agree on \"next\": data-attribute-name, recognized-icon",
+          "label": "Konten berikutnya",
+          "attributes": [
+            "aria-label"
+          ],
+          "status": "applied"
+        },
+        {
+          "rule": "button-name",
+          "selector": "#closeServiceModal",
+          "confidence": 0.95,
+          "source": "agreeing-signals",
+          "reason": "Independent signals agree on \"close\": element-identifier, recognized-icon",
+          "label": "Tutup",
+          "attributes": [
+            "aria-label"
+          ],
+          "status": "applied"
+        },
+        {
+          "rule": "scrollable-region-focusable",
+          "selector": ".grid-rows-2",
+          "confidence": 0.9,
+          "source": "preceding-heading",
+          "reason": "A heading before the region describes its content",
+          "label": "Area gulir Indikator Makro Daerah",
+          "attributes": [
+            "tabindex",
+            "role",
+            "aria-label"
+          ],
+          "status": "applied"
+        }
+      ]
+    },
+    "review": {
+      "total": 0,
+      "truncated": false,
+      "items": []
+    },
+    "skipped": {
+      "total": 0,
+      "truncated": false,
+      "items": []
+    }
+  }
+}

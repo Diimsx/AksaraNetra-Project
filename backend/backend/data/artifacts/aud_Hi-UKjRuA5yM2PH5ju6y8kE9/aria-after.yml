@@ -1,0 +1,135 @@
+- banner:
+  - link "Logo Pemprov Sulsel":
+    - /url: /
+    - img "Logo Pemprov Sulsel"
+  - navigation "main":
+    - list:
+      - listitem:
+        - link "Beranda":
+          - /url: /
+      - listitem:
+        - button "Profil"
+      - listitem:
+        - button "Ragam Informasi"
+      - listitem:
+        - link "Produk Hukum":
+          - /url: https://jdih.sulselprov.go.id
+      - listitem:
+        - button "Potensi Daerah"
+      - listitem:
+        - link "Kabupaten/Kota":
+          - /url: /kabupaten-kota
+      - listitem:
+        - link "PPID":
+          - /url: https://ppid.sulselprov.go.id/
+      - listitem:
+        - link "Aksi PPK":
+          - /url: "#"
+      - listitem:
+        - link "IPKD":
+          - /url: /ipkd
+  - button "Buka pencarian":
+    - img
+  - button "Buka menu":
+    - img
+- main:
+  - button "Berita"
+  - link "Lihat Semua":
+    - /url: /berita
+  - heading "Pencarian" [level=3]:
+    - img
+    - text: Pencarian
+  - textbox "Cari informasi..."
+  - button "Cari":
+    - img
+  - heading "Peraturan" [level=3]
+  - link "JDIH Prov. Sulsel 8 Jan 2026":
+    - /url: https://jdih.sulselprov.go.id
+    - heading "JDIH Prov. Sulsel" [level=4]
+    - img
+    - text: 8 Jan 2026
+  - heading "Opini" [level=3]
+  - region "Area gulir daftar Peraturan Gubernur":
+    - paragraph: "Pergub - Nomor: 50 | Tahun: 2023"
+    - heading "Pengembangan Budi Daya Tanaman Pisang" [level=4]
+    - paragraph: "Pergub - Nomor: 48 | Tahun: 2023"
+    - heading "Pengelolaan Cadangan Pangan" [level=4]
+    - paragraph: "Pergub - Nomor: 47 | Tahun: 2023"
+    - heading "Tata Cara Pengajuan Permohonan, Penilaian, dan Pelaksanaan Pemberian Insentif dan/atau Pemberian Kemudahan Investasi" [level=4]
+    - paragraph: "Pergub - Nomor: 45 | Tahun: 2023"
+    - heading "Peraturan Atas Peraturan Gubernur Sulawesi Selatan Nomor 40 Tahun 2022 tentang Manajemen Karier Pegawai Negeri Sipil" [level=4]
+    - paragraph: "Pergub - Nomor: 39 | Tahun: 2023"
+    - heading "Pengendalian Pemanfaatan Ruang Pada Kawasan Danau Tempe dan Sekitarnya" [level=4]
+  - heading "Berita terakhir" [level=3]
+  - heading "Berita Terpopuler" [level=3]
+  - heading "Ikuti Kami" [level=3]
+  - link "Buka Instagram Sulselprov":
+    - /url: https://www.instagram.com/sulselprov?igsh=MTlmdzFwbmpqaGJjcg==
+    - img
+  - link "Buka Facebook Sulselprov":
+    - /url: https://www.facebook.com/share/1BwoEWAUEZ/
+    - img
+  - link "Buka YouTube Sulselprov":
+    - /url: https://youtube.com/@sulselprov_?si=ixsWI-DBL512RX3k
+    - img
+  - link:
+    - /url: "#"
+    - img
+  - link "TikTok":
+    - /url: https://www.tiktok.com/@sulselprov?_r=1&_t=ZS-93TFAURtmXU
+    - img "TikTok"
+  - heading "Ragam Berita" [level=3]
+  - paragraph: Memuat berita...
+  - heading "Berita OPD" [level=3]
+  - paragraph: Memuat foto...
+  - heading "Info Grafis" [level=3]
+  - paragraph: Memuat infografis...
+  - heading "Kegiatan" [level=3]
+  - paragraph: Memuat kegiatan...
+- contentinfo:
+  - text: + +
+  - heading "Statistik Pengunjung Website" [level=2]
+  - paragraph: Data akses website resmi Pemprov Sulsel
+  - img
+  - paragraph: "0"
+  - paragraph: Total Kunjungan
+  - img
+  - paragraph: "0"
+  - paragraph: Kunjungan Bulan Ini
+  - img
+  - img
+  - paragraph: "0"
+  - paragraph: Kunjungan Hari Ini
+  - img "Logo Sulsel"
+  - heading "Pemerintah Provinsi Sulawesi Selatan" [level=3]
+  - paragraph: Melayani dengan Integritas, Membangun dengan Inovasi untuk Sulawesi Selatan yang Maju dan Sejahtera.
+  - heading "Kontak Kami" [level=3]
+  - img
+  - paragraph: Jl. Urip Sumoharjo No 269, Makassar, Sulawesi Selatan 90234
+  - img
+  - paragraph: (0411) 453192
+  - img
+  - paragraph:
+    - link "[email protected]":
+      - /url: /cdn-cgi/l/email-protection
+  - heading "Pimpinan Daerah" [level=3]
+  - img "Gubernur"
+  - img "Wakil Gubernur"
+  - link "Buka Facebook Sulselprov":
+    - /url: https://www.facebook.com/share/1BwoEWAUEZ/
+    - img
+  - link:
+    - /url: "#"
+    - img
+  - link "Buka Instagram Sulselprov":
+    - /url: https://www.instagram.com/sulselprov?igsh=MTlmdzFwbmpqaGJjcg==
+    - img
+  - link "Buka YouTube Sulselprov":
+    - /url: https://youtube.com/@sulselprov_?si=ixsWI-DBL512RX3k
+    - img
+  - link "Buka TikTok Sulselprov":
+    - /url: https://www.tiktok.com/@sulselprov?_r=1&_t=ZS-93TFAURtmXU
+    - img
+  - paragraph: Copyright © Dikelola oleh Dinas Komunikasi Informatika, Statistik dan Persandian Provinsi Sulawesi Selatan
+- button "Buka menu aksesibilitas":
+  - img
