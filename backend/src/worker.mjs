@@ -41,7 +41,7 @@ export class AuditWorker {
 
   async drain() {
     while (!this.stopped && this.active.size < this.concurrency) {
-      const job = this.store.claimNext();
+      const job = await this.store.claimNext();
       if (!job) return;
       const run = this.run(job);
       this.runs.add(run);
@@ -61,33 +61,33 @@ export class AuditWorker {
         signal: controller.signal,
         onProgress: (update) => this.store.updateProgress(job.id, update),
       });
-      if (controller.signal.aborted || this.store.getJob(job.id)?.cancelRequested) {
-        this.store.cancelRunning(job.id);
+      if (controller.signal.aborted || (await this.store.getJob(job.id))?.cancelRequested) {
+        await this.store.cancelRunning(job.id);
         fs.rmSync(job.artifactDir, { recursive: true, force: true });
       } else {
-        this.store.complete(job.id, result);
+        await this.store.complete(job.id, result);
       }
     } catch (error) {
-      const current = this.store.getJob(job.id);
+      const current = await this.store.getJob(job.id);
       if (controller.signal.reason === "server-stopping") return;
       if (controller.signal.aborted || current?.cancelRequested) {
         const timedOut = controller.signal.reason === "timeout";
         if (timedOut) {
-          this.store.fail(job.id, {
+          await this.store.fail(job.id, {
             code: "audit-timeout",
             message: `Audit melewati batas ${Math.round(this.timeoutMs / 1000)} detik.`,
           });
         } else {
-          this.store.cancelRunning(job.id);
+          await this.store.cancelRunning(job.id);
         }
         fs.rmSync(job.artifactDir, { recursive: true, force: true });
       } else {
         const code = error.code || "audit-failed";
         const message = error.message || "Audit gagal.";
         if (TRANSIENT_CODES.has(code) && current?.attempts < 2) {
-          this.store.retry(job.id, { code, message });
+          await this.store.retry(job.id, { code, message });
         } else {
-          this.store.fail(job.id, { code, message });
+          await this.store.fail(job.id, { code, message });
           fs.rmSync(job.artifactDir, { recursive: true, force: true });
         }
       }
@@ -98,8 +98,8 @@ export class AuditWorker {
     }
   }
 
-  cancel(id) {
-    const job = this.store.requestCancel(id);
+  async cancel(id) {
+    const job = await this.store.requestCancel(id);
     this.active.get(id)?.abort("cancelled-by-user");
     return job;
   }

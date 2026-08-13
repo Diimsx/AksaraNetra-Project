@@ -8,11 +8,12 @@ import { loadConfig } from "./config.mjs";
 import { JobStore } from "./store.mjs";
 import { AuditWorker } from "./worker.mjs";
 
-export function createService(overrides = {}) {
+export async function createService(overrides = {}) {
   const config = loadConfig(overrides.config);
   fs.mkdirSync(config.artifactsDir, { recursive: true });
   const store =
-    overrides.store || new JobStore({ databasePath: config.databasePath });
+    overrides.store || new JobStore({ databaseUrl: config.databaseUrl });
+  await store.init();
   const worker =
     overrides.worker ||
     new AuditWorker({
@@ -23,12 +24,12 @@ export function createService(overrides = {}) {
     });
   const server = http.createServer(createApp({ config, store, worker }));
 
-  const cleanup = () => {
-    for (const job of store.deleteExpired()) {
+  const cleanup = async () => {
+    for (const job of await store.deleteExpired()) {
       fs.rmSync(job.artifact_dir, { recursive: true, force: true });
     }
   };
-  cleanup();
+  await cleanup();
   const cleanupTimer = setInterval(cleanup, config.cleanupIntervalMs);
   cleanupTimer.unref?.();
 
@@ -39,21 +40,22 @@ export function createService(overrides = {}) {
         resolve(server.address());
       });
     });
-  const stop = () =>
-    new Promise((resolve) => {
-      clearInterval(cleanupTimer);
+  const stop = async () => {
+    clearInterval(cleanupTimer);
+    await new Promise((resolve) => {
       server.close(async () => {
         await worker.stop();
-        store.close?.();
+        await store.close();
         resolve();
       });
     });
+  };
 
   return { config, store, worker, server, start, stop, cleanup };
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const service = createService();
+  const service = await createService();
   const address = await service.start();
   console.log(
     "AksaraNetra backend listening",
