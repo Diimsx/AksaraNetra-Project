@@ -1,0 +1,16 @@
+services:
+  backend:
+    build:
+      context: .                    # wajib root repo, bukan ./backend
+      dockerfile: backend/Dockerfile
+    container_name: aksaranetra-backend
+    ports:
+      - "8787:8787"
+    env_file:
+      - ./backend/.env               # dibuat manual, lihat backend/.env.example
+    volumes:
+      - backend_data:/data           # supaya data SQLite tidak hilang tiap restart container
+    restart: unless-stopped
+
+volumes:
+  backend_data:

@@ -27,6 +27,11 @@ WORKDIR /app
 COPY engine/package.json engine/package-lock.json ./engine/
 RUN cd engine && npm ci --omit=dev
 
+# Playwright menyimpan browser di path berdasarkan user. Build berjalan
+# sebagai root, tapi runtime sebagai user node. Supaya browser yang
+# terinstall saat build bisa ditemukan saat runtime, pakai path bersama.
+ENV PLAYWRIGHT_BROWSERS_PATH=/app/.playwright
+
 # Install Chromium + dependency sistemnya (versi mengikuti yang terkunci
 # di engine/package-lock.json, yaitu playwright 1.62.1)
 RUN cd engine && npx playwright install --with-deps chromium
