@@ -1,29 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import pg from "pg";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 
 import { JobStore } from "../src/store.mjs";
 
-const DATABASE_URL = process.env.DATABASE_URL;
-if (!DATABASE_URL) {
-  console.error("Skipping store tests: DATABASE_URL not set");
-  process.exit(0);
-}
-
-async function createStore(now = () => Date.now()) {
-  const pool = new pg.Pool({
-    connectionString: DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
-    max: 2,
-  });
-  const store = new JobStore({ pool, now });
-  await store.init();
-  // Clean up any leftover test data
-  await pool.query("DELETE FROM jobs WHERE id LIKE 'test-%'");
-  return { store, pool };
-}
-
-async function createTestJob(store, root, id, now, expiresAt = now + 10_000) {
+function create(store, root, id, now, expiresAt = now + 10_000) {
   return store.createJob({
     id,
     tokenHash: "a".repeat(64),
@@ -32,46 +15,41 @@ async function createTestJob(store, root, id, now, expiresAt = now + 10_000) {
     targetUrl: "https://example.com/",
     createdAt: now,
     expiresAt,
-    artifactDir: root + "/" + id,
+    artifactDir: path.join(root, id),
   });
 }
 
-test("persists queue state and recovers interrupted jobs once", async () => {
+test("persists queue state and recovers interrupted jobs once", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "aksara-store-"));
+  const db = path.join(root, "jobs.sqlite");
   let now = 1_000;
-  const { store, pool } = await createStore(() => now);
-  const id = "test-recover-" + Date.now();
-  await createTestJob(store, "/tmp", id, now);
-  const claimed = await store.claimNext();
-  assert.equal(claimed.attempts, 1);
+  let store = new JobStore({ databasePath: db, now: () => now });
+  create(store, root, "job-1", now);
+  assert.equal(store.claimNext().attempts, 1);
+  store.close();
 
-  // Simulate restart: recover interrupted
   now += 100;
-  await store.recoverInterrupted();
-  const recovered = await store.getJob(id);
-  assert.equal(recovered.status, "queued");
+  store = new JobStore({ databasePath: db, now: () => now });
+  assert.equal(store.getJob("job-1").status, "queued");
+  assert.equal(store.claimNext().attempts, 2);
+  store.close();
 
-  const claimed2 = await store.claimNext();
-  assert.equal(claimed2.attempts, 2);
-
-  // Second restart: should fail since attempts >= 2
   now += 100;
-  await store.recoverInterrupted();
-  const failed = await store.getJob(id);
-  assert.equal(failed.status, "failed");
-  assert.equal(failed.errorCode, "server-restarted");
-
-  // Cleanup
-  await pool.query("DELETE FROM jobs WHERE id = $1", [id]);
-  await pool.end();
+  store = new JobStore({ databasePath: db, now: () => now });
+  assert.equal(store.getJob("job-1").status, "failed");
+  assert.equal(store.getJob("job-1").errorCode, "server-restarted");
+  store.close();
+  fs.rmSync(root, { recursive: true, force: true });
 });
 
-test("returns expired artifact folders before deleting rows", async () => {
-  const { store, pool } = await createStore(() => 5_000);
-  const id = "test-expiry-" + Date.now();
-  await createTestJob(store, "/tmp", id, 1_000, 2_000);
-  const rows = await store.deleteExpired(5_000);
-  assert.equal(rows.length >= 1, true);
-  assert.ok(rows.some(r => r.id === id));
-  assert.equal(await store.getJob(id), null);
-  await pool.end();
+test("returns expired artifact folders before deleting rows", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "aksara-expiry-"));
+  const store = new JobStore({ databasePath: path.join(root, "jobs.sqlite"), now: () => 5_000 });
+  create(store, root, "expired", 1_000, 2_000);
+  const rows = store.deleteExpired(5_000);
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].id, "expired");
+  assert.equal(store.getJob("expired"), null);
+  store.close();
+  fs.rmSync(root, { recursive: true, force: true });
 });

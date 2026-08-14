@@ -32,7 +32,7 @@ export function loadConfig(overrides = {}) {
     host: process.env.HOST || "127.0.0.1",
     port: integer("PORT", 8787, { max: 65535 }),
     dataDir,
-    databaseUrl: process.env.DATABASE_URL || "",
+    databasePath: path.join(dataDir, "jobs.sqlite"),
     artifactsDir: path.join(dataDir, "artifacts"),
     frontendOrigins: origins,
     trustProxy: process.env.TRUST_PROXY === "1",

@@ -57,14 +57,14 @@ async function readJson(request, limit) {
   }
 }
 
-async function publicJob(job, store) {
+function publicJob(job, store) {
   return {
     jobId: job.id,
     url: job.targetUrl,
     status: job.status,
     stage: job.stage,
     progress: job.progress,
-    queuePosition: await store.queuePosition(job.id),
+    queuePosition: store.queuePosition(job.id),
     attempts: job.attempts,
     canCancel: job.status === "queued" || job.status === "running",
     createdAt: new Date(job.createdAt).toISOString(),
@@ -75,8 +75,8 @@ async function publicJob(job, store) {
   };
 }
 
-async function authorizedJob({ store, config, id, token }) {
-  const job = await store.getJob(id);
+function authorizedJob({ store, config, id, token }) {
+  const job = store.getJob(id);
   if (!job || !token) return null;
   return safeEqualHex(job.tokenHash, digest(token, config.secret)) ? job : null;
 }
@@ -142,7 +142,7 @@ export function createApp({ config, store, worker }) {
           send(response, 400, { error: verdict.code, message: verdict.message });
           return;
         }
-        const cached = await store.findReusable(verdict.url, Date.now());
+        const cached = store.findReusable(verdict.url, Date.now());
         send(response, 200, {
           available: Boolean(cached),
           capturedAt: cached?.finishedAt ? new Date(cached.finishedAt).toISOString() : null,
@@ -160,7 +160,7 @@ export function createApp({ config, store, worker }) {
         }
         const ipHash = digest(clientIp(request, config), config.secret);
         const since = Date.now() - config.rateWindowMs;
-        const used = await store.countRecentByIp(ipHash, since);
+        const used = store.countRecentByIp(ipHash, since);
         if (used >= config.rateLimit) {
           send(response, 429, {
             error: "rate-limit",
@@ -173,7 +173,7 @@ export function createApp({ config, store, worker }) {
         const accessToken = randomToken();
         const shareToken = deriveShareToken({ jobId: id, accessToken, secret: config.secret });
         const now = Date.now();
-        const job = await store.createJob({
+        const job = store.createJob({
           id,
           tokenHash: digest(accessToken, config.secret),
           shareTokenHash: digest(shareToken, config.secret),
@@ -184,15 +184,15 @@ export function createApp({ config, store, worker }) {
           artifactDir: path.join(config.artifactsDir, id),
         });
         const cached = body.reuseExisting === true
-          ? await store.findReusable(verdict.url, now)
+          ? store.findReusable(verdict.url, now)
           : null;
         if (cached && cached.id !== job.id && fs.existsSync(cached.artifactDir)) {
           fs.cpSync(cached.artifactDir, job.artifactDir, { recursive: true });
-          await store.completeQueued(job.id, cached.result);
+          store.completeQueued(job.id, cached.result);
         } else {
           worker.kick();
         }
-        const current = await store.getJob(job.id);
+        const current = store.getJob(job.id);
         send(response, current.status === "completed" ? 200 : 202, {
           jobId: id,
           accessToken,
@@ -205,7 +205,7 @@ export function createApp({ config, store, worker }) {
 
       const artifactMatch = url.pathname.match(/^\/audits\/([^/]+)\/artifacts\/([^/]+)$/);
       if (request.method === "GET" && artifactMatch) {
-        const job = await store.getJob(artifactMatch[1]);
+        const job = store.getJob(artifactMatch[1]);
         if (!job) { send(response, 404, { error: "not-found", message: "Audit tidak ditemukan." }); return; }
         serveArtifact(response, job, artifactMatch[2], config, url.searchParams.get("token") || "");
         return;
@@ -214,16 +214,16 @@ export function createApp({ config, store, worker }) {
       const resultMatch = url.pathname.match(/^\/audits\/([^/]+)\/result$/);
       if (request.method === "GET" && resultMatch) {
         const accessToken = bearerToken(request, url);
-        const job = await authorizedJob({ store, config, id: resultMatch[1], token: accessToken });
+        const job = authorizedJob({ store, config, id: resultMatch[1], token: accessToken });
         if (!job) { send(response, 404, { error: "not-found", message: "Audit tidak ditemukan." }); return; }
         if (job.status !== "completed") {
-          send(response, 409, { error: "not-ready", job: await publicJob(job, store) });
+          send(response, 409, { error: "not-ready", job: publicJob(job, store) });
           return;
         }
         const shareToken = deriveShareToken({ jobId: job.id, accessToken, secret: config.secret });
         const base = `/audits/${job.id}/artifacts`;
         send(response, 200, {
-          job: await publicJob(job, store),
+          job: publicJob(job, store),
           result: job.result,
           links: {
             reader: `${base}/reader?token=${encodeURIComponent(shareToken)}`,
@@ -238,13 +238,13 @@ export function createApp({ config, store, worker }) {
       const jobMatch = url.pathname.match(/^\/audits\/([^/]+)$/);
       if (jobMatch && (request.method === "GET" || request.method === "DELETE")) {
         const token = bearerToken(request, url);
-        const job = await authorizedJob({ store, config, id: jobMatch[1], token });
+        const job = authorizedJob({ store, config, id: jobMatch[1], token });
         if (!job) { send(response, 404, { error: "not-found", message: "Audit tidak ditemukan." }); return; }
         if (request.method === "DELETE") {
-          const updated = await worker.cancel(job.id);
-          send(response, 202, { job: await publicJob(updated, store) });
+          const updated = worker.cancel(job.id);
+          send(response, 202, { job: publicJob(updated, store) });
         } else {
-          send(response, 200, { job: await publicJob(job, store) });
+          send(response, 200, { job: publicJob(job, store) });
         }
         return;
       }
