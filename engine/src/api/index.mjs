@@ -217,9 +217,8 @@ async function fetchRobots({ origin, signal = null }) {
     if (!address.ok) {
       throw new Error(`Redirect robots.txt ditolak: ${address.code}`);
     }
-    if (address.hostname !== initial.hostname.toLowerCase()) {
-      throw new Error("Redirect robots.txt berpindah ke host lain");
-    }
+    // Redirect ke host lain diizinkan (misal www.example.com → example.com),
+    // selama host tujuan tetap lolos validasi checkResolvedAddresses di bawah.
 
     const addresses = await resolveHost(address.hostname);
     const resolved = checkResolvedAddresses(addresses);
