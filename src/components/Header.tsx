@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import styles from "./Header.module.css";
 
@@ -22,9 +23,14 @@ export default function Header() {
           className={styles.brand}
           aria-label="AksaraNetra, kembali ke beranda"
         >
-          <span className={styles.brandTanda} aria-hidden="true">
-            AN
-          </span>
+          <Image 
+            src="/AN - Nav Icon.png" 
+            alt="AksaraNetra Logo" 
+            width={60} 
+            height={40} 
+            className={styles.brandTanda} 
+            aria-hidden="true" 
+          />
           <span className={styles.brandNama}>AksaraNetra</span>
         </Link>
 
