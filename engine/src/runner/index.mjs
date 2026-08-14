@@ -50,10 +50,42 @@ export const CONTEXT_OPTIONS = Object.freeze({
 //   sembarang website), tapi mengurangi jumlah proses anak yang di-spawn
 //   Chromium -- CPU sangat terbatas seperti 0.1 vCPU lebih diuntungkan oleh
 //   pengurangan proses ini.
+//
+// Flag tambahan di bawah ini semuanya mematikan subsistem Chromium yang
+// sama sekali tidak dipakai audit ini (extension, sync, crash reporter,
+// auto-update, dsb) tapi tetap dialokasikan RAM-nya kalau tidak dimatikan
+// eksplisit. Satu per satu kecil, tapi di container 512MB gabungannya cukup
+// terasa -- ini bukan optimasi kode lagi, ini cuma menyuruh Chromium tidak
+// menyalakan hal yang memang tidak kita perlukan.
+//
+// --renderer-process-limit=1 : batasi jumlah proses renderer jadi satu.
+//   Chromium biasanya memberi tiap tab proses renderer sendiri; kita cuma
+//   pernah punya satu page per browser (lihat withBrowser), jadi batas ini
+//   tidak mengurangi kemampuan, cuma mencegah Chromium menyisakan alokasi
+//   untuk renderer tambahan yang tidak akan pernah dipakai.
+// --js-flags=--max-old-space-size=192 : batas heap V8 di proses renderer.
+//   Tanpa ini V8 boleh tumbuh sampai batas defaultnya sendiri (bisa lebih
+//   dari sisa RAM container), lalu container di-OOM-kill oleh kernel tanpa
+//   sempat GC. Dengan batas eksplisit, V8 akan GC lebih agresif duluan.
 const CONTAINER_LAUNCH_ARGS = [
   "--disable-dev-shm-usage",
   "--disable-gpu",
   "--no-sandbox",
+  "--disable-extensions",
+  "--disable-background-networking",
+  "--disable-background-timer-throttling",
+  "--disable-backgrounding-occluded-windows",
+  "--disable-breakpad",
+  "--disable-component-update",
+  "--disable-default-apps",
+  "--disable-domain-reliability",
+  "--disable-sync",
+  "--disable-translate",
+  "--metrics-recording-only",
+  "--mute-audio",
+  "--no-first-run",
+  "--renderer-process-limit=1",
+  "--js-flags=--max-old-space-size=192",
 ];
 
 function resolveLaunchArgs() {
@@ -215,10 +247,49 @@ export async function auditPage({
       wcagAfter,
       ariaSnapshot: await page.locator("body").ariaSnapshot(),
       screenshot: captureScreenshot
-        ? await page.screenshot({ fullPage: true })
+        ? await captureBoundedScreenshot(page)
         : null,
     },
   };
+}
+
+// Batas tinggi tangkapan layar saat CHROMIUM_LOW_RESOURCE_MODE aktif.
+//
+// fullPage:true tanpa batas berarti Chromium harus merender SELURUH tinggi
+// halaman jadi satu bitmap sebelum di-encode -- untuk halaman pemerintah
+// yang panjang (beberapa ribu piksel), ini sendirian bisa jadi lonjakan RAM
+// terbesar dalam satu audit, lebih besar dari axe-core atau DOM-nya sendiri.
+// Nilai ini dibiarkan longgar (halaman umum tetap tertangkap penuh) tapi
+// mencegah kasus ekstrem (halaman arsip/listing yang sangat panjang) dari
+// membuat container OOM hanya demi satu gambar pratinjau.
+const MAX_SCREENSHOT_HEIGHT_PX = 6000;
+
+async function captureBoundedScreenshot(page) {
+  if (process.env.CHROMIUM_LOW_RESOURCE_MODE !== "1") {
+    // Perilaku asli di luar container terbatas: PNG, tinggi penuh, tanpa
+    // kompromi kualitas. Tidak diubah supaya tangkapan layar lokal / CI
+    // tetap seperti sebelumnya.
+    return page.screenshot({ fullPage: true });
+  }
+
+  const pageHeight = await page.evaluate(
+    () => document.documentElement.scrollHeight,
+  );
+
+  const clip =
+    pageHeight > MAX_SCREENSHOT_HEIGHT_PX
+      ? { x: 0, y: 0, width: CONTEXT_OPTIONS.viewport.width, height: MAX_SCREENSHOT_HEIGHT_PX }
+      : undefined;
+
+  // Tetap PNG dengan sengaja. FILE_NAMES.screenshot di src/snapshot/index.mjs
+  // sudah dikunci sebagai "after.png" dan disebut eksplisit sebagai kontrak
+  // dengan frontend -- mengganti ke JPEG di sini tanpa mengubah nama berkas
+  // dan penyajian Content-Type di sisi frontend bisa menyebabkan gambar
+  // salah dikenali sebagai PNG padahal isinya JPEG. Kalau nanti mau beralih
+  // ke JPEG demi RAM lebih hemat lagi, itu perubahan kontrak dua sisi
+  // (nama berkas + siapa pun yang menyajikannya), sengaja tidak dilakukan
+  // sepihak di sini.
+  return page.screenshot({ fullPage: clip ? false : true, clip });
 }
 
 export async function renderPdf({ html, outputPath, signal = null }) {

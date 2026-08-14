@@ -53,6 +53,15 @@ ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=8787
 
+# Tanpa batas eksplisit, heap V8 milik proses Node sendiri (bukan
+# Chromium-nya) boleh tumbuh mengikuti default V8, yang di beberapa kondisi
+# bisa lebih besar dari sisa RAM yang tersedia setelah Chromium jalan --
+# di container 512MB itu berarti Node ikut menyumbang risiko OOM-kill, bukan
+# cuma Chromium. 192MB memberi Node ruang lebih dari cukup untuk orkestrasi
+# job (bukan Node yang merender halaman), dan memaksa GC lebih agresif
+# lebih dulu ketimbang menunggu kernel yang membunuh paksa.
+ENV NODE_OPTIONS=--max-old-space-size=192
+
 EXPOSE 8787
 
 USER node
