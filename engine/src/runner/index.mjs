@@ -34,9 +34,40 @@ export const CONTEXT_OPTIONS = Object.freeze({
  * AxeBuilder butuh page yang lahir dari context, bukan dari browser langsung.
  * Ini pernah jadi bug, jadi urutannya dikunci di sini.
  */
+// Flag ini dibaca dari environment supaya bisa dinyalakan hanya di container
+// dengan resource terbatas (Render Free: 0.1 CPU / 512MB), tanpa mengubah
+// perilaku default saat dijalankan lokal (docker run biasa / npm run dev).
+//
+// --disable-dev-shm-usage : Docker membatasi /dev/shm ke 64MB secara default.
+//   Chromium memakai /dev/shm untuk shared memory antar-proses render; kalau
+//   penuh, Chromium bisa crash diam-diam atau jadi sangat lambat. Flag ini
+//   memaksa Chromium pakai /tmp biasa sebagai gantinya.
+// --disable-gpu            : tidak ada GPU di container, jadi proses inisialisasi
+//   GPU compositor cuma menambah waktu startup tanpa manfaat.
+// --no-sandbox              : menonaktifkan sandbox proses Chromium. Ini
+//   trade-off keamanan (biasanya diterima karena container sendiri sudah
+//   terisolasi, dan target audit adalah domain pemerintah tepercaya, bukan
+//   sembarang website), tapi mengurangi jumlah proses anak yang di-spawn
+//   Chromium -- CPU sangat terbatas seperti 0.1 vCPU lebih diuntungkan oleh
+//   pengurangan proses ini.
+const CONTAINER_LAUNCH_ARGS = [
+  "--disable-dev-shm-usage",
+  "--disable-gpu",
+  "--no-sandbox",
+];
+
+function resolveLaunchArgs() {
+  // Default: OFF. Baru aktif kalau eksplisit di-set lewat env var, supaya
+  // tidak diam-diam mengubah perilaku Playwright di lokal atau di lingkungan
+  // yang resource-nya sudah cukup.
+  return process.env.CHROMIUM_LOW_RESOURCE_MODE === "1"
+    ? CONTAINER_LAUNCH_ARGS
+    : [];
+}
+
 export async function withBrowser(task, { headless = true, signal = null } = {}) {
   signal?.throwIfAborted();
-  const browser = await chromium.launch({ headless });
+  const browser = await chromium.launch({ headless, args: resolveLaunchArgs() });
   const context = await browser.newContext(CONTEXT_OPTIONS);
   const page = await context.newPage();
   const abort = () => context.close().catch(() => {});
