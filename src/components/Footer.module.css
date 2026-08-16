@@ -1,35 +1,189 @@
 /*
-  Footer satu baris.
+  Footer editorial biru gelap.
 
-  Sengaja dibuat setenang mungkin. Footer bukan tempat penting, dan footer yang
-  ramai menarik perhatian dari isi halaman yang sebenarnya.
+  Footer di sini bukan tempat buangan. Ia menutup halaman: satu identitas
+  singkat di kiri, navigasi cepat di kanan, lalu satu baris keterangan di
+  bawah. Warnanya gelap supaya batas akhir halaman terasa jelas tanpa perlu
+  garis tebal.
 */
 
 .footer {
-  margin-top: var(--space-xl);
-  border-top: 1px solid var(--color-border);
-  background: var(--color-surface);
+  margin-top: clamp(40px, 5vw, 56px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--color-primary);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* Sapuan tekstur di footer dibuat lebih terang karena latarnya gelap. */
+.footer::before {
+  opacity: 0.13;
+}
+
+.footer::after {
+  background-image: radial-gradient(
+    80% 120% at 8% 0%,
+    rgba(255, 255, 255, 0.09) 0%,
+    transparent 68%
+  );
 }
 
 .footerContainer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px var(--space-sm);
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 72px);
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: var(--space-md);
+  padding: clamp(40px, 6vw, 64px) var(--space-md) clamp(28px, 4vw, 40px);
+}
+
+.merek {
+  color: #ffffff;
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.ringkas {
+  max-width: 46ch;
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Aksen pendek sebagai penutup kolom, bukan garis di sisi kartu. */
+.garisAksen {
+  display: block;
+  width: 68px;
+  height: 3px;
+  margin-top: 22px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+    to right,
+    var(--color-primary-bright),
+    rgba(255, 255, 255, 0.25)
+  );
+}
+
+.navJudul {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.navDaftar {
+  display: flex;
+  flex-direction: column;
+  margin-top: 14px;
+  list-style: none;
+}
+
+.navTautan {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 10px 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    color var(--transition-cepat),
+    padding-left var(--transition-sedang),
+    border-color var(--transition-cepat);
+}
+
+.navTautan:hover {
+  padding-left: 8px;
+  border-color: rgba(255, 255, 255, 0.42);
+  color: var(--color-card-highlight);
+}
+
+.navPanah {
+  flex: none;
+  opacity: 0.5;
+  transition:
+    transform var(--transition-sedang),
+    opacity var(--transition-cepat);
+}
+
+.navTautan:hover .navPanah,
+.navTautan:focus-visible .navPanah {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.navTautan:focus-visible {
+  outline: 3px solid var(--color-card-highlight);
+  outline-offset: 3px;
+}
+
+.barisBawah {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.barisBawahIsi {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px var(--space-md);
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 20px var(--space-md);
 }
 
 .copyright {
+  color: #ffffff;
   font-size: 15px;
-  font-weight: 700;
-  color: var(--color-heading);
+  font-weight: 800;
 }
 
 .penyangkalan {
-  font-size: 15px;
-  color: var(--color-text-muted);
   max-width: var(--reading-width);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 15px;
+}
+
+@media (max-width: 860px) {
+  .footerContainer {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .navDaftar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 var(--space-md);
+  }
+}
+
+@media (max-width: 720px) {
+  .footer {
+    margin-top: var(--space-lg);
+  }
+
+  .footerContainer {
+    padding: 32px var(--space-sm) 24px;
+  }
+
+  .barisBawahIsi {
+    padding: 18px var(--space-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navTautan:hover {
+    padding-left: 0;
+  }
+
+  .navTautan:hover .navPanah,
+  .navTautan:focus-visible .navPanah {
+    transform: none;
+  }
 }

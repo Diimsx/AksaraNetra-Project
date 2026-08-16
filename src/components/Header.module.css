@@ -1,9 +1,17 @@
+/*
+  Bar atas dan navigasi bawah.
+
+  Bar atas dibuat tenang: satu garis pemisah, tanpa bayangan berat, dan
+  tautan aktif ditandai garis bawah tebal, bukan kotak besar.
+*/
+
 .header {
   position: sticky;
   z-index: 100;
   top: 0;
   border-bottom: 1px solid var(--color-border);
-  background: var(--color-surface);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
 }
 
 .headerContainer {
@@ -22,26 +30,21 @@
   display: inline-flex;
   min-height: 44px;
   align-items: center;
-  gap: 0;
-  color: var(--color-primary);
-  font-size: 20px;
+  gap: 6px;
+  color: var(--color-heading);
+  font-size: 19px;
   font-weight: 800;
   letter-spacing: -0.02em;
   white-space: nowrap;
 }
 
-.brand:hover {
-  opacity: 1;
-}
-
 .brandTanda {
   display: inline-flex;
-  width: 60px;
-  height: 40px;
+  width: 44px;
+  height: 30px;
   flex: none;
   align-items: center;
   justify-content: center;
-  border-radius: 9px;
   object-fit: contain;
 }
 
@@ -53,16 +56,16 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 4px;
+  gap: 2px;
 }
 
 .navLink {
+  position: relative;
   display: inline-flex;
   min-height: 44px;
   align-items: center;
-  padding: 8px 13px;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  border-radius: var(--radius-xs);
   color: var(--color-text);
   font-size: 15px;
   font-weight: 700;
@@ -70,57 +73,109 @@
 }
 
 .navLink:hover {
-  border-color: var(--color-border);
-  background: var(--color-primary-soft);
+  background: var(--color-card-light);
   color: var(--color-primary);
-  opacity: 1;
 }
 
 .navLinkActive {
-  border-color: var(--color-border);
-  background: var(--color-primary-soft);
   color: var(--color-primary);
 }
 
-@media (max-width: 680px) {
+/* Penanda halaman aktif: garis tebal di bawah label. */
+.navLinkActive::after {
+  position: absolute;
+  right: 14px;
+  bottom: 4px;
+  left: 14px;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-bright);
+  content: "";
+}
+
+/* --- Navigasi bawah, hanya untuk layar sempit --- */
+.bottomNav {
+  display: none;
+}
+
+.bottomList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bottomLink {
+  display: flex;
+  min-height: 60px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 4px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.bottomLink span {
+  line-height: 1.2;
+}
+
+.bottomLinkActive {
+  color: var(--color-primary);
+}
+
+/*
+  Halaman aktif ditandai dua hal sekaligus: warna dan penanda bentuk di atas
+  ikon. Warna saja tidak cukup untuk sebagian pengguna.
+*/
+.bottomLinkActive::before {
+  position: absolute;
+  top: 0;
+  width: 32px;
+  height: 3px;
+  border-radius: 0 0 var(--radius-pill) var(--radius-pill);
+  background: var(--color-primary-bright);
+  content: "";
+}
+
+@media (max-width: 720px) {
   .headerContainer {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 2px;
+    min-height: var(--header-height-compact);
     padding: 8px var(--space-sm);
   }
 
-  .brand {
-    min-height: 38px;
-  }
-
-  .brandTanda {
-    width: 45px;
-    height: 30px;
-  }
-
   .nav {
-    width: 100%;
-    justify-content: flex-start;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scrollbar-width: thin;
+    display: none;
   }
 
-  .navLink {
-    min-height: 42px;
-    padding-inline: 7px;
-    font-size: 13px;
+  .bottomNav {
+    position: fixed;
+    z-index: 200;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    border-top: 1px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .bottomLink {
+    position: relative;
   }
 }
 
-@media (max-height: 520px) and (max-width: 680px) {
-  .headerContainer {
+/* Layar pendek dan lebar, misalnya ponsel dimiringkan. */
+@media (max-height: 460px) and (max-width: 720px) {
+  .bottomLink {
+    min-height: 48px;
     flex-direction: row;
-    align-items: center;
-  }
-
-  .brandNama {
-    display: none;
+    gap: 8px;
+    font-size: 13px;
   }
 }

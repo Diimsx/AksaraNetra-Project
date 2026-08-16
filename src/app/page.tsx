@@ -10,6 +10,21 @@ const EXAMPLE_SITES = [
   { url: "https://kepriprov.go.id", label: "kepriprov.go.id" },
 ];
 
+const LANGKAH_SINGKAT = [
+  {
+    judul: "Halaman diperiksa",
+    isi: "Alamat yang dimasukkan dibuka, lalu dicari bagian yang menyulitkan pembaca.",
+  },
+  {
+    judul: "Perbaikan diuji",
+    isi: "Hanya perbaikan yang benar benar membantu yang dipertahankan.",
+  },
+  {
+    judul: "Tampilan baru disiapkan",
+    isi: "Isi halaman ditata ulang agar lebih mudah dibaca dan dijelajahi.",
+  },
+];
+
 export default function Home() {
   const [url, setUrl] = useState("");
   const router = useRouter();
@@ -26,96 +41,151 @@ export default function Home() {
   };
 
   return (
-    <main className={`container ${styles.main}`}>
-      <div className={styles.heroGrid}>
-        <section className={styles.heroSection}>
-          <h1 className={styles.h1}>
-            Temukan hambatan aksesibilitas di halaman web
-          </h1>
-          <p className={styles.description}>
-            AksaraNetra memeriksa halaman publik, menguji perbaikan yang aman,
-            lalu menyiapkan tampilan reader tanpa mengubah situs aslinya
-          </p>
-          <ul className={styles.assurances}>
-            <li>Tanpa login</li>
-            <li>Progress berdasarkan pemeriksaan nyata</li>
-            <li>Hasil disimpan tujuh hari</li>
-          </ul>
-        </section>
-
-        <section className={styles.inputSection} aria-labelledby="audit-title">
-          <div className={styles.formIntro}>
-            <h2 id="audit-title">Periksa halaman publik</h2>
-            <p>Masukkan satu alamat untuk memulai pemeriksaan.</p>
-          </div>
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.inputGroup}>
-              <label htmlFor="url-input" className="label">
-                Alamat halaman
-              </label>
-              <input
-                id="url-input"
-                type="url"
-                className={`input ${styles.urlInput}`}
-                placeholder="https://contoh.go.id/layanan"
-                value={url}
-                onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                  setUrl(event.target.value)
-                }
-                required
-                autoComplete="url"
-              />
-              <p className="hint">
-                Gunakan halaman publik dengan alamat HTTP atau HTTPS
-              </p>
+    <main className={styles.main}>
+      <div className={`${styles.heroWrap} texture-grid`}>
+        <div className={`container ${styles.heroInner}`}>
+          {/*
+            Di layar sempit, formulir berada paling atas lewat urutan CSS,
+            sedangkan urutan bacanya tetap wajar untuk pembaca layar.
+          */}
+          <section className={styles.formPanel} aria-labelledby="audit-title">
+            <div className={styles.formIntro}>
+              <h2 id="audit-title">Periksa satu halaman</h2>
+              <p>Tempel alamat halaman yang ingin diperiksa.</p>
             </div>
-            <button
-              type="submit"
-              className={`btn btn-primary ${styles.submitBtn}`}
-            >
-              Mulai pemeriksaan
-            </button>
-          </form>
-          <div className={styles.examples} aria-label="Contoh alamat">
-            <span>Contoh</span>
-            {EXAMPLE_SITES.map((site) => (
+
+            <form className={styles.form} onSubmit={handleSubmit}>
+              <div className={styles.inputGroup}>
+                <label htmlFor="url-input" className="label">
+                  Alamat halaman
+                </label>
+                <input
+                  id="url-input"
+                  type="url"
+                  className={`input ${styles.urlInput}`}
+                  placeholder="https://contoh.go.id/layanan"
+                  value={url}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    setUrl(event.target.value)
+                  }
+                  required
+                  autoComplete="url"
+                />
+                <p className="hint">
+                  Gunakan halaman yang bisa dibuka siapa saja, tanpa perlu masuk
+                  akun.
+                </p>
+              </div>
               <button
-                key={site.url}
-                type="button"
-                onClick={() => {
-                  setUrl(site.url);
-                  document.getElementById("url-input")?.focus();
-                }}
+                type="submit"
+                className={`btn btn-primary ${styles.submitBtn}`}
               >
-                {site.label}
+                Mulai pemeriksaan
               </button>
-            ))}
-          </div>
-        </section>
+            </form>
+
+            <div className={styles.examples}>
+              <span className={styles.examplesLabel}>Coba contoh</span>
+              <div className={styles.exampleButtons}>
+                {EXAMPLE_SITES.map((site) => (
+                  <button
+                    key={site.url}
+                    type="button"
+                    className={styles.exampleButton}
+                    onClick={() => {
+                      setUrl(site.url);
+                      document.getElementById("url-input")?.focus();
+                    }}
+                  >
+                    {site.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className={styles.heroCopy}>
+            <p className="eyebrow">Alat bantu baca halaman publik</p>
+            <h1 className={styles.h1}>
+              Periksa hambatannya, lalu baca versi yang lebih mudah
+            </h1>
+            <p className={styles.description}>
+              Banyak halaman penting sulit digunakan oleh pembaca dengan
+              hambatan penglihatan. AksaraNetra memeriksa halaman itu,
+              memperbaiki bagian yang bisa diperbaiki, lalu menyajikan isinya
+              dalam tampilan yang lebih tenang dan mudah dijelajahi.
+            </p>
+            <ul className={styles.assurances}>
+              <li>Tidak perlu membuat akun</li>
+              <li>Situs aslinya tidak diubah</li>
+              <li>Hasil tersimpan tujuh hari</li>
+            </ul>
+          </section>
+        </div>
       </div>
 
-      <section
-        className={styles.proofSection}
-        aria-label="Cara hasil disiapkan"
-      >
-        <article>
-          <h2>Diukur dua kali</h2>
-          <p>Rule yang sama dijalankan sebelum dan sesudah perbaikan.</p>
-        </article>
-        <article>
-          <h2>Perubahan dapat dibatalkan</h2>
-          <p>Perbaikan yang tidak lolos pemeriksaan tidak dipertahankan.</p>
-        </article>
-        <article>
-          <h2>Bukti tetap tersedia</h2>
-          <p>Reader, screenshot, halaman hasil, dan PDF disimpan tujuh hari.</p>
-        </article>
-      </section>
+      <div className={`container ${styles.body}`}>
+        <section className={styles.stepsSection} aria-labelledby="steps-title">
+          <div className={styles.sectionIntro}>
+            <h2 id="steps-title">Tiga tahap yang dilalui</h2>
+            <p>
+              Setiap tahap bisa dilihat hasilnya, tidak ada yang disembunyikan.
+            </p>
+          </div>
+          <ol className={styles.steps}>
+            {LANGKAH_SINGKAT.map((item, index) => (
+              <li key={item.judul} className={styles.step}>
+                <span className={styles.stepNumber} aria-hidden="true">
+                  {index + 1}
+                </span>
+                <div>
+                  <h3>{item.judul}</h3>
+                  <p>{item.isi}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
 
-      <p className={styles.historyLink}>
-        Pernah menjalankan pemeriksaan?{" "}
-        <Link href="/katalog">Buka riwayat</Link>
-      </p>
+        <section className={styles.proofSection} aria-labelledby="proof-title">
+          <h2 id="proof-title" className="sr-only">
+            Yang membuat hasilnya bisa dipercaya
+          </h2>
+          <article>
+            <h3>Diperiksa dua kali</h3>
+            <p>
+              Halaman dinilai sebelum dan sesudah perbaikan, dengan cara yang
+              sama.
+            </p>
+          </article>
+          <article>
+            <h3>Perbaikan bisa dibatalkan</h3>
+            <p>
+              Perubahan yang tidak membantu tidak akan ikut dipakai pada hasil.
+            </p>
+          </article>
+          <article>
+            <h3>Hasilnya bisa dibuka ulang</h3>
+            <p>
+              Tampilan baru, ringkasan, dan laporannya tersimpan selama tujuh
+              hari.
+            </p>
+          </article>
+        </section>
+
+        <section className={`${styles.closing} texture-grid`}>
+          <div>
+            <h2>Pernah memeriksa halaman sebelumnya?</h2>
+            <p>
+              Pemeriksaan yang masih tersimpan di perangkat ini bisa dibuka
+              kembali tanpa memeriksa ulang.
+            </p>
+          </div>
+          <Link href="/katalog" className="btn btn-secondary">
+            Buka riwayat
+          </Link>
+        </section>
+      </div>
     </main>
   );
 }

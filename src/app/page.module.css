@@ -1,43 +1,65 @@
+/*
+  Beranda.
+
+  Yang paling penting di halaman ini adalah satu hal: kolom alamat.
+  Karena itu formulir dibuat sebagai objek utama, bukan kartu kecil di
+  samping judul. Di layar sempit, formulir naik ke paling atas.
+*/
+
 .main {
   display: flex;
   flex-direction: column;
-  gap: 48px;
-  padding-top: clamp(48px, 8vw, 96px);
-  padding-bottom: 80px;
 }
 
-.heroGrid {
+/* --- Hero --- */
+
+.heroWrap {
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(
+    180deg,
+    var(--color-surface) 0%,
+    var(--color-background) 100%
+  );
+}
+
+.heroInner {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
   align-items: center;
-  gap: clamp(40px, 7vw, 88px);
+  gap: clamp(32px, 5vw, 64px);
+  padding-top: clamp(40px, 6vw, 72px);
+  padding-bottom: clamp(40px, 6vw, 72px);
 }
 
-.heroSection {
+.heroCopy {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  align-items: flex-start;
+  gap: 18px;
+  order: 1;
+}
+
+.formPanel {
+  order: 2;
 }
 
 .h1 {
-  max-width: 15ch;
+  max-width: 19ch;
   margin: 0;
-  color: var(--color-primary);
-  font-size: clamp(42px, 6vw, 72px);
-  line-height: 1.02;
 }
 
 .description {
-  max-width: 60ch;
-  color: var(--color-text-muted);
-  font-size: clamp(18px, 2vw, 21px);
+  max-width: 52ch;
+  color: var(--color-text);
+  font-size: clamp(16px, 1.5vw, 18px);
 }
 
 .assurances {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 22px;
+  gap: 8px 20px;
   padding: 0;
+  margin: 2px 0 0;
   color: var(--color-primary-mid);
   font-size: 15px;
   font-weight: 700;
@@ -46,30 +68,37 @@
 
 .assurances li {
   position: relative;
-  padding-left: 18px;
+  padding-left: 22px;
 }
 
+/* Tanda centang dibuat dari bentuk, bukan huruf, agar tidak dibacakan. */
 .assurances li::before {
   position: absolute;
+  top: 8px;
   left: 0;
-  content: "✓";
-  color: var(--color-primary-bright);
+  width: 12px;
+  height: 7px;
+  border-left: 2.5px solid var(--color-success);
+  border-bottom: 2.5px solid var(--color-success);
+  transform: rotate(-45deg);
+  content: "";
 }
 
-.inputSection {
+/* --- Panel formulir --- */
+
+.formPanel {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: clamp(24px, 4vw, 36px);
-  border: 1px solid var(--color-border-strong);
+  gap: 22px;
+  padding: clamp(22px, 3vw, 32px);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
   box-shadow: var(--shadow-md);
 }
 
 .formIntro h2 {
-  margin-bottom: 6px;
-  font-size: 28px;
+  margin-bottom: 4px;
 }
 
 .formIntro p {
@@ -84,7 +113,7 @@
 }
 
 .form {
-  gap: 20px;
+  gap: 18px;
 }
 
 .urlInput {
@@ -100,34 +129,117 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  color: var(--color-text-muted);
-  font-size: 13px;
+  gap: 8px 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-border);
 }
 
-.examples > span {
+.examplesLabel {
+  color: var(--color-text-muted);
+  font-size: 14px;
   font-weight: 700;
 }
 
-.examples button {
-  min-height: 36px;
-  padding: 6px 10px;
+.exampleButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.exampleButton {
+  min-height: 40px;
+  padding: 8px 14px;
   border: 1px solid var(--color-border);
-  border-radius: 7px;
-  background: var(--color-background);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-sunken);
   color: var(--color-primary);
   font: inherit;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
+  transition:
+    border-color var(--transition-cepat),
+    background var(--transition-cepat);
 }
 
-.examples button:hover {
+.exampleButton:hover {
   border-color: var(--color-primary-bright);
+  background: var(--color-card-light);
 }
+
+/* --- Isi halaman --- */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(48px, 6vw, 72px);
+  padding-top: clamp(48px, 6vw, 72px);
+  padding-bottom: 8px;
+}
+
+.sectionIntro {
+  max-width: 60ch;
+  margin-bottom: 26px;
+}
+
+.sectionIntro h2 {
+  margin-bottom: 6px;
+}
+
+.sectionIntro p {
+  color: var(--color-text-muted);
+  font-size: 17px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.stepNumber {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  place-items: center;
+  border-radius: var(--radius-xs);
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.step h3 {
+  margin-bottom: 4px;
+  font-size: 18px;
+}
+
+.step p {
+  color: var(--color-text-muted);
+  font-size: 15px;
+}
+
+/* --- Bukti --- */
 
 .proofSection {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   border-block: 1px solid var(--color-border);
 }
 
@@ -139,47 +251,61 @@
   border-left: 1px solid var(--color-border);
 }
 
-.proofSection h2 {
+.proofSection h3 {
   margin-bottom: 6px;
-  font-size: 19px;
+  font-size: 18px;
 }
 
 .proofSection p {
+  max-width: 34ch;
   color: var(--color-text-muted);
   font-size: 15px;
 }
 
-.historyLink {
-  color: var(--color-text-muted);
+/* --- Penutup --- */
+
+.closing {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: clamp(24px, 3vw, 34px);
+  border: 1px solid var(--color-card-accent);
+  border-radius: var(--radius-lg);
+  background: var(--color-card-light);
+  overflow: clip;
+  box-shadow: var(--shadow-sm);
+}
+
+.closing h2 {
+  margin-bottom: 6px;
+  font-size: clamp(21px, 2.2vw, 26px);
+}
+
+.closing p {
+  max-width: 56ch;
+  color: var(--color-text);
   font-size: 16px;
-  text-align: center;
 }
 
-.historyLink a {
-  color: var(--color-primary-bright);
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
+/* --- Layar sedang --- */
 
-@media (max-width: 900px) {
-  .heroGrid {
+@media (max-width: 980px) {
+  .heroInner {
     grid-template-columns: 1fr;
+    gap: 32px;
   }
 
   .h1 {
-    max-width: 17ch;
-  }
-}
-
-@media (max-width: 680px) {
-  .main {
-    gap: 40px;
-    padding: 40px 16px 64px;
+    max-width: 24ch;
   }
 
-  .h1 {
-    font-size: clamp(38px, 12vw, 52px);
+  .description {
+    max-width: 62ch;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
   }
 
   .proofSection {
@@ -189,5 +315,150 @@
   .proofSection article + article {
     border-top: 1px solid var(--color-border);
     border-left: 0;
+  }
+
+  .proofSection p {
+    max-width: 60ch;
+  }
+}
+
+/*
+  Layar sempit.
+  Formulir dipindah ke paling atas supaya tidak perlu menggulir dulu.
+*/
+@media (max-width: 720px) {
+  .heroInner {
+    padding-top: 20px;
+    padding-bottom: 32px;
+    gap: 28px;
+  }
+
+  .formPanel {
+    order: 1;
+  }
+
+  .heroCopy {
+    order: 2;
+    gap: 14px;
+  }
+
+  .h1 {
+    max-width: 100%;
+    font-size: clamp(26px, 7.4vw, 34px);
+  }
+
+  .closing {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .closing .btn,
+  .closing a {
+    width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  .formPanel {
+    padding: 18px;
+  }
+
+  .exampleButton {
+    font-size: 13px;
+  }
+}
+
+/*
+  --- Gerak halaman ---
+  Hanya opacity dan transform. Keadaan akhir animasi sama dengan tampilan
+  bawaan, jadi isinya tetap utuh kalau animasi tidak berjalan.
+*/
+.heroCopy,
+.formPanel,
+.proofSection,
+.closing {
+  animation: munculNaik 480ms cubic-bezier(0.22, 0.68, 0.28, 1) both;
+}
+
+.formPanel {
+  animation-delay: 80ms;
+}
+
+.proofSection {
+  animation-delay: 140ms;
+}
+
+.closing {
+  animation-delay: 180ms;
+}
+
+.step {
+  animation: munculNaik 460ms cubic-bezier(0.22, 0.68, 0.28, 1) both;
+}
+
+.step:nth-child(2) {
+  animation-delay: 90ms;
+}
+
+.step:nth-child(3) {
+  animation-delay: 180ms;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .step {
+    transition:
+      transform var(--transition-sedang),
+      box-shadow var(--transition-sedang),
+      border-color var(--transition-cepat);
+  }
+
+  .step:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-border-strong);
+  }
+
+  .exampleButton {
+    transition:
+      transform var(--transition-cepat),
+      background var(--transition-cepat),
+      border-color var(--transition-cepat);
+  }
+
+  .exampleButton:hover {
+    transform: translateY(-1px);
+  }
+
+  .submitBtn:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.submitBtn {
+  transition:
+    transform var(--transition-cepat),
+    background var(--transition-cepat),
+    box-shadow var(--transition-cepat);
+}
+
+.submitBtn:active {
+  transform: translateY(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroCopy,
+  .formPanel,
+  .proofSection,
+  .closing,
+  .step {
+    animation: none;
+  }
+
+  .step:hover,
+  .exampleButton:hover,
+  .submitBtn:hover,
+  .submitBtn:active {
+    transform: none;
   }
 }

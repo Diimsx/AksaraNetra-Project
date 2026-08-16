@@ -11,101 +11,128 @@ export const metadata: Metadata = {
 const yangDikerjakan = [
   {
     judul: "Memberi nama pada tombol dan tautan",
-    isi: "Tombol ikon yang tidak memiliki nama dapat diberi label berdasarkan petunjuk di sekitarnya. Setiap perubahan tetap dicatat agar dapat ditinjau.",
+    isi: "Tombol yang hanya berupa gambar sering dibacakan tanpa nama, sehingga tidak jelas fungsinya. Bila petunjuknya cukup, tombol itu diberi nama yang sesuai.",
   },
   {
-    judul: "Membuka area gulir untuk keyboard",
-    isi: "Area yang dapat digulir dibuat dapat dicapai dengan keyboard dan diberi penanda yang membantu navigasi.",
+    judul: "Membuka jalan bagi pengguna papan tombol",
+    isi: "Bagian yang bisa digulir dibuat agar tetap bisa dijangkau tanpa tetikus, hanya dengan papan tombol.",
   },
   {
-    judul: "Menyiapkan tampilan reader",
-    isi: "Konten disusun dalam satu kolom dengan urutan judul yang lebih jelas, kontras tinggi, dan tautan ke halaman asli.",
+    judul: "Menyusun ulang isi halaman",
+    isi: "Isi halaman ditata menjadi satu kolom dengan urutan judul yang jelas dan warna yang lebih mudah dibedakan.",
   },
   {
-    judul: "Memeriksa hasil perbaikan",
-    isi: "Halaman diuji sebelum dan sesudah perubahan dengan aturan yang sama. Hanya perbaikan yang lolos pemeriksaan yang dipertahankan.",
+    judul: "Memastikan perbaikannya benar membantu",
+    isi: "Halaman dinilai sebelum dan sesudah perbaikan. Perubahan yang tidak membantu tidak dipakai.",
   },
 ];
 
 const batasCakupan = [
   {
-    judul: "Hanya halaman informasi publik",
-    isi: "Halaman yang memerlukan login, pembayaran, atau data pribadi tidak diperiksa.",
+    judul: "Hanya halaman yang terbuka untuk umum",
+    isi: "Halaman yang meminta akun, pembayaran, atau data pribadi tidak diperiksa.",
   },
   {
-    judul: "Deskripsi gambar tidak dibuat otomatis",
-    isi: "Gambar tanpa keterangan tidak diberi deskripsi tebakan yang berisiko menyesatkan.",
+    judul: "Isi gambar tidak dikarang",
+    isi: "Gambar tanpa keterangan tidak diberi keterangan tebakan, karena keterangan yang salah lebih menyesatkan daripada tidak ada.",
   },
   {
-    judul: "Kontras situs sumber tidak diubah",
-    isi: "Kontras tinggi diterapkan pada tampilan reader, bukan pada situs sumber.",
+    judul: "Warna situs aslinya tidak diubah",
+    isi: "Perbaikan warna dan jarak baca hanya berlaku pada tampilan yang disiapkan di sini.",
   },
   {
-    judul: "Situs asli tetap sama",
-    isi: "Perbaikan diterapkan pada salinan pemeriksaan. AksaraNetra tidak mengubah situs resmi terkait.",
+    judul: "Bukan pengganti pemeriksaan manusia",
+    isi: "Sebagian hambatan hanya bisa dinilai oleh orang. Hasil di sini membantu peninjauan, bukan menyatakan sebuah halaman sudah layak.",
   },
 ];
 
 export default function AboutPage() {
   return (
-    <main className={styles.container}>
-      <header className={styles.hero}>
-        <h1>Apa yang dilakukan AksaraNetra</h1>
-        <p>
-          AksaraNetra memeriksa hambatan aksesibilitas pada halaman publik,
-          menguji perbaikan yang aman, dan menyiapkan tampilan reader. Hasilnya
-          membantu peninjauan, bukan sertifikasi aksesibilitas.
-        </p>
-      </header>
-
-      <section className={styles.section} aria-labelledby="work-title">
-        <div className={styles.sectionIntro}>
-          <h2 id="work-title">Bagian yang diperiksa</h2>
-          <p>
-            Pemeriksaan difokuskan pada perubahan yang dapat diukur dan ditinjau
-            kembali.
+    <main className={styles.main}>
+      <div className={`${styles.heroWrap} texture-grid`}>
+        <header className={`container ${styles.hero}`}>
+          <p className="eyebrow">Tentang AksaraNetra</p>
+          <h1>
+            Isi halaman penting seharusnya bisa dibaca semua orang
+          </h1>
+          <p className={styles.heroLead}>
+            Ketika sebuah halaman dibuat tanpa memikirkan pembaca dengan hambatan
+            penglihatan, isinya bisa terasa hilang meski sebenarnya ada.
+            AksaraNetra memeriksa halaman seperti itu, memperbaiki bagian yang
+            bisa diperbaiki dengan aman, lalu menyiapkan tampilan yang lebih
+            mudah dibaca dan dijelajahi.
           </p>
-        </div>
-        <ul className={styles.cardList}>
-          {yangDikerjakan.map((item) => (
-            <li key={item.judul} className={styles.card}>
-              <h3>{item.judul}</h3>
-              <p>{item.isi}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
+        </header>
+      </div>
 
-      <section className={styles.section} aria-labelledby="limit-title">
-        <div className={styles.sectionIntro}>
-          <h2 id="limit-title">Batas pemeriksaan</h2>
-          <p>
-            Cakupan dibuat terbatas agar hasil tidak memberikan klaim yang lebih
-            luas dari pemeriksaan yang dilakukan.
-          </p>
-        </div>
-        <ul className={styles.limitList}>
-          {batasCakupan.map((item) => (
-            <li key={item.judul} className={styles.limitCard}>
-              <h3>{item.judul}</h3>
-              <p>{item.isi}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <div className={`container ${styles.content}`}>
+        <section className={styles.section} aria-labelledby="work-title">
+          <div className={styles.sectionIntro}>
+            <h2 id="work-title">Yang dikerjakan</h2>
+            <p>
+              Perbaikan dibatasi pada hal yang bisa diperiksa hasilnya, supaya
+              tidak ada perubahan yang justru menyesatkan.
+            </p>
+          </div>
+          <ul className={styles.cardList}>
+            {yangDikerjakan.map((item, index) => (
+              <li key={item.judul} className={styles.card}>
+                <span className={styles.cardIndex} aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3>{item.judul}</h3>
+                <p>{item.isi}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-      <section className={styles.cta}>
-        <div>
-          <h2>Lihat hasil pemeriksaan</h2>
+        <section className={styles.section} aria-labelledby="limit-title">
+          <div className={styles.sectionIntro}>
+            <h2 id="limit-title">Yang tidak dilakukan</h2>
+            <p>
+              Batasnya disebutkan terbuka, supaya hasil pemeriksaan tidak dibaca
+              lebih luas daripada yang sebenarnya diperiksa.
+            </p>
+          </div>
+          <ul className={styles.limitList}>
+            {batasCakupan.map((item) => (
+              <li key={item.judul} className={styles.limitCard}>
+                <h3>{item.judul}</h3>
+                <p>{item.isi}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className={styles.sourceNote} aria-labelledby="source-title">
+          <h2 id="source-title">Hubungan dengan situs aslinya</h2>
           <p>
-            Riwayat menyimpan hasil yang masih tersedia pada perangkat ini
-            selama tujuh hari.
+            Pemeriksaan dilakukan pada salinan halaman. Situs aslinya tidak
+            disentuh, tidak diubah, dan tidak diwakili oleh AksaraNetra.
+            AksaraNetra adalah alat bantu yang berdiri sendiri.
           </p>
-        </div>
-        <Link href="/katalog" className="btn btn-primary">
-          Buka riwayat
-        </Link>
-      </section>
+        </section>
+
+        <section className={`${styles.cta} texture-grid`}>
+          <div>
+            <h2>Mulai dari satu halaman</h2>
+            <p>
+              Tempel satu alamat, lalu lihat sendiri bagian mana yang menyulitkan
+              pembaca.
+            </p>
+          </div>
+          <div className={styles.ctaActions}>
+            <Link href="/" className="btn btn-primary">
+              Periksa halaman
+            </Link>
+            <Link href="/katalog" className="btn btn-secondary">
+              Buka riwayat
+            </Link>
+          </div>
+        </section>
+      </div>
     </main>
   );
 }
+

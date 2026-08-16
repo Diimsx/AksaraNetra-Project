@@ -69,17 +69,64 @@ function count(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) ? value : 0;
 }
 
+/*
+  Angka hasil berhitung naik saat pertama kali tampil. Murni hiasan:
+  angka yang berubah disembunyikan dari pembaca layar, dan angka sebenarnya
+  selalu tersedia sebagai teks yang hanya dibacakan pembaca layar. Kalau
+  animasi tidak berjalan, angka akhirnya tetap sama.
+*/
+function AngkaNaik({ value }: { value: number }) {
+  const [shown, setShown] = useState(value);
+
+  useEffect(() => {
+    const reduced =
+      typeof window !== "undefined" &&
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduced || value <= 0) {
+      setShown(value);
+      return;
+    }
+
+    let frame = 0;
+    const duration = 700;
+    const started = performance.now();
+
+    setShown(0);
+
+    const tick = (now: number) => {
+      const progress = Math.min(1, (now - started) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setShown(Math.round(value * eased));
+      if (progress < 1) {
+        frame = requestAnimationFrame(tick);
+      }
+    };
+
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [value]);
+
+  return (
+    <>
+      <span aria-hidden="true">{shown}</span>
+      <span className={styles.srOnly}>{value}</span>
+    </>
+  );
+}
+
 function friendlyStage(stage?: string, status?: AuditJob["status"]) {
   if (status === "queued") return "Menyiapkan halaman";
   const value = (stage || "").toLowerCase();
-  if (/reader/.test(value)) return "Menyiapkan tampilan reader";
+  if (/reader/.test(value)) return "Menyiapkan tampilan ramah akses";
   if (/report|pdf|artifact|summary|ringkas/.test(value))
     return "Merangkum hasil";
   if (/patch|apply|verify|verif|rollback|perbaikan/.test(value)) {
     return "Menguji perbaikan";
   }
   if (/audit|axe|scan|rule|hambatan/.test(value)) {
-    return "Memeriksa hambatan aksesibilitas";
+    return "Memeriksa hambatan pada halaman";
   }
   return "Menyiapkan halaman";
 }
@@ -96,16 +143,16 @@ function conclusion(snapshot: Snapshot) {
 
   if (before === 0 && fixed === 0 && unresolved === 0) {
     return {
-      title: "Tidak perlu perbaikan otomatis",
-      text: "Pemeriksaan ini tidak menemukan hambatan yang dapat diperbaiki otomatis. Hasil ini tidak berarti halaman sudah sepenuhnya aksesibel.",
+      title: "Tidak ada bagian yang bisa diperbaiki di sini",
+      text: "Pemeriksaan ini tidak menemukan bagian yang bisa diperbaiki sendiri oleh AksaraNetra. Ini bukan berarti halaman sudah mudah digunakan semua orang.",
       tone: "neutral",
     } as const;
   }
 
   if (unresolved > 0) {
     return {
-      title: "Masih ada hambatan yang perlu ditinjau",
-      text: "Beberapa hambatan belum aman untuk diperbaiki otomatis dan memerlukan pemeriksaan lebih lanjut. Kesimpulan ini terbatas pada pemeriksaan yang dilakukan.",
+      title: "Masih ada bagian yang perlu diperiksa orang",
+      text: "Sebagian hambatan belum aman untuk diperbaiki sendiri oleh AksaraNetra, jadi masih perlu diperiksa lebih lanjut. Kesimpulan ini hanya berlaku untuk halaman yang diperiksa.",
       tone: "attention",
     } as const;
   }
@@ -113,14 +160,14 @@ function conclusion(snapshot: Snapshot) {
   if (fixed > 0 && after < before) {
     return {
       title: "Sebagian besar hambatan berhasil diperbaiki",
-      text: `${fixed} perbaikan berhasil diverifikasi. Tidak ada masalah baru yang ditemukan setelah perbaikan pada pemeriksaan ini.`,
+      text: `${fixed} bagian sudah diperbaiki dan diperiksa ulang. Tidak ada masalah baru yang muncul setelah perbaikan.`,
       tone: "success",
     } as const;
   }
 
   return {
-    title: "Perbaikan otomatis belum dapat diterapkan",
-    text: "Hambatan ditemukan, tetapi belum ada perbaikan yang dapat diterapkan dengan aman. Kesimpulan ini terbatas pada pemeriksaan yang dilakukan.",
+    title: "Belum ada bagian yang bisa diperbaiki dengan aman",
+    text: "Hambatan ditemukan, tetapi belum ada yang bisa diperbaiki tanpa risiko mengubah arti halaman. Kesimpulan ini hanya berlaku untuk halaman yang diperiksa.",
     tone: "attention",
   } as const;
 }
@@ -142,7 +189,7 @@ function ProgressPanel({
           <p className={styles.statusLabel}>
             <span className={styles.activeDot} aria-hidden="true" />
             {job?.status === "queued"
-              ? "Dalam antrean"
+              ? "Menunggu giliran"
               : "Pemeriksaan berjalan"}
           </p>
           <div className={styles.stageArea}>
@@ -161,15 +208,15 @@ function ProgressPanel({
       <div className={styles.statusMeta}>
         <span>
           {job?.queuePosition
-            ? `Posisi antrean: ${job.queuePosition}`
-            : "Satu pemeriksaan dijalankan pada satu waktu"}
+            ? `Urutan Anda saat ini: ${job.queuePosition}`
+            : "Satu halaman diperiksa pada satu waktu"}
         </span>
         <span>Percobaan {Math.max(job?.attempts ?? 1, 1)} dari 2</span>
       </div>
 
       <p className={styles.statusNote}>
-        Halaman ini boleh ditutup. Buka URL yang sama untuk melanjutkan
-        pemantauan.
+        Halaman ini boleh ditutup. Pemeriksaan tetap berjalan, dan hasilnya bisa
+        dibuka lagi dari halaman Riwayat.
       </p>
 
       {job?.canCancel && (
@@ -190,14 +237,14 @@ function Comparison({ snapshot }: { snapshot: Snapshot }) {
   return (
     <section className={styles.section} aria-labelledby="comparison-title">
       <div className={styles.sectionHeading}>
-        <h2 id="comparison-title">Sebelum dan sesudah perbaikan</h2>
+        <h2 id="comparison-title">Sebelum dan sesudah diperbaiki</h2>
         <strong className={styles.reduction}>{reduction}% berkurang</strong>
       </div>
 
       <div
         className={styles.chart}
         role="img"
-        aria-label={`${before} temuan sebelum dan ${after} temuan setelah perbaikan`}
+        aria-label={`${before} hambatan sebelum diperbaiki dan ${after} hambatan setelah diperbaiki`}
       >
         <div className={styles.chartRow}>
           <span>Sebelum</span>
@@ -225,7 +272,10 @@ function Comparison({ snapshot }: { snapshot: Snapshot }) {
         tabIndex={0}
       >
         <table className={styles.table}>
-          <caption>Jumlah elemen bermasalah untuk setiap aturan target</caption>
+          <caption>
+            Rincian teknis: jumlah bagian bermasalah pada setiap aturan yang
+            diperiksa
+          </caption>
           <thead>
             <tr>
               <th scope="col">Aturan</th>
@@ -267,9 +317,8 @@ function ResultView({ data }: { data: AuditResult }) {
       <div className={styles.notice}>
         <span aria-hidden="true">i</span>
         <p>
-          Anda sedang melihat tampilan alternatif yang dibuat AksaraNetra.
-          Kontennya tetap berasal dari situs terkait dan situs asli tidak
-          diubah.
+          Halaman ini adalah tampilan buatan AksaraNetra. Isinya tetap berasal
+          dari situs aslinya, dan situs aslinya tidak diubah.
         </p>
       </div>
 
@@ -287,19 +336,29 @@ function ResultView({ data }: { data: AuditResult }) {
           </a>
         </p>
         <p className={styles.timestamp}>
-          Diperiksa {waktu(snapshot.capturedAt)} · Engine{" "}
+          Diperiksa {waktu(snapshot.capturedAt)} · Versi pemeriksaan{" "}
           {snapshot.engineVersion}
         </p>
       </header>
 
-      <section className={styles.primaryActions} aria-label="Buka hasil utama">
+      <section
+        className={styles.primaryActions}
+        aria-labelledby="actions-title"
+      >
+        <div className={styles.actionsIntro}>
+          <h2 id="actions-title">Baca hasilnya</h2>
+          <p>
+            Baca isi halaman dalam tampilan yang lebih sederhana dan lebih mudah
+            digunakan dengan pembaca layar.
+          </p>
+        </div>
         <a
           className="btn btn-primary"
           href={links.reader}
           target="_blank"
           rel="noopener noreferrer"
         >
-          Buka reader
+          Buka versi ramah akses
         </a>
         <a
           className="btn btn-secondary"
@@ -307,7 +366,7 @@ function ResultView({ data }: { data: AuditResult }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Unduh laporan PDF
+          Unduh laporan
         </a>
         <a
           className="btn btn-secondary"
@@ -315,26 +374,34 @@ function ResultView({ data }: { data: AuditResult }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Lihat halaman hasil
+          Lihat halaman setelah perbaikan
         </a>
       </section>
 
       <section className={styles.metricGrid} aria-label="Ringkasan pemeriksaan">
         <article>
-          <span>Temuan awal</span>
-          <strong>{count(snapshot.summary.beforeTotal)}</strong>
+          <span>Hambatan ditemukan</span>
+          <strong>
+            <AngkaNaik value={count(snapshot.summary.beforeTotal)} />
+          </strong>
         </article>
         <article>
-          <span>Temuan akhir</span>
-          <strong>{count(snapshot.summary.afterTotal)}</strong>
+          <span>Hambatan yang masih ada</span>
+          <strong>
+            <AngkaNaik value={count(snapshot.summary.afterTotal)} />
+          </strong>
         </article>
         <article>
-          <span>Perbaikan terverifikasi</span>
-          <strong>{fixed}</strong>
+          <span>Berhasil diperbaiki</span>
+          <strong>
+            <AngkaNaik value={fixed} />
+          </strong>
         </article>
         <article>
-          <span>Perlu ditinjau</span>
-          <strong>{count(snapshot.counts.review)}</strong>
+          <span>Perlu diperiksa orang</span>
+          <strong>
+            <AngkaNaik value={count(snapshot.counts.review)} />
+          </strong>
         </article>
       </section>
 
@@ -350,7 +417,7 @@ function ResultView({ data }: { data: AuditResult }) {
 
       <section className={styles.section} aria-labelledby="verification-title">
         <div className={styles.sectionHeading}>
-          <h2 id="verification-title">Hasil pemeriksaan perbaikan</h2>
+          <h2 id="verification-title">Pemeriksaan ulang setelah perbaikan</h2>
           <span
             className={
               snapshot.warnings.wcagRegressionClean
@@ -360,51 +427,51 @@ function ResultView({ data }: { data: AuditResult }) {
           >
             {snapshot.warnings.wcagRegressionClean
               ? "Tidak ada masalah baru setelah perbaikan"
-              : "Masih memerlukan pemeriksaan"}
+              : "Masih perlu diperiksa lagi"}
           </span>
         </div>
 
         <div className={styles.verificationGrid}>
           <div>
             <strong>{fixed}</strong>
-            <span>Perbaikan terverifikasi</span>
+            <span>Berhasil diperbaiki</span>
           </div>
           <div>
             <strong>{rolledBack}</strong>
-            <span>Perbaikan dibatalkan</span>
+            <span>Dibatalkan karena tidak membantu</span>
           </div>
           <div>
             <strong>{skipped}</strong>
-            <span>Kandidat dilewati</span>
+            <span>Belum dapat diperbaiki</span>
           </div>
         </div>
 
         <details className={styles.details}>
-          <summary>Lihat detail pemeriksaan</summary>
+          <summary>Lihat rincian teknis</summary>
           <dl>
             <div>
-              <dt>Strict improvement</dt>
+              <dt>Jumlah hambatan benar benar menurun</dt>
               <dd>{snapshot.summary.strictImprovement ? "Ya" : "Tidak"}</dd>
             </div>
             <div>
-              <dt>Regresi WCAG pada rule target</dt>
+              <dt>Masalah baru setelah perbaikan</dt>
               <dd>{snapshot.summary.noRegression ? "Tidak ada" : "Ada"}</dd>
             </div>
             <div>
-              <dt>Human override</dt>
+              <dt>Perbaikan yang ditinjau orang</dt>
               <dd>{count(snapshot.counts.verifiedOverrides)}</dd>
             </div>
             <div>
-              <dt>Stale override</dt>
+              <dt>Tinjauan yang perlu diperbarui</dt>
               <dd>{snapshot.warnings.staleOverrides?.length ?? 0}</dd>
             </div>
             <div>
-              <dt>Verifikasi per elemen</dt>
+              <dt>Perbaikan yang diperiksa satu per satu</dt>
               <dd>{fixed}</dd>
             </div>
             <div>
-              <dt>Detail axe</dt>
-              <dd>Tersedia di laporan PDF</dd>
+              <dt>Rincian pemeriksaan</dt>
+              <dd>Ada di laporan yang bisa diunduh</dd>
             </div>
           </dl>
         </details>
@@ -412,10 +479,10 @@ function ResultView({ data }: { data: AuditResult }) {
 
       <section className={styles.evidenceCard}>
         <div>
-          <h2>Bukti pemeriksaan</h2>
+          <h2>Tangkapan halaman</h2>
           <p>
-            Screenshot memperlihatkan halaman setelah perbaikan. Detail axe
-            tersedia di laporan PDF.
+            Gambar ini memperlihatkan tampilan halaman setelah diperbaiki.
+            Rincian lengkapnya ada di laporan yang bisa diunduh.
           </p>
         </div>
         <a
@@ -424,7 +491,7 @@ function ResultView({ data }: { data: AuditResult }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Buka screenshot
+          Lihat tangkapan halaman
         </a>
       </section>
 
@@ -658,13 +725,13 @@ function ResultPageContent() {
               ? "Memeriksa hasil tersimpan"
               : "Menyiapkan pemeriksaan"}
           </h1>
-          <p>Belum ada hasil yang diklaim pada tahap ini.</p>
+          <p>Ini hanya perlu beberapa saat.</p>
         </section>
       )}
 
       {phase === "cache-choice" && (
         <section className={styles.centerCard}>
-          <h1>Hasil tersimpan tersedia</h1>
+          <h1>Ada hasil pemeriksaan sebelumnya</h1>
           <p>
             Hasil dibuat {waktu(cacheInfo?.capturedAt)} dan tersedia sampai{" "}
             {waktu(cacheInfo?.expiresAt)}.
@@ -693,13 +760,16 @@ function ResultPageContent() {
       {phase === "ready" && (
         <section className={styles.centerCard}>
           <p className={styles.statusLabel}>Pemeriksaan selesai</p>
-          <h1>Reader dan laporan sudah siap</h1>
-          <p>Hasil dibuka setelah Anda memilih tindakan berikutnya.</p>
+          <h1>Hasil pemeriksaan sudah siap</h1>
+          <p>
+            Di dalamnya ada ringkasan, tampilan ramah akses, dan laporan yang
+            bisa diunduh.
+          </p>
           <button
             className="btn btn-primary"
             onClick={() => jobId && token && void loadResult(jobId, token)}
           >
-            Buka hasil
+            Baca hasil
           </button>
         </section>
       )}
@@ -708,14 +778,14 @@ function ResultPageContent() {
         <section className={styles.centerCard} role="status">
           <div className={styles.spinner} aria-hidden="true" />
           <h1>Membuka hasil pemeriksaan</h1>
-          <p>Reader dan laporan sedang disiapkan.</p>
+          <p>Ringkasan dan tampilan ramah akses sedang disiapkan.</p>
         </section>
       )}
 
       {phase === "cancelled" && (
         <section className={styles.centerCard}>
-          <h1>Pemeriksaan dibatalkan</h1>
-          <p>Artefak sementara sudah dihapus.</p>
+          <h1>Pemeriksaan dihentikan</h1>
+          <p>Tidak ada hasil yang disimpan dari pemeriksaan ini.</p>
           <Link href="/" className="btn btn-primary">
             Kembali ke beranda
           </Link>
@@ -746,7 +816,7 @@ export default function ResultPage() {
       fallback={
         <main className={styles.shell}>
           <section className={styles.centerCard}>
-            <h1>Memuat pemeriksaan</h1>
+            <h1>Membuka halaman pemeriksaan</h1>
           </section>
         </main>
       }

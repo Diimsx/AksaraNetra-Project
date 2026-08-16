@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 import {
@@ -18,6 +24,9 @@ import {
 } from "@/lib/recent-audits";
 
 const ACTIVE = new Set(["queued", "running"]);
+
+/** Lama jendela pembatalan, dalam milidetik. */
+const UNDO_DURATION = 7000;
 
 function readableDate(iso: string) {
   const date = new Date(iso);
@@ -40,11 +49,11 @@ function host(url: string) {
 }
 
 function statusLabel(item: RecentAudit) {
-  if (item.status === "queued") return "Dalam antrean";
-  if (item.status === "running") return "Sedang berjalan";
-  if (item.status === "completed") return "Selesai";
-  if (item.status === "failed") return "Gagal";
-  return "Dibatalkan";
+  if (item.status === "queued") return "Menunggu giliran";
+  if (item.status === "running") return "Sedang diperiksa";
+  if (item.status === "completed") return "Hasil siap";
+  if (item.status === "failed") return "Tidak berhasil";
+  return "Dihentikan";
 }
 
 function AuditCard({
@@ -72,7 +81,7 @@ function AuditCard({
 
       <dl className={styles.cardMeta}>
         <div>
-          <dt>Dibuat</dt>
+          <dt>Diperiksa</dt>
           <dd>{readableDate(item.createdAt)}</dd>
         </div>
         <div>
@@ -84,10 +93,14 @@ function AuditCard({
       {active && (
         <div className={styles.progressBlock}>
           <div className={styles.progressLabel}>
-            <span>Progress pemeriksaan</span>
+            <span>Kemajuan pemeriksaan</span>
             <strong>{item.progress}%</strong>
           </div>
-          <progress max="100" value={item.progress}>
+          <progress
+            className={styles.progress}
+            max="100"
+            value={item.progress}
+          >
             {item.progress}%
           </progress>
         </div>
@@ -98,8 +111,8 @@ function AuditCard({
           {active
             ? "Lanjutkan pemeriksaan"
             : completed
-              ? "Buka hasil"
-              : "Lihat status"}
+              ? "Baca hasil"
+              : "Lihat keterangan"}
         </Link>
         <Link
           className="btn btn-secondary"
@@ -107,12 +120,34 @@ function AuditCard({
         >
           Periksa ulang
         </Link>
+        {/*
+          Hanya ikon tong sampah, tetapi tetap punya nama yang dibacakan
+          pembaca layar dan keterangan singkat saat kursor berhenti di atasnya.
+        */}
         <button
           className={styles.removeButton}
           type="button"
           onClick={() => onRemove(item.jobId)}
+          aria-label="Hapus riwayat pemeriksaan ini"
+          title="Hapus riwayat"
         >
-          Hapus dari perangkat ini
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.9"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M4 7h16" />
+            <path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7" />
+            <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12" />
+            <path d="M10 11v6M14 11v6" />
+          </svg>
         </button>
       </div>
     </article>
@@ -123,6 +158,16 @@ export default function RiwayatAuditPage() {
   const [items, setItems] = useState<RecentAudit[]>([]);
   const [loading, setLoading] = useState(true);
   const [warning, setWarning] = useState("");
+
+  /* Antrean penghapusan. Item disembunyikan lebih dulu, baru benar benar
+     dihapus setelah jendela pembatalan berakhir. */
+  const [confirmTarget, setConfirmTarget] = useState<RecentAudit | null>(null);
+  const [pendingRemoval, setPendingRemoval] = useState<RecentAudit | null>(
+    null,
+  );
+  const undoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const confirmButtonRef = useRef<HTMLButtonElement | null>(null);
+  const undoButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const refresh = useCallback(async () => {
     const stored = readRecentAudits();
@@ -161,7 +206,7 @@ export default function RiwayatAuditPage() {
     setItems(verified);
     setWarning(
       connectionFailed
-        ? "Sebagian status belum dapat dikonfirmasi. Data terakhir di perangkat tetap ditampilkan."
+        ? "Sebagian keterangan belum dapat dipastikan. Catatan terakhir di perangkat ini tetap ditampilkan."
         : "",
     );
     setLoading(false);
@@ -171,120 +216,253 @@ export default function RiwayatAuditPage() {
     void refresh();
   }, [refresh]);
 
-  const groups = useMemo(
-    () => ({
-      active: items.filter((item) => ACTIVE.has(item.status)),
-      completed: items.filter((item) => item.status === "completed"),
-      ended: items.filter(
-        (item) => item.status === "failed" || item.status === "cancelled",
-      ),
-    }),
-    [items],
-  );
-
-  const handleRemove = (jobId: string) => {
+  /* Penghapusan sebenarnya. Dipanggil hanya setelah jendela pembatalan habis,
+     atau saat halaman ditinggalkan. */
+  const handleRemove = useCallback((jobId: string) => {
     removeRecentAudit(jobId);
     removeJobToken(jobId);
     setItems((current) => current.filter((item) => item.jobId !== jobId));
+  }, []);
+
+  const requestRemove = (jobId: string) => {
+    const target = items.find((item) => item.jobId === jobId) ?? null;
+    if (target) setConfirmTarget(target);
   };
+
+  const confirmRemove = () => {
+    const target = confirmTarget;
+    if (!target) return;
+
+    // Bila masih ada penghapusan yang menunggu, selesaikan dulu.
+    if (undoTimer.current) {
+      clearTimeout(undoTimer.current);
+      undoTimer.current = null;
+      if (pendingRemoval) handleRemove(pendingRemoval.jobId);
+    }
+
+    setConfirmTarget(null);
+    setPendingRemoval(target);
+    undoTimer.current = setTimeout(() => {
+      undoTimer.current = null;
+      handleRemove(target.jobId);
+      setPendingRemoval(null);
+    }, UNDO_DURATION);
+  };
+
+  const undoRemove = () => {
+    if (undoTimer.current) {
+      clearTimeout(undoTimer.current);
+      undoTimer.current = null;
+    }
+    setPendingRemoval(null);
+  };
+
+  // Jika halaman ditinggalkan sebelum jendela habis, penghapusan diselesaikan.
+  useEffect(() => {
+    return () => {
+      if (undoTimer.current) {
+        clearTimeout(undoTimer.current);
+        undoTimer.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (confirmTarget) confirmButtonRef.current?.focus();
+  }, [confirmTarget]);
+
+  useEffect(() => {
+    if (pendingRemoval) undoButtonRef.current?.focus();
+  }, [pendingRemoval]);
+
+  useEffect(() => {
+    if (!confirmTarget) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setConfirmTarget(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [confirmTarget]);
+
+  // Item yang sedang menunggu penghapusan disembunyikan dari daftar.
+  const visible = useMemo(
+    () =>
+      pendingRemoval
+        ? items.filter((item) => item.jobId !== pendingRemoval.jobId)
+        : items,
+    [items, pendingRemoval],
+  );
+
+  const groups = useMemo(
+    () => ({
+      active: visible.filter((item) => ACTIVE.has(item.status)),
+      completed: visible.filter((item) => item.status === "completed"),
+      ended: visible.filter(
+        (item) => item.status === "failed" || item.status === "cancelled",
+      ),
+    }),
+    [visible],
+  );
 
   return (
     <main className={styles.main} aria-busy={loading}>
-      <section className={styles.hero}>
-        <div>
-          <h1>Riwayat pemeriksaan tujuh hari terakhir</h1>
-          <p>
-            Lanjutkan proses aktif atau buka hasil yang masih tersedia di
-            perangkat ini.
-          </p>
-        </div>
-        <Link href="/" className="btn btn-primary">
-          Mulai pemeriksaan baru
-        </Link>
-      </section>
-
-      {warning && (
-        <p className={styles.warning} role="status">
-          {warning}
-        </p>
-      )}
-
-      {loading ? (
-        <section className={styles.loadingState} role="status">
-          <span className={styles.spinner} aria-hidden="true" />
+      <div className={`${styles.heroWrap} texture-grid`}>
+        <section className={`container ${styles.hero}`}>
           <div>
-            <h2>Memeriksa riwayat</h2>
-            <p>Status dikonfirmasi sebelum hasil ditampilkan.</p>
+            <p className="eyebrow">Riwayat</p>
+            <h1>Pemeriksaan tujuh hari terakhir</h1>
+            <p className={styles.heroLead}>
+              Catatan ini hanya tersimpan di perangkat ini. Lanjutkan pemeriksaan
+              yang masih berjalan, atau baca hasil yang sudah siap.
+            </p>
           </div>
-        </section>
-      ) : items.length === 0 ? (
-        <section className={styles.emptyState}>
-          <h2>Belum ada riwayat pemeriksaan</h2>
-          <p>
-            Masukkan alamat halaman publik di beranda. Tidak ada perintah atau
-            persiapan teknis yang perlu dijalankan.
-          </p>
           <Link href="/" className="btn btn-primary">
-            Mulai dari beranda
+            Periksa halaman baru
           </Link>
         </section>
-      ) : (
-        <div className={styles.sections}>
-          {groups.active.length > 0 && (
-            <section aria-labelledby="active-title">
-              <div className={styles.sectionHeading}>
-                <h2 id="active-title">Sedang berlangsung</h2>
-                <span>{groups.active.length}</span>
-              </div>
-              <div className={styles.auditList}>
-                {groups.active.map((item) => (
-                  <AuditCard
-                    key={item.jobId}
-                    item={item}
-                    onRemove={handleRemove}
-                  />
-                ))}
-              </div>
-            </section>
-          )}
+      </div>
 
-          {groups.completed.length > 0 && (
-            <section aria-labelledby="completed-title">
-              <div className={styles.sectionHeading}>
-                <h2 id="completed-title">Hasil tersedia</h2>
-                <span>{groups.completed.length}</span>
-              </div>
-              <div className={styles.auditList}>
-                {groups.completed.map((item) => (
-                  <AuditCard
-                    key={item.jobId}
-                    item={item}
-                    onRemove={handleRemove}
-                  />
-                ))}
-              </div>
-            </section>
-          )}
+      <div className={`container ${styles.content}`}>
+        {warning && (
+          <p className={styles.warning} role="status">
+            {warning}
+          </p>
+        )}
 
-          {groups.ended.length > 0 && (
-            <section aria-labelledby="ended-title">
-              <div className={styles.sectionHeading}>
-                <h2 id="ended-title">Tidak selesai</h2>
-                <span>{groups.ended.length}</span>
+        {loading ? (
+          <section className={styles.loadingState} role="status">
+            <span className={styles.spinner} aria-hidden="true" />
+            <div>
+              <h2>Membuka riwayat</h2>
+              <p>Keterangan tiap pemeriksaan sedang dipastikan.</p>
+            </div>
+          </section>
+        ) : visible.length === 0 ? (
+          <section className={styles.emptyState}>
+            <span className={styles.emptyMark} aria-hidden="true" />
+            <h2>Belum ada pemeriksaan tersimpan</h2>
+            <p>
+              Setelah satu halaman diperiksa, catatannya muncul di sini dan bisa
+              dibuka kembali selama tujuh hari.
+            </p>
+            <Link href="/" className="btn btn-primary">
+              Mulai dari beranda
+            </Link>
+          </section>
+        ) : (
+          <div className={styles.sections}>
+            {groups.active.length > 0 && (
+              <section aria-labelledby="active-title">
+                <div className={styles.sectionHeading}>
+                  <h2 id="active-title">Sedang berjalan</h2>
+                  <span>{groups.active.length}</span>
+                </div>
+                <div className={styles.auditList}>
+                  {groups.active.map((item) => (
+                    <AuditCard
+                      key={item.jobId}
+                      item={item}
+                      onRemove={requestRemove}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {groups.completed.length > 0 && (
+              <section aria-labelledby="completed-title">
+                <div className={styles.sectionHeading}>
+                  <h2 id="completed-title">Hasil siap dibaca</h2>
+                  <span>{groups.completed.length}</span>
+                </div>
+                <div className={styles.auditList}>
+                  {groups.completed.map((item) => (
+                    <AuditCard
+                      key={item.jobId}
+                      item={item}
+                      onRemove={requestRemove}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {groups.ended.length > 0 && (
+              <section aria-labelledby="ended-title">
+                <div className={styles.sectionHeading}>
+                  <h2 id="ended-title">Tidak selesai</h2>
+                  <span>{groups.ended.length}</span>
+                </div>
+                <div className={styles.auditList}>
+                  {groups.ended.map((item) => (
+                    <AuditCard
+                      key={item.jobId}
+                      item={item}
+                      onRemove={requestRemove}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
+        )}
+
+        {confirmTarget && (
+          <div className={styles.dialogLapis}>
+            <div
+              className={styles.dialog}
+              role="alertdialog"
+              aria-modal="true"
+              aria-labelledby="hapus-title"
+              aria-describedby="hapus-desc"
+            >
+              <h2 id="hapus-title">Hapus catatan pemeriksaan ini?</h2>
+              <p id="hapus-desc">
+                Catatan untuk{" "}
+                <strong>
+                  {confirmTarget.title || host(confirmTarget.sourceUrl)}
+                </strong>{" "}
+                akan hilang dari perangkat ini. Halaman aslinya tidak terpengaruh,
+                dan halaman itu bisa diperiksa ulang kapan saja.
+              </p>
+              <div className={styles.dialogActions}>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={confirmRemove}
+                  ref={confirmButtonRef}
+                >
+                  Ya, hapus
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setConfirmTarget(null)}
+                >
+                  Batal
+                </button>
               </div>
-              <div className={styles.auditList}>
-                {groups.ended.map((item) => (
-                  <AuditCard
-                    key={item.jobId}
-                    item={item}
-                    onRemove={handleRemove}
-                  />
-                ))}
-              </div>
-            </section>
-          )}
-        </div>
-      )}
+            </div>
+          </div>
+        )}
+
+        {pendingRemoval && (
+          <div className={styles.snackbar} role="status">
+            <p>
+              Catatan{" "}
+              {pendingRemoval.title || host(pendingRemoval.sourceUrl)} dihapus.
+            </p>
+            <button
+              type="button"
+              className={styles.undoButton}
+              onClick={undoRemove}
+              ref={undoButtonRef}
+            >
+              Urungkan
+            </button>
+          </div>
+        )}
+      </div>
     </main>
   );
 }

@@ -1,9 +1,83 @@
-.shell,
-.resultContainer {
+/*
+  Halaman proses dan hasil pemeriksaan.
+
+  Prioritasnya: pembaca harus tahu keadaan halamannya dalam satu tarikan mata,
+  lalu bisa langsung membuka tampilan yang lebih ramah akses. Angka dan tabel
+  teknis diletakkan setelah itu.
+*/
+
+/* --- Kerangka untuk keadaan sementara --- */
+
+/*
+  Layar proses dan layar galat isinya sedikit. Tinggi minimumnya tidak lagi
+  dikira kira dengan angka tetap, tetapi meregang mengikuti ruang sisa di
+  dalam pembungkus isi halaman. Itu yang membuat footer duduk di dasar layar,
+  bukan menggantung tepat di bawah kartu proses.
+*/
+.shell {
+  display: grid;
+  place-items: center;
   width: 100%;
-  max-width: 1120px;
+  max-width: var(--max-width);
+  min-height: 100%;
+  flex: 1;
   margin: 0 auto;
-  padding: clamp(40px, 7vw, 72px) 24px 80px;
+  padding: clamp(28px, 5vw, 56px) 24px;
+}
+
+.centerCard {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 560px;
+  padding: clamp(28px, 4vw, 44px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.centerCard h1 {
+  font-size: clamp(23px, 3vw, 30px);
+}
+
+.centerCard p {
+  max-width: 48ch;
+  color: var(--color-text-muted);
+  font-size: 16px;
+}
+
+.centerCard :global(.btn) {
+  margin-top: 6px;
+}
+
+.errorCard {
+  border-color: var(--color-danger-border);
+  background: var(--color-danger-soft);
+}
+
+.errorCard h1 {
+  color: var(--color-danger);
+}
+
+.spinner {
+  width: 42px;
+  height: 42px;
+  border: 4px solid var(--color-card-highlight);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+.choiceActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
 }
 
 .srOnly {
@@ -15,216 +89,241 @@
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
-  border: 0;
+  border-width: 0;
 }
 
-.statusLabel {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  margin-bottom: 8px;
-  color: var(--color-primary-bright);
-  font-size: 14px;
-  font-weight: 800;
-}
+/* --- Panel proses --- */
 
-.centerCard,
 .statusCard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   width: 100%;
-  max-width: 740px;
-  min-height: 310px;
-  margin: 32px auto;
-  padding: clamp(28px, 5vw, 42px);
-  border: 1px solid var(--color-border-strong);
+  max-width: 680px;
+  padding: clamp(26px, 4vw, 40px);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
   box-shadow: var(--shadow-md);
 }
 
-.centerCard {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.centerCard h1,
-.statusCard h1 {
-  font-size: clamp(30px, 5vw, 44px);
-  line-height: 1.12;
-}
-
-.choiceActions,
-.bottomActions,
-.primaryActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 10px;
-}
-
-.spinner {
-  width: 38px;
-  height: 38px;
-  border: 4px solid var(--color-border);
-  border-top-color: var(--color-primary-bright);
-  border-radius: 50%;
-  animation: spin 0.9s linear infinite;
-}
-
-.errorCard {
-  border-color: #d7949c;
-  background: var(--color-danger-soft);
-}
-
 .statusTop {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: start;
-  gap: 24px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .stageColumn {
   min-width: 0;
 }
 
-.stageArea {
-  display: grid;
-  min-block-size: 6.4rem;
-  align-items: start;
-}
-
-.stageArea h1 {
-  animation: stageFade 180ms ease-out;
+.statusLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: var(--color-primary-mid);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .activeDot {
+  display: inline-block;
   width: 9px;
   height: 9px;
   flex: none;
   border-radius: 50%;
   background: var(--color-primary-bright);
-  box-shadow: 0 0 0 5px rgba(23, 100, 183, 0.12);
-  animation: softPulse 1.8s ease-in-out infinite;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+/* Ruang tahap dijaga tinggi tetap supaya teks berganti tanpa melompat. */
+.stageArea {
+  min-height: 2.5em;
+}
+
+.stageArea h1 {
+  font-size: clamp(24px, 3.2vw, 32px);
+  animation: fadeIn 0.3s ease-out;
 }
 
 .percent {
   color: var(--color-primary);
-  font-size: clamp(36px, 7vw, 48px);
+  font-size: clamp(30px, 4vw, 40px);
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
 .progress {
   width: 100%;
-  height: 16px;
-  margin: 26px 0 14px;
-  overflow: hidden;
-  border: 0;
+  height: 12px;
+  appearance: none;
+  border: none;
   border-radius: var(--radius-pill);
-  background: #c7d9ee;
+  background: var(--color-surface-sunken);
+  overflow: hidden;
 }
 
 .progress::-webkit-progress-bar {
-  background: #c7d9ee;
+  background: var(--color-surface-sunken);
+  border-radius: var(--radius-pill);
 }
 
 .progress::-webkit-progress-value {
-  border-radius: var(--radius-pill);
   background: var(--color-primary-bright);
+  border-radius: var(--radius-pill);
   transition: width var(--transition-sedang);
 }
 
 .progress::-moz-progress-bar {
-  border-radius: var(--radius-pill);
   background: var(--color-primary-bright);
-  transition: width var(--transition-sedang);
+  border-radius: var(--radius-pill);
 }
 
 .statusMeta {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 16px;
+  gap: 8px 20px;
   color: var(--color-text-muted);
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .statusNote {
-  margin: 24px 0 18px;
-  padding: 15px 16px;
-  border: 1px solid var(--color-border);
+  padding: 14px 16px;
+  border: 1px solid var(--color-card-accent);
   border-radius: var(--radius-sm);
-  background: var(--color-primary-soft);
+  background: var(--color-card-light);
+  color: var(--color-text);
   font-size: 15px;
+}
+
+/* --- Halaman hasil --- */
+
+.resultContainer {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 40px);
+  width: 100%;
+  max-width: 940px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 44px) 24px 8px;
 }
 
 .notice {
   display: flex;
+  align-items: flex-start;
   gap: 12px;
-  max-width: 900px;
-  padding: 16px 18px;
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-md);
-  background: var(--color-primary-soft);
-  color: var(--color-primary-mid);
+  padding: 14px 16px;
+  border: 1px solid var(--color-card-accent);
+  border-radius: var(--radius-sm);
+  background: var(--color-card-light);
 }
 
 .notice span {
   display: grid;
-  width: 26px;
-  height: 26px;
-  flex: 0 0 26px;
+  width: 22px;
+  height: 22px;
+  flex: none;
   place-items: center;
+  margin-top: 2px;
   border-radius: 50%;
   background: var(--color-primary);
-  color: #fff;
+  color: #ffffff;
+  font-size: 13px;
   font-weight: 800;
 }
 
+.notice p {
+  color: var(--color-text);
+  font-size: 15px;
+}
+
+/* --- Kepala hasil --- */
+
 .resultHeader {
-  max-width: 850px;
-  margin: 42px 0 24px;
+  padding-bottom: clamp(24px, 3vw, 32px);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .resultHeader h1 {
-  margin-bottom: 14px;
-  font-size: clamp(38px, 6vw, 60px);
-  line-height: 1.04;
+  margin: 4px 0 14px;
+  font-size: clamp(27px, 3.6vw, 40px);
 }
 
 .source,
 .timestamp {
   color: var(--color-text-muted);
+  font-size: 15px;
   overflow-wrap: anywhere;
 }
 
 .source a {
   color: var(--color-primary-bright);
+  font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.primaryActions {
-  margin-bottom: 42px;
+.timestamp {
+  margin-top: 4px;
 }
+
+/* --- Tindakan utama --- */
+
+.primaryActions {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid var(--color-card-accent);
+  border-radius: var(--radius-lg);
+  background: var(--color-card-light);
+}
+
+.primaryActions :global(.btn) {
+  width: 100%;
+}
+
+.actionsIntro {
+  grid-column: 1 / -1;
+}
+
+.actionsIntro h2 {
+  margin-bottom: 4px;
+  font-size: 21px;
+}
+
+.actionsIntro p {
+  max-width: 62ch;
+  color: var(--color-text);
+  font-size: 15px;
+}
+
+/* --- Angka ringkas --- */
 
 .metricGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin-bottom: 28px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  overflow: hidden;
 }
 
 .metricGrid article {
   display: flex;
-  min-height: 138px;
-  justify-content: space-between;
   flex-direction: column;
-  padding: 22px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
+  gap: 6px;
+  padding: 20px;
+}
+
+.metricGrid article + article {
+  border-left: 1px solid var(--color-border);
 }
 
 .metricGrid span {
@@ -234,97 +333,131 @@
 }
 
 .metricGrid strong {
-  color: var(--color-primary);
-  font-size: 44px;
+  color: var(--color-heading);
+  font-size: 32px;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
+/* --- Kesimpulan --- */
+
+/*
+  Nada kesimpulan dibedakan lewat warna latar yang sangat tipis dan satu
+  lencana kecil, bukan garis tebal di salah satu sisi.
+*/
 .conclusionCard {
-  max-width: 900px;
-  margin-bottom: 64px;
-  padding: 24px 26px;
-  border: 1px solid var(--color-border-strong);
-  border-left-width: 5px;
+  padding: 26px 28px;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);
 }
 
 .conclusionCard h2 {
-  margin-bottom: 6px;
-  font-size: 25px;
+  margin-bottom: 8px;
+  font-size: clamp(21px, 2.4vw, 26px);
 }
 
 .conclusionCard p {
-  max-width: 72ch;
-  color: var(--color-text-muted);
+  max-width: var(--reading-width);
+  color: var(--color-text);
   font-size: 16px;
 }
 
-.conclusionCard.success {
-  border-left-color: var(--color-success);
-  background: var(--color-success-soft);
+.success {
+  border-color: var(--color-success-border);
+  background: linear-gradient(
+    180deg,
+    var(--color-success-soft) 0%,
+    var(--color-surface) 88%
+  );
 }
 
-.conclusionCard.attention {
-  border-left-color: var(--color-primary-mid);
-  background: var(--color-warning-soft);
+.success h2 {
+  color: var(--color-success);
 }
 
-.conclusionCard.neutral {
-  border-left-color: var(--color-primary-bright);
-  background: var(--color-primary-soft);
+.attention {
+  border-color: var(--color-warning-border);
+  background: linear-gradient(
+    180deg,
+    var(--color-warning-soft) 0%,
+    var(--color-surface) 88%
+  );
 }
+
+.attention h2 {
+  color: var(--color-warning);
+}
+
+.neutral {
+  border-color: var(--color-border);
+  background: linear-gradient(
+    180deg,
+    var(--color-surface-sunken) 0%,
+    var(--color-surface) 88%
+  );
+}
+
+/* --- Bagian umum --- */
 
 .section {
-  margin: 64px 0;
+  padding-top: clamp(20px, 3vw, 28px);
+  border-top: 1px solid var(--color-border);
 }
 
 .sectionHeading {
   display: flex;
-  align-items: end;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 24px;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .sectionHeading h2 {
-  font-size: 31px;
+  font-size: clamp(21px, 2.4vw, 26px);
 }
 
-.reduction,
+.reduction {
+  padding: 6px 14px;
+  border: 1px solid var(--color-success-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-success-soft);
+  color: var(--color-success);
+  font-size: 15px;
+  font-weight: 800;
+}
+
 .goodBadge,
 .attentionBadge {
-  flex: none;
-  padding: 8px 13px;
-  border: 1px solid var(--color-border-strong);
+  padding: 6px 14px;
+  border: 1px solid transparent;
   border-radius: var(--radius-pill);
   font-size: 14px;
   font-weight: 800;
 }
 
-.reduction {
-  background: var(--color-primary-soft);
-  color: var(--color-primary-bright);
-}
-
 .goodBadge {
-  border-color: #80b8b2;
+  border-color: var(--color-success-border);
   background: var(--color-success-soft);
   color: var(--color-success);
 }
 
 .attentionBadge {
+  border-color: var(--color-warning-border);
   background: var(--color-warning-soft);
   color: var(--color-warning);
 }
 
+/* --- Diagram sebelum sesudah --- */
+
 .chart {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 30px;
-  padding: 24px;
+  gap: 14px;
+  margin-bottom: 26px;
+  padding: 22px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);
@@ -332,82 +465,129 @@
 
 .chartRow {
   display: grid;
-  grid-template-columns: 80px 1fr 50px;
+  grid-template-columns: 88px minmax(0, 1fr) 48px;
   align-items: center;
   gap: 14px;
 }
 
+.chartRow > span {
+  color: var(--color-text-muted);
+  font-size: 15px;
+  font-weight: 700;
+}
+
 .chartRow > div {
-  height: 28px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-sunken);
   overflow: hidden;
-  border-radius: 5px;
-  background: var(--color-card-light);
 }
 
 .chartRow i {
   display: block;
   height: 100%;
   min-width: 3px;
+  border-radius: var(--radius-pill);
   background: var(--color-primary-mid);
+  transition: width var(--transition-sedang);
 }
 
-.chartRow .afterBar {
-  background: var(--color-success);
+/* Batang sesudah dibedakan warna dan pola, bukan warna saja. */
+.afterBar {
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.28) 0 4px,
+      transparent 4px 8px
+    ),
+    var(--color-success);
 }
 
-.chartRow strong {
-  text-align: right;
-  font-size: 22px;
+.chartRow > strong {
+  color: var(--color-heading);
+  font-size: 19px;
   font-variant-numeric: tabular-nums;
+  text-align: right;
 }
+
+/* --- Tabel --- */
 
 .tableWrap {
-  overflow-x: auto;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);
+  overflow-x: auto;
 }
 
 .tableWrap:focus-visible {
   outline: 3px solid var(--color-focus-ring);
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
 
 .table {
   width: 100%;
-  min-width: 620px;
   border-collapse: collapse;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .table caption {
-  padding: 18px 20px;
+  position: sticky;
+  left: 0;
+  max-width: min(100%, calc(100vw - 3rem));
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 14px;
   text-align: left;
-  font-weight: 700;
+  white-space: normal;
 }
 
 .table th,
 .table td {
-  padding: 14px 20px;
-  border-top: 1px solid var(--color-border);
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--color-border);
   text-align: left;
+  white-space: nowrap;
 }
 
 .table thead th {
-  background: var(--color-primary-soft);
-  color: var(--color-primary);
+  background: var(--color-surface-sunken);
+  color: var(--color-heading);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
+
+.table tbody tr:last-child th,
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody th {
+  font-weight: 700;
+}
+
+.table code {
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  background: var(--color-surface-sunken);
+  color: var(--color-primary);
+  font-size: 13px;
+}
+
+/* --- Ringkasan perbaikan --- */
 
 .verificationGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .verificationGrid > div {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   padding: 20px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -415,106 +595,195 @@
 }
 
 .verificationGrid strong {
-  color: var(--color-primary);
-  font-size: 34px;
+  color: var(--color-heading);
+  font-size: 30px;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
 .verificationGrid span {
-  color: var(--color-text-muted);
-  font-size: 15px;
-}
-
-.details {
-  margin-top: 18px;
-  padding: 18px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-primary-soft);
-}
-
-.details summary {
-  min-height: 44px;
-  cursor: pointer;
-  color: var(--color-primary);
-  font-weight: 800;
-}
-
-.details dl {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-  margin-top: 18px;
-}
-
-.details dl div {
-  padding: 12px;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background: var(--color-surface);
-}
-
-.details dt {
   color: var(--color-text-muted);
   font-size: 14px;
   font-weight: 700;
 }
 
-.details dd {
-  color: var(--color-heading);
-  font-weight: 800;
+/* --- Rincian teknis --- */
+
+.details {
+  margin-top: 18px;
+  padding: 16px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
 }
+
+.details summary {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  color: var(--color-primary-bright);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.details summary:hover {
+  color: var(--color-primary);
+}
+
+.details dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 24px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.details dt {
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.details dd {
+  margin: 2px 0 0;
+  color: var(--color-heading);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* --- Bukti --- */
 
 .evidenceCard {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  margin-top: 64px;
-  padding: 28px;
-  border-radius: var(--radius-lg);
-  background: var(--color-primary);
-  color: #fff;
+  gap: 22px;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
 }
 
 .evidenceCard h2 {
-  color: #fff;
+  margin-bottom: 6px;
+  font-size: 21px;
 }
 
 .evidenceCard p {
-  max-width: 60ch;
+  max-width: 56ch;
+  color: var(--color-text-muted);
+  font-size: 15px;
 }
 
-.evidenceCard :global(.btn-secondary) {
-  background: #fff;
+.evidenceCard :global(.btn) {
+  flex: none;
 }
+
+/* --- Tindakan penutup --- */
 
 .bottomActions {
-  margin-top: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: clamp(20px, 3vw, 28px);
+  border-top: 1px solid var(--color-border);
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+/* --- Responsif --- */
+
+@media (max-width: 900px) {
+  .primaryActions {
+    grid-template-columns: 1fr;
+  }
+
+  .metricGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metricGrid article:nth-child(odd) {
+    border-left: none;
+  }
+
+  .metricGrid article:nth-child(n + 3) {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .verificationGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .evidenceCard {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
   }
 }
 
-@keyframes softPulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
+@media (max-width: 720px) {
+  .shell {
+    min-height: auto;
+    padding: 24px 16px 8px;
   }
-  50% {
-    opacity: 0.55;
-    transform: scale(0.82);
+
+  .centerCard,
+  .statusCard {
+    padding: 22px;
+  }
+
+  .choiceActions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .choiceActions :global(.btn) {
+    width: 100%;
+  }
+
+  .resultContainer {
+    padding: 20px 16px 8px;
+    gap: 26px;
+  }
+
+  .statusTop {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .stageArea {
+    min-height: auto;
+  }
+
+  .metricGrid strong {
+    font-size: 27px;
+  }
+
+  .chartRow {
+    grid-template-columns: 68px minmax(0, 1fr) 38px;
+    gap: 10px;
+  }
+
+  .details dl {
+    grid-template-columns: 1fr;
+  }
+
+  .bottomActions {
+    flex-direction: column;
+  }
+
+  .bottomActions :global(.btn) {
+    width: 100%;
   }
 }
 
-@keyframes stageFade {
+/* --- Gerak halaman --- */
+@keyframes kartuMasuk {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -522,73 +791,95 @@
   }
 }
 
-@media (max-width: 850px) {
-  .metricGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.notice,
+.resultHeader,
+.conclusionCard,
+.primaryActions,
+.metricGrid,
+.section,
+.bottomActions {
+  animation: kartuMasuk 480ms cubic-bezier(0.22, 0.68, 0.28, 1) both;
+}
 
-  .sectionHeading,
+.resultHeader {
+  animation-delay: 40ms;
+}
+
+.conclusionCard {
+  animation-delay: 90ms;
+}
+
+.primaryActions {
+  animation-delay: 140ms;
+}
+
+.metricGrid {
+  animation-delay: 180ms;
+}
+
+.section {
+  animation-delay: 220ms;
+}
+
+.bottomActions {
+  animation-delay: 260ms;
+}
+
+.statusCard,
+.centerCard {
+  animation: kartuMasuk 420ms cubic-bezier(0.22, 0.68, 0.28, 1) both;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .primaryActions :global(.btn),
   .evidenceCard {
-    align-items: flex-start;
-    flex-direction: column;
+    transition:
+      transform var(--transition-sedang),
+      box-shadow var(--transition-sedang),
+      border-color var(--transition-cepat),
+      background var(--transition-cepat);
   }
 
-  .verificationGrid {
-    grid-template-columns: 1fr;
+  .primaryActions :global(.btn):hover,
+  .evidenceCard:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .chartRow:hover .afterBar {
+    filter: saturate(1.15);
   }
 }
 
-@media (max-width: 560px) {
-  .shell,
-  .resultContainer {
-    padding: 32px 16px 64px;
-  }
+/* Bar proses berdenyut halus selama pemeriksaan berjalan. */
+.progress::-webkit-progress-value {
+  animation: denyutLembut 2.2s ease-in-out infinite;
+}
 
-  .centerCard,
-  .statusCard {
-    min-height: 290px;
-    padding: 24px;
-  }
-
-  .statusTop {
-    grid-template-columns: 1fr;
-  }
-
-  .stageArea {
-    min-block-size: 5.8rem;
-  }
-
-  .statusMeta {
-    flex-direction: column;
-  }
-
-  .metricGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .details dl {
-    grid-template-columns: 1fr;
-  }
-
-  .chartRow {
-    grid-template-columns: 66px 1fr 34px;
-  }
-
-  .primaryActions a,
-  .choiceActions > * {
-    width: 100%;
-  }
+.progress::-moz-progress-bar {
+  animation: denyutLembut 2.2s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .spinner,
-  .activeDot,
-  .stageArea h1 {
+  .notice,
+  .resultHeader,
+  .conclusionCard,
+  .primaryActions,
+  .metricGrid,
+  .section,
+  .bottomActions,
+  .statusCard,
+  .centerCard {
     animation: none;
+  }
+
+  .primaryActions :global(.btn):hover,
+  .evidenceCard:hover {
+    transform: none;
   }
 
   .progress::-webkit-progress-value,
   .progress::-moz-progress-bar {
-    transition: none;
+    animation: none;
   }
 }

@@ -5,7 +5,7 @@ import styles from "./page.module.css";
 export const metadata: Metadata = {
   title: "Cara kerja",
   description:
-    "Lima tahap pemeriksaan AksaraNetra, dari validasi alamat sampai tampilan reader dan hasil terukur.",
+    "Lima tahap pemeriksaan AksaraNetra, dari alamat halaman sampai tampilan yang lebih ramah akses.",
 };
 
 /**
@@ -20,39 +20,39 @@ export const metadata: Metadata = {
 
 const langkah = [
   {
-    judul: "Alamat diperiksa dulu",
-    isi: "Alamat harus http atau https, bukan alamat jaringan lokal, dan tidak ditolak oleh berkas robots.txt situs tersebut. Kalau salah satu syarat tidak terpenuhi, prosesnya berhenti di sini dan alasannya ditampilkan.",
+    judul: "Alamat diperiksa lebih dulu",
+    isi: "Halaman harus bisa dibuka siapa saja, dan pemilik situsnya tidak melarang pemeriksaan otomatis. Kalau salah satu syarat itu tidak terpenuhi, prosesnya berhenti di sini dan alasannya ditampilkan.",
   },
   {
-    judul: "Halaman diambil dan diperiksa",
-    isi: "Isi halaman diambil, lalu diperiksa dengan axe memakai aturan WCAG 2.1 tingkat A dan AA. Hasil pemeriksaan ini menjadi angka awal, yaitu keadaan sebelum diperbaiki.",
+    judul: "Halaman dibuka dan dinilai",
+    isi: "Isi halaman diambil apa adanya, lalu dicari bagian yang biasanya menyulitkan pembaca, misalnya tombol tanpa nama atau gambar tanpa keterangan. Hasilnya menjadi catatan keadaan sebelum diperbaiki.",
   },
   {
-    judul: "Perbaikan disaring lewat tingkat keyakinan",
-    isi: "Setiap usulan perbaikan diberi nilai keyakinan. Nilai 0,80 ke atas langsung dipasang, 0,60 sampai 0,79 disimpan untuk diperiksa manusia, dan di bawah itu dilewati. Nama yang salah lebih berbahaya daripada tidak ada nama sama sekali.",
+    judul: "Hanya perbaikan yang aman dijalankan",
+    isi: "Perbaikan dipasang hanya bila petunjuk di halaman sudah cukup jelas. Yang masih meragukan disimpan untuk diperiksa orang, dan yang tidak jelas dilewati. Nama yang salah lebih menyesatkan daripada tidak ada nama sama sekali.",
   },
   {
-    judul: "Hasilnya diukur ulang",
-    isi: "Halaman yang sudah diperbaiki diperiksa lagi dengan aturan yang sama. Selisih antara angka awal dan angka akhir dicatat apa adanya, termasuk kalau ternyata tidak ada perbaikan.",
+    judul: "Hasilnya dinilai ulang",
+    isi: "Halaman yang sudah diperbaiki dinilai lagi dengan cara yang sama. Selisih keadaan sebelum dan sesudah dicatat apa adanya, termasuk kalau ternyata tidak ada perbaikan.",
   },
   {
-    judul: "Disajikan sebagai tampilan bacaan",
-    isi: "Isi halaman disusun ulang menjadi satu kolom dengan urutan judul yang rapi, kontras tinggi, dan tanpa skrip. Tautan ke halaman aslinya selalu ada di bagian atas dan bawah.",
+    judul: "Isi disajikan dalam tampilan yang lebih mudah",
+    isi: "Isi halaman disusun ulang menjadi satu kolom dengan urutan judul yang rapi dan warna yang tenang. Tautan ke halaman aslinya selalu tersedia di bagian atas dan bawah.",
   },
 ];
 
 const standar = [
   {
-    judul: "WCAG 2.1 tingkat A dan AA",
-    isi: "Pemeriksaan otomatis memakai aturan axe untuk tingkat A dan AA. Tingkat AAA tidak diklaim untuk situs sumber, karena sebagian syaratnya memang tidak bisa diperiksa oleh mesin.",
+    judul: "Mengikuti pedoman aksesibilitas internasional",
+    isi: "Pemeriksaan mengikuti pedoman WCAG 2.1 tingkat A dan AA. Tingkat tertinggi tidak diklaim, karena sebagian syaratnya memang tidak bisa dinilai secara otomatis.",
   },
   {
-    judul: "Atkinson Hyperlegible",
-    isi: "Huruf rancangan Braille Institute yang bentuk tiap karakternya sengaja dibuat berbeda satu sama lain, supaya lebih mudah dibedakan oleh pembaca dengan penglihatan rendah.",
+    judul: "Huruf Atkinson Hyperlegible",
+    isi: "Huruf rancangan Braille Institute yang bentuk tiap hurufnya sengaja dibuat berbeda satu sama lain, supaya lebih mudah dibedakan oleh pembaca dengan penglihatan rendah.",
   },
   {
     judul: "Diuji dengan pembaca layar sungguhan",
-    isi: "Hasilnya diuji manual memakai NVDA, termasuk penelusuran lewat daftar tautan, tombol, dan judul. Kami tidak mengklaim cocok dengan semua pembaca layar di semua versinya.",
+    isi: "Hasilnya diuji langsung memakai pembaca layar NVDA, termasuk penelusuran lewat daftar tautan, tombol, dan judul. Kami tidak mengklaim cocok dengan semua pembaca layar di semua versinya.",
   },
 ];
 
@@ -62,11 +62,11 @@ export default function CaraKerjaPage() {
       <section className={styles.hero}>
         <div className={styles.heroIsi}>
           <h1 className={styles.heroJudul}>
-            Lima langkah, dari alamat sampai halaman yang bisa dibaca
+            Lima tahap, dari alamat halaman sampai bacaan yang lebih mudah
           </h1>
           <p className={styles.heroTeks}>
-            Tidak ada langkah yang tersembunyi. Setiap keputusan yang diambil
-            alat ini bisa kamu lihat satu per satu di halaman hasil.
+            Tidak ada tahap yang disembunyikan. Setiap keputusan yang diambil
+            alat ini bisa dilihat satu per satu di halaman hasil.
           </p>
         </div>
       </section>
@@ -93,20 +93,21 @@ export default function CaraKerjaPage() {
 
       <section className={styles.bagian} aria-labelledby="judul-mode">
         <h2 id="judul-mode" className={styles.judulBagian}>
-          Satu engine, satu standar hasil
+          Satu cara pemeriksaan untuk semua halaman
         </h2>
         <p className={styles.pengantar}>
-          Alamat dari beranda dan situs katalog kini melewati pipeline terukur
-          yang sama. Tidak ada lagi jalur cepat tanpa pengukuran.
+          Semua alamat yang masuk melewati tahap yang sama. Tidak ada jalur
+          singkat yang melewatkan pengukuran.
         </p>
         <div className={`${styles.kartuMode} ${styles.kartuModeTerukur}`}>
-          <h3 className={styles.modeNama}>Audit terukur</h3>
+          <h3 className={styles.modeNama}>Pemeriksaan terukur</h3>
           <p className={styles.modeKapan}>
-            Untuk setiap halaman publik yang diajukan
+            Untuk setiap halaman publik yang diperiksa
           </p>
           <p className={styles.modeTeks}>
-            Browser sungguhan memuat halaman, axe mengukur sebelum dan sesudah,
-            lalu reader dan PDF dibuat dari DOM yang sudah diverifikasi.
+            Halaman dibuka seperti pembaca biasa membukanya, lalu dinilai
+            sebelum dan sesudah perbaikan. Tampilan ramah akses dan laporannya
+            dibuat dari hasil yang sudah diperiksa ulang.
           </p>
         </div>
       </section>
@@ -127,10 +128,10 @@ export default function CaraKerjaPage() {
       </section>
 
       <section className={styles.ajakan}>
-        <h2 className={styles.ajakanJudul}>Coba langsung</h2>
+        <h2 className={styles.ajakanJudul}>Coba satu halaman</h2>
         <p className={styles.ajakanTeks}>
-          Tempel alamat halaman publik di beranda, atau lihat hasil pengukuran
-          pemeriksaan yang masih tersedia di riwayat.
+          Tempel alamat halaman publik di beranda, atau buka kembali hasil
+          pemeriksaan yang masih tersimpan di riwayat.
         </p>
         <div className={styles.ajakanTombolBaris}>
           <Link href="/" className={styles.tombolUtama}>
