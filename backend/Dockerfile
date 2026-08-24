@@ -61,6 +61,7 @@ ENV PORT=8787
 # job (bukan Node yang merender halaman), dan memaksa GC lebih agresif
 # lebih dulu ketimbang menunggu kernel yang membunuh paksa.
 ENV NODE_OPTIONS=--max-old-space-size=192
+ENV CHROMIUM_LOW_RESOURCE_MODE=1
 
 EXPOSE 8787
 
