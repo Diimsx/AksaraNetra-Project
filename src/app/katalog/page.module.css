@@ -82,10 +82,19 @@
   width: 26px;
   height: 26px;
   flex: none;
-  border: 3px solid var(--color-card-highlight);
-  border-top-color: var(--color-primary);
+  border: 3px solid rgba(22, 119, 255, 0.16);
+  border-top-color: var(--color-primary, #0958d9);
   border-radius: 50%;
-  animation: spin 0.9s linear infinite;
+  animation: spin 0.85s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* --- Keadaan kosong --- */
