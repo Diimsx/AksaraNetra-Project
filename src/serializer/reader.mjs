@@ -123,9 +123,18 @@ body:has(#tema-kontras:checked) {
 img {
   display: block;
   height: auto;
-  margin: 1rem auto;
-  max-height: 32rem;
+  margin: 1.5rem auto;
+  max-height: 24rem;
   max-width: 100%;
+  border-radius: 0.5rem;
+  object-fit: contain;
+}
+img[src*="logo" i],
+img[alt*="logo" i],
+img[src*="lambang" i] {
+  max-height: 5.5rem;
+  max-width: 16rem;
+  margin: 1rem 0;
 }
 figure { margin: 2rem 0; }
 figcaption, .keterangan-gambar { font-size: 0.95em; margin-top: 0.5rem; }

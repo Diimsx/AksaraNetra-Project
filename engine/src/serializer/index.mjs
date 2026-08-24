@@ -156,7 +156,19 @@ async function extract(page, strippedTags, maxCardLevels) {
 
       if (tag === "img") {
         const src = node.getAttribute("src");
-        if (src) blocks.push({ type: "image", src, alt: node.getAttribute("alt") || "" });
+        if (!src) continue;
+
+        // Jangan ekstrak ikon media sosial, tombol tutup, ikon bahasa, atau gambar duplikat sebagai blok gambar artikel
+        const isIconOrSocial = node.closest("button, [class*='icon'], [class*='social'], [class*='widget'], [aria-hidden='true']");
+        const altText = node.getAttribute("alt")?.trim() || "";
+        const srcLower = src.toLowerCase();
+        const isDecorativeIcon = /twitter|facebook|instagram|youtube|close|lang|flag|search|arrow|icon|social|\bx\b/i.test(srcLower) || /twitter|facebook|instagram|youtube|tutup|icon|sosial/i.test(altText);
+
+        if (isIconOrSocial && isDecorativeIcon) continue;
+        if (seenLink.has(src)) continue;
+        seenLink.add(src);
+
+        blocks.push({ type: "image", src, alt: altText });
         continue;
       }
 
@@ -190,7 +202,7 @@ function wrapPatchedPage({ html, disclaimer, sourceUrl }) {
     `</div>`;
 
   const head =
-    `<meta http-equiv="Content-Security-Policy" content="${SNAPSHOT_CSP}">`;
+    `<meta http-equiv="Content-Security-Policy" content="${SNAPSHOT_CSP}"><style>img,svg,video{max-width:100%;height:auto;}body{margin:0;font-family:system-ui,-apple-system,sans-serif;}</style>`;
 
   let output = html.replace(/<head([^>]*)>/i, `<head$1>${head}`);
   output = output.replace(/<body([^>]*)>/i, `<body$1>${banner}`);

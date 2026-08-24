@@ -1,181 +1,176 @@
 /*
-  Bar atas dan navigasi bawah.
-
-  Bar atas dibuat tenang: satu garis pemisah, tanpa bayangan berat, dan
-  tautan aktif ditandai garis bawah tebal, bukan kotak besar.
+  Bar atas floating pill dan navigasi bawah.
 */
 
 .header {
   position: sticky;
   z-index: 100;
   top: 0;
-  border-bottom: 1px solid var(--color-border);
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  padding: 16px var(--space-md) 0;
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
 }
 
-.headerContainer {
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: auto;
+  max-width: 100%;
+  min-height: 52px;
+  padding: 5px 6px 5px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-translucent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-md);
+}
+
+.headerAksi {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
-  width: 100%;
-  max-width: var(--max-width);
-  min-height: var(--header-height);
-  margin: 0 auto;
-  padding: 8px var(--space-md);
+  gap: 6px;
+  flex: none;
+  margin-left: 8px;
 }
 
 .brand {
   display: inline-flex;
-  min-height: 44px;
   align-items: center;
-  gap: 6px;
-  color: var(--color-heading);
-  font-size: 19px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
+  flex: none;
 }
 
 .brandTanda {
-  display: inline-flex;
-  width: 44px;
+  display: block;
+  width: 30px;
   height: 30px;
-  flex: none;
-  align-items: center;
-  justify-content: center;
   object-fit: contain;
 }
 
-.brandNama {
-  line-height: 1;
+.pillDivider {
+  width: 1px;
+  height: 22px;
+  margin: 0 4px;
+  background: var(--color-border);
+  flex: none;
 }
 
 .nav {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   gap: 2px;
+  flex: none;
 }
 
 .navLink {
   position: relative;
   display: inline-flex;
-  min-height: 44px;
+  min-height: 38px;
   align-items: center;
-  padding: 8px 14px;
-  border-radius: var(--radius-xs);
-  color: var(--color-text);
-  font-size: 15px;
-  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-muted);
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-size: 14px;
+  font-weight: 600;
   white-space: nowrap;
+  text-decoration: none;
+  transition:
+    background var(--transition-cepat),
+    color var(--transition-cepat);
 }
 
 .navLink:hover {
-  background: var(--color-card-light);
-  color: var(--color-primary);
+  background: var(--color-surface-sunken);
+  color: var(--color-heading);
 }
 
 .navLinkActive {
-  color: var(--color-primary);
-}
-
-/* Penanda halaman aktif: garis tebal di bawah label. */
-.navLinkActive::after {
-  position: absolute;
-  right: 14px;
-  bottom: 4px;
-  left: 14px;
-  height: 3px;
-  border-radius: var(--radius-pill);
-  background: var(--color-primary-bright);
-  content: "";
-}
-
-/* --- Navigasi bawah, hanya untuk layar sempit --- */
-.bottomNav {
-  display: none;
-}
-
-.bottomList {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.bottomLink {
-  display: flex;
-  min-height: 60px;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 3px;
-  padding: 8px 4px;
-  color: var(--color-text-muted);
-  font-size: 12px;
+  color: var(--color-heading);
   font-weight: 700;
-  text-align: center;
 }
 
-.bottomLink span {
-  line-height: 1.2;
+.aksiUtama {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-button);
+  color: #ffffff;
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background var(--transition-cepat);
 }
 
-.bottomLinkActive {
-  color: var(--color-primary);
-}
-
-/*
-  Halaman aktif ditandai dua hal sekaligus: warna dan penanda bentuk di atas
-  ikon. Warna saja tidak cukup untuk sebagian pengguna.
-*/
-.bottomLinkActive::before {
-  position: absolute;
-  top: 0;
-  width: 32px;
-  height: 3px;
-  border-radius: 0 0 var(--radius-pill) var(--radius-pill);
-  background: var(--color-primary-bright);
-  content: "";
+.aksiUtama:hover {
+  background: var(--color-primary-button-hover);
 }
 
 @media (max-width: 720px) {
-  .headerContainer {
-    min-height: var(--header-height-compact);
-    padding: 8px var(--space-sm);
+  .header {
+    padding: 10px 12px 0;
   }
 
-  .nav {
+  .pill {
+    padding: 4px 5px 4px 8px;
+    gap: 2px;
+    min-height: 44px;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pill::-webkit-scrollbar {
     display: none;
   }
 
-  .bottomNav {
-    position: fixed;
-    z-index: 200;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: block;
-    border-top: 1px solid var(--color-border);
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(10px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+  .brandTanda {
+    width: 26px;
+    height: 26px;
   }
 
-  .bottomLink {
-    position: relative;
+  .pillDivider {
+    height: 18px;
+    margin: 0 2px;
+  }
+
+  .nav {
+    display: flex;
+    gap: 1px;
+  }
+
+  .navLink {
+    padding: 5px 8px;
+    font-size: 13px;
+    min-height: 34px;
+  }
+
+  .headerAksi {
+    margin-left: 4px;
+  }
+
+  .aksiUtama {
+    min-height: 34px;
+    padding: 0 12px;
+    font-size: 13px;
   }
 }
 
-/* Layar pendek dan lebar, misalnya ponsel dimiringkan. */
-@media (max-height: 460px) and (max-width: 720px) {
-  .bottomLink {
-    min-height: 48px;
-    flex-direction: row;
-    gap: 8px;
-    font-size: 13px;
+@media (max-width: 380px) {
+  .navLink {
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+
+  .aksiUtama {
+    padding: 0 10px;
+    font-size: 12px;
   }
 }

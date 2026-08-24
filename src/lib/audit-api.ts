@@ -89,6 +89,7 @@ interface PublicErrorCopy {
   title: string;
   message: string;
   actionLabel: string;
+  actionHref: string;
 }
 
 const ERROR_COPY: Record<PublicErrorCode, PublicErrorCopy> = {
@@ -96,75 +97,88 @@ const ERROR_COPY: Record<PublicErrorCode, PublicErrorCopy> = {
     title: "Alamat belum bisa diproses",
     message: "Periksa kembali URL dan pastikan alamat diawali http atau https.",
     actionLabel: "Periksa URL",
+    actionHref: "/periksa",
   },
   TARGET_NOT_PUBLIC: {
     title: "Halaman tidak dapat diaudit",
     message:
       "AksaraNetra hanya dapat membuka halaman web yang tersedia untuk publik.",
     actionLabel: "Gunakan URL lain",
+    actionHref: "/periksa",
   },
   TARGET_UNREACHABLE: {
     title: "Halaman tidak dapat dijangkau",
     message:
       "Situs tujuan tidak merespons. Tunggu beberapa saat lalu coba lagi.",
     actionLabel: "Coba lagi",
+    actionHref: "/periksa",
   },
   TARGET_TIMEOUT: {
     title: "Audit melewati batas waktu",
     message:
       "Halaman membutuhkan waktu terlalu lama untuk diperiksa dengan aman.",
     actionLabel: "Coba lagi",
+    actionHref: "/periksa",
   },
   TARGET_BLOCKED_BY_ROBOTS: {
     title: "Audit tidak diizinkan situs",
     message:
       "Aturan robots.txt situs tersebut tidak mengizinkan audit otomatis.",
     actionLabel: "Gunakan URL lain",
+    actionHref: "/periksa",
   },
   BROWSER_NOT_INSTALLED: {
     title: "Audit belum dapat dijalankan",
     message:
       "Layanan audit sedang tidak siap. Coba lagi beberapa saat atau hubungi pengelola.",
     actionLabel: "Kembali ke beranda",
+    actionHref: "/",
   },
   AUDIT_RUNTIME_UNAVAILABLE: {
     title: "Layanan audit belum siap",
     message: "Runtime audit sedang tidak tersedia. Coba lagi beberapa saat.",
     actionLabel: "Coba lagi",
+    actionHref: "/periksa",
   },
   RATE_LIMITED: {
     title: "Batas audit tercapai",
     message:
       "Terlalu banyak audit dibuat dari jaringan ini. Coba lagi setelah jeda.",
     actionLabel: "Kembali ke beranda",
+    actionHref: "/",
   },
   RESULT_EXPIRED: {
     title: "Hasil audit telah kedaluwarsa",
     message:
       "Hasil disimpan selama tujuh hari. Jalankan audit baru untuk membuat hasil terkini.",
     actionLabel: "Audit ulang",
+    actionHref: "/periksa",
   },
   AUDIT_NOT_FOUND: {
     title: "Audit tidak ditemukan",
     message:
       "Audit ini tidak tersedia di perangkat atau sudah dihapus dari server.",
     actionLabel: "Mulai audit baru",
+    actionHref: "/periksa",
   },
   AUDIT_CANCELLED: {
     title: "Audit dibatalkan",
     message: "Proses dihentikan dan artefak sementara sudah dibersihkan.",
     actionLabel: "Mulai audit baru",
+    actionHref: "/periksa",
   },
   NETWORK_ERROR: {
     title: "Tidak dapat terhubung ke layanan audit",
     message: "Periksa koneksi dan pastikan layanan backend sedang berjalan.",
     actionLabel: "Coba lagi",
+    actionHref: "/periksa",
   },
   INTERNAL_ERROR: {
     title: "Audit belum berhasil",
     message:
       "Terjadi kendala internal. Tidak ada hasil yang diklaim dari proses ini.",
     actionLabel: "Kembali ke beranda",
+    actionHref: "/",
   },
 };
 

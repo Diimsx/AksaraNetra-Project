@@ -1,0 +1,527 @@
+/* Styling untuk 5 Visualisasi Animasi Tahap AksaraNetra */
+
+.stage1Wrap,
+.stage2Wrap,
+.stage3Wrap,
+.stage4Wrap,
+.stage5Wrap {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* === Stage 1 === */
+.stage1SearchBar {
+  width: 100%;
+  height: 48px;
+  background: #ffffff;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.stage1Sweep {
+  position: absolute;
+  inset: 0;
+  background: rgba(219, 234, 254, 0.45);
+  pointer-events: none;
+}
+
+.stage1Globe {
+  width: 20px;
+  height: 20px;
+  color: var(--color-text-muted);
+  margin-right: 12px;
+  position: relative;
+  z-index: 2;
+  flex: none;
+}
+
+.stage1UrlBar {
+  height: 8px;
+  width: 160px;
+  background: #e2e8f0;
+  border-radius: var(--radius-pill);
+  position: relative;
+  z-index: 2;
+}
+
+.stage1CheckmarkBadge {
+  margin-left: auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #10b981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  flex: none;
+}
+
+.checkIconWhite {
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.stage1BadgesRow {
+  margin-top: 20px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.stage1BadgeCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.stage1BadgeBox {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.stage1BadgeCheckCircle {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #10b981;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkIconGreen {
+  width: 9px;
+  height: 9px;
+  background: #10b981;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.stage1BadgeText {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 600;
+}
+
+/* === Stage 2 === */
+.stage2Card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stage2Scanner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(37, 99, 235, 0.16), transparent);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.stage2Header {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  align-items: center;
+}
+
+.stage2Avatar {
+  width: 36px;
+  height: 36px;
+  background: #e2e8f0;
+  border-radius: 8px;
+  flex: none;
+}
+
+.stage2HeaderLines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stage2Line75 {
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: var(--radius-pill);
+  width: 75%;
+}
+
+.stage2Line50 {
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: var(--radius-pill);
+  width: 50%;
+}
+
+.stage2BoxMissingAlt {
+  height: 64px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  position: relative;
+  border: 2px dashed #e5e7eb;
+}
+
+.badgeMissingAlt {
+  position: absolute;
+  top: -10px;
+  right: 8px;
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+.stage2FooterRow {
+  display: flex;
+  gap: 10px;
+}
+
+.stage2BoxEmptyLabel {
+  height: 36px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  flex: 1;
+  position: relative;
+  border: 2px dashed #e5e7eb;
+}
+
+.badgeEmptyLabel {
+  position: absolute;
+  bottom: -10px;
+  left: 6px;
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+  z-index: 5;
+}
+
+.stage2BoxNormal {
+  height: 36px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  flex: 1;
+}
+
+/* === Stage 3 === */
+.stage3Wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.stage3FixItem {
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  padding: 12px 14px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+}
+
+.stage3FixLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stage3IconBox {
+  width: 28px;
+  height: 28px;
+  background: #f1f5f9;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.stage3Dash {
+  width: 14px;
+  height: 4px;
+  background: #cbd5e1;
+  border-radius: var(--radius-pill);
+}
+
+.stage3Label {
+  font-size: 12px;
+  font-family: "Courier New", Courier, monospace;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.badgeApplied {
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.04em;
+}
+
+.badgeAppliedIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.badgeReview {
+  background: #fef3c7;
+  color: #b45309;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* === Stage 4 === */
+.stage4ChartContainer {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  justify-content: center;
+  height: 190px;
+  width: 100%;
+  position: relative;
+  padding-bottom: 24px;
+}
+
+.stage4BarBefore {
+  width: 64px;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.stage4NumBefore {
+  position: absolute;
+  bottom: 12px;
+  color: #ef4444;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.stage4LabelBefore {
+  position: absolute;
+  bottom: -22px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 600;
+}
+
+.stage4BarAfter {
+  width: 64px;
+  background: #dcfce7;
+  border: 1px solid #bbf7d0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.stage4NumAfter {
+  position: absolute;
+  bottom: 8px;
+  color: #16a34a;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.stage4LabelAfter {
+  position: absolute;
+  bottom: -22px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 600;
+}
+
+.stage4ReductionBadge {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: #ffffff;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  text-align: center;
+}
+
+.stage4ReductionTitle {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.stage4ReductionVal {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-primary);
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  line-height: 1.1;
+}
+
+/* === Stage 5 === */
+.stage5RelWrap {
+  position: relative;
+  width: 100%;
+  min-height: 180px;
+}
+
+.stage5BeforeLayout {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  padding: 14px;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stage5Block1 { width: 30%; height: 26px; background: #e2e8f0; border-radius: 4px; }
+.stage5Block2 { width: 62%; height: 26px; background: #e2e8f0; border-radius: 4px; }
+.stage5Block3 { width: 100%; height: 56px; background: #e2e8f0; border-radius: 4px; }
+.stage5Block4 { width: 45%; height: 32px; background: #e2e8f0; border-radius: 4px; }
+.stage5Block5 { width: 25%; height: 32px; background: #e2e8f0; border-radius: 4px; }
+
+.stage5AfterLayout {
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  padding: 18px 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 10;
+}
+
+.stage5TitleBar {
+  width: 70%;
+  height: 16px;
+  background: #1e293b;
+  border-radius: 3px;
+}
+
+.stage5Paragraph {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stage5TextLine {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 2px;
+}
+
+.stage5TextLineShort {
+  width: 60%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 2px;
+}
+
+.stage5TextLineMed {
+  width: 75%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 2px;
+}
+
+.stage5SubTitleBar {
+  width: 45%;
+  height: 14px;
+  background: #1e293b;
+  border-radius: 3px;
+  margin-top: 4px;
+}
+
+.stage5BadgeIcon {
+  position: absolute;
+  top: -14px;
+  right: -10px;
+  width: 36px;
+  height: 36px;
+  background: #2563eb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
+}
+
+.stage5Icon {
+  width: 18px;
+  height: 18px;
+}

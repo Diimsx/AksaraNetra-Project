@@ -1,0 +1,72 @@
+# Render Blueprint untuk backend AksaraNetra.
+#
+# Build context WAJIB repo root (bukan folder backend/), karena
+# backend/src/auditor.mjs mengimpor langsung dari
+# ../../engine/src/api/index.mjs. Ini sama persis dengan catatan yang sudah
+# ada di backend/Dockerfile -- lihat komentar di sana kalau lupa kenapa.
+#
+# Cara pakai:
+#   1. Push file ini ke root branch final-integration (bukan main).
+#   2. Di Render dashboard: New > Blueprint > pilih repo ini > branch
+#      final-integration. Render otomatis mendeteksi file ini.
+#   3. Setelah service pertama kali jadi, isi FRONTEND_ORIGINS secara manual
+#      di dashboard (lihat catatan di bawah) -- sengaja tidak ditulis di sini
+#      karena URL Vercel yang asli belum diketahui saat berkas ini dibuat.
+
+services:
+  - type: web
+    name: aksaranetra-backend
+    runtime: docker
+    plan: free
+
+    # Catatan: field ini mengunci Blueprint ke satu branch tetap, termasuk di
+    # preview environment (kalau nanti dipakai). Untuk project lomba yang
+    # memang cuma jalan dari satu branch, ini yang diinginkan -- bukan
+    # kelalaian mengikuti default.
+    branch: final-integration
+
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+
+    envVars:
+      # --- WAJIB diisi manual di dashboard Render, bukan di sini ---
+      # Harus persis sama dengan URL Vercel yang dipakai, termasuk skema
+      # (https://) dan tanpa garis miring di akhir. Backend menolak
+      # permintaan dari origin mana pun yang tidak ada di daftar ini
+      # (lihat backend/src/app.mjs -> setCors, dan backend/src/config.mjs).
+      # sync:false berarti Render sengaja TIDAK menebak nilainya -- kalau
+      # dibiarkan kosong, frontend akan selalu ditolak dengan
+      # "origin-not-allowed" walau deploy-nya sendiri sukses.
+      - key: FRONTEND_ORIGINS
+        sync: false
+
+      # BACKEND_SECRET wajib >=32 karakter di production (lihat
+      # backend/src/config.mjs -> requiredSecret). generateValue:true berarti
+      # Render sendiri yang membuat nilai acaknya saat Blueprint pertama kali
+      # dijalankan -- tidak perlu dan tidak boleh disalin dari tempat lain.
+      - key: BACKEND_SECRET
+        generateValue: true
+
+      # Perbaikan RAM yang sudah kita terapkan di engine/src/runner/index.mjs.
+      # WAJIB "1" di Render Free (0.1 CPU / 512MB) -- tanpa ini seluruh flag
+      # Chromium hemat-resource dan batas tinggi screenshot tidak pernah
+      # aktif, dan audit akan OOM lagi seperti sebelumnya.
+      - key: CHROMIUM_LOW_RESOURCE_MODE
+        value: "1"
+
+      # NODE_ENV, HOST, PORT, BACKEND_DATA_DIR, dan NODE_OPTIONS sudah
+      # di-hardcode lewat ENV di backend/Dockerfile. Sengaja tidak diulang di
+      # sini -- env var yang di-set di Render akan menimpa ENV Dockerfile
+      # kalau namanya sama, jadi mengulang di sini cuma menambah satu tempat
+      # lagi yang harus diingat untuk diubah kalau nilainya nanti berubah.
+
+    # Sengaja TIDAK ada bagian "disk" di sini.
+    #
+    # Ini keputusan sadar, bukan kelupaan: Render Free Tier tidak menyediakan
+    # persistent disk sama sekali (butuh plan berbayar untuk itu). Karena
+    # project ini cuma untuk lomba sampai November dan bukan untuk produksi
+    # jangka panjang, trade-off ini diterima -- riwayat job & artefak audit
+    # di /data akan hilang tiap kali instance restart atau idle lalu bangun
+    # lagi. Kalau nanti perlu data yang bertahan, itu berarti naik plan
+    # berbayar, bukan sekadar menambah field di sini.

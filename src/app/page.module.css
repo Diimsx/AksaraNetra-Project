@@ -1,9 +1,8 @@
 /*
-  Beranda.
-
-  Yang paling penting di halaman ini adalah satu hal: kolom alamat.
-  Karena itu formulir dibuat sebagai objek utama, bukan kartu kecil di
-  samping judul. Di layar sempit, formulir naik ke paling atas.
+  Landing page gabungan: hero, form, cara kerja, dan tentang, satu halaman
+  dengan section beranchor. Arah desain mengikuti acuan navbar-pill: latar
+  putih polos, satu aksen biru, hero center-aligned dengan grid preview di
+  bawahnya alih-alih mockup yang menyatu di dalam hero.
 */
 
 .main {
@@ -11,99 +10,183 @@
   flex-direction: column;
 }
 
-/* --- Hero --- */
+/* ============ HERO ============ */
 
 .heroWrap {
-  border-bottom: 1px solid var(--color-border);
-  background: linear-gradient(
-    180deg,
-    var(--color-surface) 0%,
-    var(--color-background) 100%
-  );
+  position: relative;
+  overflow: hidden;
+  background: transparent;
 }
 
 .heroInner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
-  align-items: center;
-  gap: clamp(32px, 5vw, 64px);
-  padding-top: clamp(40px, 6vw, 72px);
-  padding-bottom: clamp(40px, 6vw, 72px);
-}
-
-.heroCopy {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 18px;
-  order: 1;
+  align-items: center;
+  max-width: 760px;
+  margin: 0 auto;
+  padding-top: clamp(96px, 12vw, 144px);
+  padding-bottom: clamp(40px, 5vw, 56px);
+  text-align: center;
 }
 
-.formPanel {
-  order: 2;
+.pillDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-success);
+  flex: none;
+}
+
+.heroPill {
+  cursor: default;
+  transition: border-color var(--transition-cepat), box-shadow var(--transition-cepat);
+}
+
+.heroPill:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.pillArrow {
+  font-size: 16px;
+  line-height: 1;
+  color: var(--color-primary-bright);
+  margin-left: 2px;
 }
 
 .h1 {
-  max-width: 19ch;
-  margin: 0;
+  max-width: 20ch;
+  margin: 20px 0 16px;
+  color: var(--color-heading);
+  font-size: clamp(32px, 4.6vw, 54px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.h1Accent {
+  color: var(--color-primary-bright);
 }
 
 .description {
   max-width: 52ch;
-  color: var(--color-text);
-  font-size: clamp(16px, 1.5vw, 18px);
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: clamp(16px, 1.4vw, 17px);
 }
 
-.assurances {
+.heroCtaRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 20px;
-  padding: 0;
-  margin: 2px 0 0;
-  color: var(--color-primary-mid);
-  font-size: 15px;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.heroLinkGhost {
+  color: var(--color-text);
   font-weight: 700;
-  list-style: none;
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--color-border-strong);
 }
 
-.assurances li {
+.heroLinkGhost:hover {
+  text-decoration-color: var(--color-text);
+}
+
+/* --- Carousel preview di bawah hero (infinite realtime ticker) --- */
+
+.carouselWrap {
+  width: 100%;
+  overflow: hidden;
+  background: transparent;
+  padding: clamp(36px, 5vw, 64px) 0;
+  margin-top: clamp(20px, 3vw, 36px);
+  margin-bottom: clamp(36px, 5vw, 56px);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
   position: relative;
-  padding-left: 22px;
+  z-index: 1;
 }
 
-/* Tanda centang dibuat dari bentuk, bukan huruf, agar tidak dibacakan. */
-.assurances li::before {
-  position: absolute;
-  top: 8px;
-  left: 0;
-  width: 12px;
-  height: 7px;
-  border-left: 2.5px solid var(--color-success);
-  border-bottom: 2.5px solid var(--color-success);
-  transform: rotate(-45deg);
-  content: "";
+.carouselTrack {
+  display: flex;
+  gap: clamp(20px, 2.5vw, 32px);
+  width: max-content;
+  will-change: transform;
 }
 
-/* --- Panel formulir --- */
+.carouselCard {
+  flex: 0 0 auto;
+  width: clamp(360px, 52vw, 720px);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: var(--radius-xl);
+  padding: clamp(14px, 2vw, 22px);
+  box-shadow:
+    0 20px 40px -15px rgba(37, 99, 235, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.8) inset,
+    0 8px 24px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-cepat), box-shadow var(--transition-cepat);
+}
+
+.carouselCard:hover {
+  box-shadow:
+    0 24px 48px -12px rgba(37, 99, 235, 0.14),
+    0 0 0 1px rgba(255, 255, 255, 0.9) inset,
+    0 12px 28px rgba(0, 0, 0, 0.06);
+}
+
+.carouselCardInner {
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.carouselImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+/* ============ FORM ============ */
+
+.formWrap {
+  padding-bottom: clamp(48px, 6vw, 72px);
+}
 
 .formPanel {
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  padding: clamp(22px, 3vw, 32px);
+  gap: 20px;
+  padding: clamp(24px, 3vw, 32px);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   background: var(--color-surface);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
 }
 
 .formIntro h2 {
   margin-bottom: 4px;
+  font-size: 19px;
 }
 
 .formIntro p {
   color: var(--color-text-muted);
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .form,
@@ -113,16 +196,16 @@
 }
 
 .form {
-  gap: 18px;
+  gap: 16px;
 }
 
 .urlInput {
-  font-size: 17px;
+  font-size: 16px;
 }
 
 .submitBtn {
   width: 100%;
-  font-size: 17px;
+  font-size: 16px;
 }
 
 .examples {
@@ -130,13 +213,13 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 12px;
-  padding-top: 18px;
+  padding-top: 16px;
   border-top: 1px solid var(--color-border);
 }
 
 .examplesLabel {
   color: var(--color-text-muted);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
 }
 
@@ -147,318 +230,514 @@
 }
 
 .exampleButton {
-  min-height: 40px;
-  padding: 8px 14px;
+  min-height: 38px;
+  padding: 7px 13px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
   background: var(--color-surface-sunken);
   color: var(--color-primary);
   font: inherit;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  transition:
-    border-color var(--transition-cepat),
-    background var(--transition-cepat);
+  transition: border-color var(--transition-cepat);
 }
 
 .exampleButton:hover {
   border-color: var(--color-primary-bright);
-  background: var(--color-card-light);
 }
 
-/* --- Isi halaman --- */
+/* ============ SECTION UMUM (Cara Kerja / Tentang) ============ */
 
-.body {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(48px, 6vw, 72px);
-  padding-top: clamp(48px, 6vw, 72px);
-  padding-bottom: 8px;
+.sectionWrap {
+  position: relative;
+  overflow: hidden;
+  padding-top: clamp(44px, 5.5vw, 68px);
+  padding-bottom: clamp(64px, 8vw, 100px);
+  scroll-margin-top: 20px;
+}
+
+.sectionWrap > :global(.container) {
+  position: relative;
+  z-index: 1;
+}
+
+.sectionAlt {
+  background: transparent;
+  border-top: none;
+  border-bottom: none;
+  padding-top: clamp(44px, 5.5vw, 68px);
+  padding-bottom: clamp(64px, 8vw, 96px);
+  scroll-margin-top: 20px;
 }
 
 .sectionIntro {
   max-width: 60ch;
-  margin-bottom: 26px;
+  margin: 0 auto 44px;
+  text-align: center;
+}
+
+.sectionPill {
+  margin-bottom: 18px;
+  cursor: default;
+  transition: border-color var(--transition-cepat), box-shadow var(--transition-cepat);
+}
+
+.sectionPill:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-sm);
 }
 
 .sectionIntro h2 {
-  margin-bottom: 6px;
+  margin: 0 0 12px;
+  font-size: clamp(26px, 3vw, 34px);
 }
 
 .sectionIntro p {
   color: var(--color-text-muted);
-  font-size: 17px;
+  font-size: 16px;
 }
 
-.steps {
+/* --- Langkah cara kerja --- */
+
+.daftarLangkah {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  padding: 0;
+  margin: 0 0 48px;
+  list-style: none;
+}
+
+.langkah {
+  display: flex;
+  flex-direction: column;
   gap: 16px;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+  transition: transform var(--transition-cepat), box-shadow var(--transition-cepat), border-color var(--transition-cepat);
+}
+
+.langkah:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Langkah ke-5 (terakhir) membentang penuh 2 kolom */
+.langkah:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.langkahHeader {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.nomor {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-button);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.langkahText {
+  flex: 1;
+}
+
+.langkahText h3 {
+  margin-bottom: 6px;
+  font-size: 17px;
+  color: var(--color-heading);
+  line-height: 1.3;
+}
+
+.langkahText p {
+  color: var(--color-text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.langkahVisual {
+  margin-top: auto;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-sunken);
+  padding: 8px;
+}
+
+.langkahImg {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: var(--radius-sm);
+  display: block;
+  border: 1px solid var(--color-border);
+  background: #ffffff;
+}
+
+.langkah:last-child:nth-child(odd) .langkahImg {
+  height: 240px;
+  object-position: top center;
+}
+
+/* --- Standar --- */
+
+.standarGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 32px;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-border);
+}
+
+.standarIntro h3 {
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+.standarIntro p {
+  color: var(--color-text-muted);
+  font-size: 15px;
+}
+
+.standarList {
+  display: grid;
+  gap: 12px;
   padding: 0;
   margin: 0;
   list-style: none;
-  counter-reset: none;
 }
 
-.step {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 22px;
+.standarCard {
+  padding: 18px 20px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);
 }
 
-.stepNumber {
-  display: grid;
-  width: 34px;
-  height: 34px;
-  flex: none;
-  place-items: center;
-  border-radius: var(--radius-xs);
-  background: var(--color-primary);
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-}
-
-.step h3 {
-  margin-bottom: 4px;
-  font-size: 18px;
-}
-
-.step p {
-  color: var(--color-text-muted);
-  font-size: 15px;
-}
-
-/* --- Bukti --- */
-
-.proofSection {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-block: 1px solid var(--color-border);
-}
-
-.proofSection article {
-  padding: 26px 24px;
-}
-
-.proofSection article + article {
-  border-left: 1px solid var(--color-border);
-}
-
-.proofSection h3 {
-  margin-bottom: 6px;
-  font-size: 18px;
-}
-
-.proofSection p {
-  max-width: 34ch;
-  color: var(--color-text-muted);
-  font-size: 15px;
-}
-
-/* --- Penutup --- */
-
-.closing {
+.standarHeader {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-  padding: clamp(24px, 3vw, 34px);
-  border: 1px solid var(--color-card-accent);
+  gap: 12px;
+  margin: 0 0 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.standarLogoWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-xs);
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  padding: 4px;
+  flex: none;
+  overflow: hidden;
+}
+
+.standarLogo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.standarCard h4 {
+  margin: 0;
+  font-size: 15px;
+  color: var(--color-heading);
+}
+
+.standarCard p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+/* --- Tentang: stacked sections --- */
+
+.aboutSections {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(48px, 6vw, 64px);
+}
+
+.aboutSectionBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.aboutGroupHeader {
+  max-width: 58ch;
+}
+
+.aboutGroupHeader :global(.mono-label) {
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.aboutGroupTitle {
+  margin: 0 0 6px;
+  font-size: clamp(22px, 2.5vw, 26px);
+  font-weight: 800;
+  color: var(--color-heading);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.titleBadgeCheck {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 13px;
+  font-weight: 800;
+  flex: none;
+}
+
+.titleBadgeMuted {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 11px;
+  font-weight: 800;
+  flex: none;
+}
+
+.aboutGroupDesc {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.aboutGridCards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.aboutCard {
+  padding: 22px 24px;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  background: var(--color-card-light);
-  overflow: clip;
+  background: var(--color-surface);
   box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform var(--transition-cepat), box-shadow var(--transition-cepat), border-color var(--transition-cepat);
 }
 
-.closing h2 {
-  margin-bottom: 6px;
-  font-size: clamp(21px, 2.2vw, 26px);
+.aboutCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary-bright);
 }
 
-.closing p {
-  max-width: 56ch;
-  color: var(--color-text);
+.aboutCardMuted {
+  padding: 22px 24px;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-lg);
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform var(--transition-cepat), background var(--transition-cepat), border-color var(--transition-cepat);
+}
+
+.aboutCardMuted:hover {
+  transform: translateY(-2px);
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.aboutCardHeader {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.aboutIndex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-xs);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-bright);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 13px;
+  font-weight: 800;
+  flex: none;
+}
+
+.aboutMutedIndex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 11px;
+  font-weight: 800;
+  flex: none;
+  margin-top: 2px;
+}
+
+.aboutCardBody {
+  flex: 1;
+}
+
+.aboutCardBody h4 {
+  margin: 0 0 4px;
   font-size: 16px;
+  color: var(--color-heading);
+  line-height: 1.35;
 }
 
-/* --- Layar sedang --- */
+.aboutCardMuted .aboutCardBody h4 {
+  color: #334155;
+}
+
+.aboutCardBody p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.aboutCardMuted .aboutCardBody p {
+  color: #64748b;
+}
+
+.aboutVisualWrap {
+  margin-top: auto;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface-sunken);
+  border: 1px solid var(--color-border);
+  padding: 16px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 190px;
+}
+
+.aboutVisualWrapMuted {
+  margin-top: auto;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 16px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 190px;
+}
+
+.sourceNote {
+  margin-top: 32px;
+  padding: 24px 26px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.sourceNote h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+}
+
+.sourceNote p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 15px;
+}
+
+/* ============ Layar sedang ============ */
 
 @media (max-width: 980px) {
-  .heroInner {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .h1 {
-    max-width: 24ch;
-  }
-
-  .description {
-    max-width: 62ch;
-  }
-
-  .steps {
+  .daftarLangkah {
     grid-template-columns: 1fr;
   }
 
-  .proofSection {
+  .standarGrid {
     grid-template-columns: 1fr;
+    gap: 24px;
   }
 
-  .proofSection article + article {
-    border-top: 1px solid var(--color-border);
-    border-left: 0;
-  }
-
-  .proofSection p {
-    max-width: 60ch;
+  .aboutGridCards {
+    grid-template-columns: 1fr;
   }
 }
 
-/*
-  Layar sempit.
-  Formulir dipindah ke paling atas supaya tidak perlu menggulir dulu.
-*/
+/* ============ Layar sempit ============ */
+
 @media (max-width: 720px) {
   .heroInner {
-    padding-top: 20px;
-    padding-bottom: 32px;
-    gap: 28px;
-  }
-
-  .formPanel {
-    order: 1;
-  }
-
-  .heroCopy {
-    order: 2;
-    gap: 14px;
+    padding-top: 64px;
   }
 
   .h1 {
-    max-width: 100%;
-    font-size: clamp(26px, 7.4vw, 34px);
+    font-size: clamp(26px, 7.4vw, 32px);
   }
 
-  .closing {
-    align-items: flex-start;
+  .heroCtaRow {
     flex-direction: column;
-    gap: 18px;
-  }
-
-  .closing .btn,
-  .closing a {
+    align-items: stretch;
     width: 100%;
   }
-}
 
-@media (max-width: 380px) {
-  .formPanel {
-    padding: 18px;
-  }
-
-  .exampleButton {
-    font-size: 13px;
+  .heroCtaRow :global(.btn-primary) {
+    width: 100%;
+    text-align: center;
   }
 }
 
-/*
-  --- Gerak halaman ---
-  Hanya opacity dan transform. Keadaan akhir animasi sama dengan tampilan
-  bawaan, jadi isinya tetap utuh kalau animasi tidak berjalan.
-*/
-.heroCopy,
-.formPanel,
-.proofSection,
-.closing {
+/* ============ Gerak halaman ============ */
+
+.heroInner {
   animation: munculNaik 480ms cubic-bezier(0.22, 0.68, 0.28, 1) both;
 }
 
-.formPanel {
-  animation-delay: 80ms;
-}
-
-.proofSection {
-  animation-delay: 140ms;
-}
-
-.closing {
-  animation-delay: 180ms;
-}
-
-.step {
-  animation: munculNaik 460ms cubic-bezier(0.22, 0.68, 0.28, 1) both;
-}
-
-.step:nth-child(2) {
-  animation-delay: 90ms;
-}
-
-.step:nth-child(3) {
-  animation-delay: 180ms;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .step {
-    transition:
-      transform var(--transition-sedang),
-      box-shadow var(--transition-sedang),
-      border-color var(--transition-cepat);
-  }
-
-  .step:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--color-border-strong);
-  }
-
-  .exampleButton {
-    transition:
-      transform var(--transition-cepat),
-      background var(--transition-cepat),
-      border-color var(--transition-cepat);
-  }
-
-  .exampleButton:hover {
-    transform: translateY(-1px);
-  }
-
-  .submitBtn:hover {
-    transform: translateY(-1px);
-  }
-}
-
-.submitBtn {
-  transition:
-    transform var(--transition-cepat),
-    background var(--transition-cepat),
-    box-shadow var(--transition-cepat);
-}
-
-.submitBtn:active {
-  transform: translateY(1px);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .heroCopy,
-  .formPanel,
-  .proofSection,
-  .closing,
-  .step {
+  .heroInner {
     animation: none;
-  }
-
-  .step:hover,
-  .exampleButton:hover,
-  .submitBtn:hover,
-  .submitBtn:active {
-    transform: none;
   }
 }

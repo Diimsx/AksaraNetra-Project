@@ -1,0 +1,95 @@
+/*
+  Halaman periksa: satu kartu formulir berdiri sendiri, terpusat secara
+  vertikal dan horizontal. Style kartu sama persis dengan yang sebelumnya
+  menempel di landing page, hanya dipindah keluar jadi halaman sendiri.
+*/
+
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--header-height) - 180px);
+  padding: clamp(60px, 8vw, 96px) 0 clamp(96px, 14vw, 160px);
+}
+
+.formPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: clamp(24px, 3vw, 32px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.formIntro h2 {
+  margin-bottom: 4px;
+  font-size: 19px;
+}
+
+.formIntro p {
+  color: var(--color-text-muted);
+  font-size: 15px;
+}
+
+.form,
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.form {
+  gap: 16px;
+}
+
+.urlInput {
+  font-size: 16px;
+}
+
+.submitBtn {
+  width: 100%;
+  font-size: 16px;
+}
+
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.examplesLabel {
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.exampleButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.exampleButton {
+  min-height: 38px;
+  padding: 7px 13px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-sunken);
+  color: var(--color-primary);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color var(--transition-cepat);
+}
+
+.exampleButton:hover {
+  border-color: var(--color-primary-bright);
+}

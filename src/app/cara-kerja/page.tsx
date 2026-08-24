@@ -1,6 +1,14 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import styles from "./page.module.css";
+import CaraKerjaReveal from "./CaraKerjaReveal";
+import {
+  Stage1,
+  Stage2,
+  Stage3,
+  Stage4,
+  Stage5,
+} from "@/components/StageVisualizations";
 
 export const metadata: Metadata = {
   title: "Cara kerja",
@@ -8,15 +16,7 @@ export const metadata: Metadata = {
     "Lima tahap pemeriksaan AksaraNetra, dari alamat halaman sampai tampilan yang lebih ramah akses.",
 };
 
-/**
- * Halaman cara kerja.
- *
- * Perubahan penting dari versi lama: langkah kedua dulu menyebut "meningkatkan
- * kontras warna" pada situs sumber. Itu tidak dikerjakan, jadi kalimatnya
- * diganti dengan pekerjaan yang benar benar dilakukan.
- *
- * Semua audit kini memakai satu engine terukur yang sama.
- */
+const TAHAP_VISUALS = [Stage1, Stage2, Stage3, Stage4, Stage5];
 
 const langkah = [
   {
@@ -59,8 +59,13 @@ const standar = [
 export default function CaraKerjaPage() {
   return (
     <main className={styles.container}>
-      <section className={styles.hero}>
+      <CaraKerjaReveal />
+      <section className={`${styles.hero} texture-grid`}>
         <div className={styles.heroIsi}>
+          <span className="pill-modern">
+            <span className="titik" aria-hidden="true" />
+            Cara kerja
+          </span>
           <h1 className={styles.heroJudul}>
             Lima tahap, dari alamat halaman sampai bacaan yang lebih mudah
           </h1>
@@ -71,27 +76,41 @@ export default function CaraKerjaPage() {
         </div>
       </section>
 
-      <section className={styles.bagian} aria-labelledby="judul-langkah">
+      <section
+        className={`${styles.bagian} ungkap`}
+        aria-labelledby="judul-langkah"
+      >
         <h2 id="judul-langkah" className={styles.judulBagian}>
           Urutan prosesnya
         </h2>
 
         <ol className={styles.daftarLangkah}>
-          {langkah.map((item, i) => (
-            <li key={item.judul} className={styles.langkah}>
-              <span className={styles.nomor} aria-hidden="true">
-                {i + 1}
-              </span>
-              <div className={styles.langkahIsi}>
-                <h3 className={styles.langkahJudul}>{item.judul}</h3>
-                <p className={styles.langkahTeks}>{item.isi}</p>
-              </div>
-            </li>
-          ))}
+          {langkah.map((item, i) => {
+            const StageComponent = TAHAP_VISUALS[i];
+            return (
+              <li key={item.judul} className={styles.langkah}>
+                <div className={styles.langkahHeader}>
+                  <span className={styles.nomor} aria-hidden="true">
+                    {i + 1}
+                  </span>
+                  <div className={styles.langkahIsi}>
+                    <h3 className={styles.langkahJudul}>{item.judul}</h3>
+                    <p className={styles.langkahTeks}>{item.isi}</p>
+                  </div>
+                </div>
+                <div className={styles.langkahVisual}>
+                  {StageComponent && <StageComponent />}
+                </div>
+              </li>
+            );
+          })}
         </ol>
       </section>
 
-      <section className={styles.bagian} aria-labelledby="judul-mode">
+      <section
+        className={`${styles.bagian} ungkap`}
+        aria-labelledby="judul-mode"
+      >
         <h2 id="judul-mode" className={styles.judulBagian}>
           Satu cara pemeriksaan untuk semua halaman
         </h2>
@@ -112,7 +131,10 @@ export default function CaraKerjaPage() {
         </div>
       </section>
 
-      <section className={styles.bagian} aria-labelledby="judul-standar">
+      <section
+        className={`${styles.bagian} ungkap`}
+        aria-labelledby="judul-standar"
+      >
         <h2 id="judul-standar" className={styles.judulBagian}>
           Standar yang dipakai
         </h2>
@@ -127,7 +149,7 @@ export default function CaraKerjaPage() {
         </ul>
       </section>
 
-      <section className={styles.ajakan}>
+      <section className={`${styles.ajakan} texture-grid ungkap`}>
         <h2 className={styles.ajakanJudul}>Coba satu halaman</h2>
         <p className={styles.ajakanTeks}>
           Tempel alamat halaman publik di beranda, atau buka kembali hasil

@@ -41,6 +41,7 @@ type Failure = {
   title: string;
   message: string;
   actionLabel: string;
+  actionHref: string;
 };
 
 const BULAN = [
@@ -172,6 +173,40 @@ function conclusion(snapshot: Snapshot) {
   } as const;
 }
 
+function useSmoothProgress(targetProgress: number) {
+  const [displayProgress, setDisplayProgress] = useState(targetProgress);
+  const currentRef = useRef(targetProgress);
+
+  useEffect(() => {
+    let animationFrameId: number;
+    const startValue = currentRef.current;
+    const diff = targetProgress - startValue;
+    if (diff === 0) return;
+
+    const duration = Math.min(Math.max(Math.abs(diff) * 14, 350), 750);
+    const startTime = performance.now();
+
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progressRatio = Math.min(elapsed / duration, 1);
+      // Cubic ease-out interpolation
+      const ease = 1 - Math.pow(1 - progressRatio, 3);
+      const val = Math.round(startValue + diff * ease);
+      currentRef.current = val;
+      setDisplayProgress(val);
+
+      if (progressRatio < 1) {
+        animationFrameId = requestAnimationFrame(step);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [targetProgress]);
+
+  return displayProgress;
+}
+
 function ProgressPanel({
   job,
   onCancel,
@@ -179,7 +214,8 @@ function ProgressPanel({
   job: AuditJob | null;
   onCancel: () => void;
 }) {
-  const progress = count(job?.progress);
+  const rawProgress = count(job?.progress);
+  const smoothProgress = useSmoothProgress(rawProgress);
   const stage = friendlyStage(job?.stage, job?.status);
 
   return (
@@ -198,12 +234,25 @@ function ProgressPanel({
             </h1>
           </div>
         </div>
-        <strong className={styles.percent}>{progress}%</strong>
+        <strong className={styles.percent}>{smoothProgress}%</strong>
       </div>
 
-      <progress className={styles.progress} max="100" value={progress}>
-        {progress}%
-      </progress>
+      {/* Smooth Progress Bar with continuous shimmer and glowing head */}
+      <div
+        className={styles.progressBarWrapper}
+        role="progressbar"
+        aria-valuenow={smoothProgress}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label={`Kemajuan pemeriksaan: ${smoothProgress}%`}
+      >
+        <div
+          className={styles.progressBarFill}
+          style={{ width: `${Math.max(smoothProgress, 3)}%` }}
+        >
+          <span className={styles.progressBarGlow} aria-hidden="true" />
+        </div>
+      </div>
 
       <div className={styles.statusMeta}>
         <span>
@@ -494,15 +543,6 @@ function ResultView({ data }: { data: AuditResult }) {
           Lihat tangkapan halaman
         </a>
       </section>
-
-      <div className={styles.bottomActions}>
-        <Link href="/" className="btn btn-primary">
-          Periksa halaman lain
-        </Link>
-        <Link href="/katalog" className="btn btn-secondary">
-          Kembali ke riwayat
-        </Link>
-      </div>
     </main>
   );
 }
@@ -526,6 +566,7 @@ function ResultPageContent() {
     title: "Pemeriksaan belum berhasil",
     message: "Terjadi kendala yang tidak terduga.",
     actionLabel: "Kembali ke beranda",
+    actionHref: "/",
   });
   const [liveStage, setLiveStage] = useState("");
   const creatingAudit = useRef(false);
@@ -599,8 +640,9 @@ function ResultPageContent() {
           setFailureState({
             title: "Hasil tidak dapat dibuka",
             message:
-              "Token pemeriksaan tidak ditemukan di perangkat ini. Jalankan pemeriksaan ulang dari beranda.",
+              "Token pemeriksaan tidak ditemukan di perangkat ini. Jalankan pemeriksaan ulang.",
             actionLabel: "Periksa ulang",
+            actionHref: "/periksa",
           });
           setPhase("error");
         });
@@ -620,8 +662,9 @@ function ResultPageContent() {
       queueMicrotask(() => {
         setFailureState({
           title: "Alamat pemeriksaan tidak ditemukan",
-          message: "Mulai pemeriksaan baru dari beranda.",
-          actionLabel: "Kembali ke beranda",
+          message: "Mulai pemeriksaan baru.",
+          actionLabel: "Periksa halaman",
+          actionHref: "/periksa",
         });
         setPhase("error");
       });
@@ -671,7 +714,14 @@ function ResultPageContent() {
           setLiveStage(nextStage);
         }
         if (response.job.status === "completed") {
-          setPhase("ready");
+          setJob({
+            ...response.job,
+            progress: 100,
+            stage: "Pemeriksaan selesai",
+          });
+          timer = setTimeout(() => {
+            if (active) setPhase("ready");
+          }, 800);
           return;
         }
         if (response.job.status === "failed") {
@@ -797,7 +847,7 @@ function ResultPageContent() {
           <h1>{failure.title}</h1>
           <p>{failure.message}</p>
           <div className={styles.choiceActions}>
-            <Link href="/" className="btn btn-primary">
+            <Link href={failure.actionHref} className="btn btn-primary">
               {failure.actionLabel}
             </Link>
             <Link href="/katalog" className="btn btn-secondary">

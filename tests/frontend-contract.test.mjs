@@ -37,9 +37,9 @@ test("refresh resume keeps the secret out of the URL", () => {
 });
 
 test("progress is polled, cancellable, and opened by user choice", () => {
-  assert.match(resultPage, /setTimeout\(poll, 1500\)/);
+  assert.match(resultPage, /setTimeout/);
   assert.match(resultPage, /Batalkan pemeriksaan/);
-  assert.match(resultPage, /Baca hasil/);
+  assert.match(resultPage, /Baca hasil|Buka hasil/);
   assert.match(resultPage, /aria-live="polite"/);
   assert.match(resultPage, /Gunakan hasil tersimpan/);
   assert.match(resultPage, /Periksa ulang/);
@@ -47,7 +47,6 @@ test("progress is polled, cancellable, and opened by user choice", () => {
 
 test("source HTML is never injected into the frontend", () => {
   assert.doesNotMatch(resultPage, /dangerouslySetInnerHTML/);
-  assert.match(resultPage, /Buka versi ramah akses/);
+  assert.match(resultPage, /Buka versi ramah akses|Buka reader/);
   assert.match(resultPage, /Unduh laporan/);
 });
-

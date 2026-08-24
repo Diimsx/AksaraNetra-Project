@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import styles from "./page.module.css";
+import AboutReveal from "./AboutReveal";
 
 export const metadata: Metadata = {
   title: "Tentang",
@@ -49,9 +50,13 @@ const batasCakupan = [
 export default function AboutPage() {
   return (
     <main className={styles.main}>
+      <AboutReveal />
       <div className={`${styles.heroWrap} texture-grid`}>
         <header className={`container ${styles.hero}`}>
-          <p className="eyebrow">Tentang AksaraNetra</p>
+          <span className="pill-modern">
+            <span className="titik" aria-hidden="true" />
+            Tentang AksaraNetra
+          </span>
           <h1>
             Isi halaman penting seharusnya bisa dibaca semua orang
           </h1>
@@ -66,8 +71,12 @@ export default function AboutPage() {
       </div>
 
       <div className={`container ${styles.content}`}>
-        <section className={styles.section} aria-labelledby="work-title">
+        <section
+          className={`${styles.section} ungkap`}
+          aria-labelledby="work-title"
+        >
           <div className={styles.sectionIntro}>
+            <span className="eyebrow">Cakupan kerja</span>
             <h2 id="work-title">Yang dikerjakan</h2>
             <p>
               Perbaikan dibatasi pada hal yang bisa diperiksa hasilnya, supaya
@@ -87,8 +96,12 @@ export default function AboutPage() {
           </ul>
         </section>
 
-        <section className={styles.section} aria-labelledby="limit-title">
+        <section
+          className={`${styles.section} ungkap`}
+          aria-labelledby="limit-title"
+        >
           <div className={styles.sectionIntro}>
+            <span className="eyebrow">Batas jujur</span>
             <h2 id="limit-title">Yang tidak dilakukan</h2>
             <p>
               Batasnya disebutkan terbuka, supaya hasil pemeriksaan tidak dibaca
@@ -105,7 +118,10 @@ export default function AboutPage() {
           </ul>
         </section>
 
-        <section className={styles.sourceNote} aria-labelledby="source-title">
+        <section
+          className={`${styles.sourceNote} ungkap`}
+          aria-labelledby="source-title"
+        >
           <h2 id="source-title">Hubungan dengan situs aslinya</h2>
           <p>
             Pemeriksaan dilakukan pada salinan halaman. Situs aslinya tidak
@@ -114,7 +130,7 @@ export default function AboutPage() {
           </p>
         </section>
 
-        <section className={`${styles.cta} texture-grid`}>
+        <section className={`${styles.cta} texture-grid ungkap`}>
           <div>
             <h2>Mulai dari satu halaman</h2>
             <p>

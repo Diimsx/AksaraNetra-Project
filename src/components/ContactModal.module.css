@@ -1,0 +1,170 @@
+.overlay {
+  position: fixed;
+  z-index: 300;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(20, 15, 32, 0.6);
+  animation: fadeIn 180ms ease-out;
+}
+
+.dialog {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding: clamp(28px, 4vw, 44px);
+  border-radius: var(--radius-2xl);
+  background: linear-gradient(
+    135deg,
+    var(--color-surface) 0%,
+    var(--color-surface) 55%,
+    var(--color-primary-soft) 100%
+  );
+  box-shadow: var(--shadow-lg);
+  animation: munculNaik 220ms cubic-bezier(0.22, 0.68, 0.28, 1) both;
+}
+
+.blobHias {
+  position: absolute;
+  z-index: 0;
+  top: -10%;
+  right: -14%;
+  width: 46%;
+  height: 60%;
+  background: radial-gradient(
+    60% 60% at 50% 40%,
+    var(--color-primary-soft) 0%,
+    transparent 75%
+  );
+  border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%;
+  pointer-events: none;
+}
+
+.tutupBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-surface-sunken);
+  color: var(--color-text-muted);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background var(--transition-cepat);
+}
+
+.tutupBtn:hover {
+  background: var(--color-card-highlight);
+}
+
+.judul {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 8px;
+  color: var(--color-primary-button);
+  font-size: clamp(24px, 3vw, 32px);
+}
+
+.subjudul {
+  position: relative;
+  z-index: 1;
+  max-width: 46ch;
+  margin: 0 0 24px;
+  color: var(--color-text-muted);
+  font-size: 15px;
+}
+
+.form {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.field input,
+.field textarea {
+  padding: 12px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 15px;
+  resize: vertical;
+}
+
+.field input:focus-visible,
+.field textarea:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 1px;
+  border-color: var(--color-focus-ring);
+}
+
+.kirimBtn {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 13px 30px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-teal);
+  color: #ffffff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--transition-cepat);
+}
+
+.kirimBtn:hover {
+  background: var(--color-primary-button);
+}
+
+@media (max-width: 560px) {
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .dialog {
+    animation: none;
+  }
+}

@@ -1,0 +1,539 @@
+/* Styling untuk 4 Motion Visualisasi 'Yang Dikerjakan' */
+
+.f1Wrap,
+.f2Wrap,
+.f3Wrap,
+.f4Wrap {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* === Feature 1: Memberi nama pada tombol dan tautan === */
+.f1Wrap {
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.f1Card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 110px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+.f1NoLabelBadge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+.f1ImageIcon {
+  width: 36px;
+  height: 36px;
+  color: var(--color-text-muted);
+}
+
+.f1AriaBadge {
+  position: absolute;
+  bottom: -12px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #bbf7d0;
+  white-space: nowrap;
+}
+
+.f1CodeIcon {
+  width: 13px;
+  height: 13px;
+}
+
+.f1ProgressTrack {
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.f1ProgressBar {
+  height: 100%;
+  background: var(--color-primary-bright);
+}
+
+.f1ScanText {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  font-family: "Courier New", Courier, monospace;
+  margin: 0;
+}
+
+/* === Feature 2: Membuka jalan bagi pengguna papan tombol === */
+.f2Wrap {
+  gap: 12px;
+  padding-top: 26px;
+}
+
+.f2TabBadge {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+  font-size: 11px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.f2KeyboardIcon {
+  width: 14px;
+  height: 14px;
+  color: var(--color-text-muted);
+}
+
+.f2Item1 {
+  width: 100%;
+  background: #ffffff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.f2Circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  flex: none;
+}
+
+.f2LineShort {
+  width: 80px;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: var(--radius-pill);
+}
+
+.f2Item2 {
+  width: 100%;
+  background: #ffffff;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  box-shadow: var(--shadow-sm);
+}
+
+.f2HeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.f2LineMed {
+  width: 100px;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: var(--radius-pill);
+}
+
+.f2TabIndexBadge {
+  font-size: 10px;
+  font-family: "Courier New", Courier, monospace;
+  background: #dbeafe;
+  color: #1d4ed8;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.f2ScrollArea {
+  height: 60px;
+  overflow: hidden;
+  position: relative;
+  padding-right: 12px;
+}
+
+.f2ScrollTrack {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #e2e8f0;
+  border-radius: var(--radius-pill);
+}
+
+.f2ScrollThumb {
+  position: absolute;
+  width: 100%;
+  background: #94a3b8;
+  border-radius: var(--radius-pill);
+}
+
+.f2ContentLines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.f2TextLineFull {
+  width: 100%;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: var(--radius-pill);
+}
+
+.f2TextLine80 {
+  width: 80%;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: var(--radius-pill);
+}
+
+.f2TextLine75 {
+  width: 75%;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: var(--radius-pill);
+}
+
+/* === Feature 3: Menyusun ulang isi halaman === */
+.f3Wrap {
+  min-height: 190px;
+}
+
+.f3BeforeLayout {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  padding: 12px;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.f3LowContrastBlock {
+  width: 38%;
+  height: 30px;
+  background: #f8fafc;
+  border-radius: 4px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  font-size: 10px;
+}
+
+.f3SmallTextBlock {
+  width: 58%;
+  height: 30px;
+  background: #f8fafc;
+  border-radius: 4px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  font-size: 10px;
+}
+
+.f3MessyContainer {
+  width: 100%;
+  height: 70px;
+  background: #f8fafc;
+  display: flex;
+  align-items: flex-start;
+  padding: 6px;
+  gap: 8px;
+  border-radius: 6px;
+}
+
+.f3MessyLeft {
+  width: 50%;
+  height: 100%;
+  background: #e2e8f0;
+  border-radius: 4px;
+}
+
+.f3MessyRight {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.f3MessyLine {
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 3px;
+}
+
+.f3AfterLayout {
+  background: #ffffff;
+  border: 2px solid #dbeafe;
+  box-shadow: var(--shadow-md);
+  padding: 14px 16px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+.f3Group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.f3H1Tag,
+.f3BodyTag {
+  width: 28px;
+  height: 14px;
+  background: #dbeafe;
+  color: #1e40af;
+  font-size: 8px;
+  font-family: "Courier New", Courier, monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.f3H1Title {
+  width: 100%;
+  height: 14px;
+  background: #0f172a;
+  border-radius: 3px;
+}
+
+.f3BodyLine {
+  width: 100%;
+  height: 7px;
+  background: #334155;
+  border-radius: 2px;
+}
+
+.f3BodyLine80 {
+  width: 80%;
+  height: 7px;
+  background: #334155;
+  border-radius: 2px;
+}
+
+.f3MediaBox {
+  width: 100%;
+  height: 48px;
+  background: #f1f5f9;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.f3PlayCircle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.f3PlayTriangle {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-left: 8px solid #94a3b8;
+  border-bottom: 5px solid transparent;
+  margin-left: 2px;
+}
+
+/* === Feature 4: Memastikan perbaikannya benar membantu === */
+.f4Wrap {
+  gap: 10px;
+  width: 100%;
+}
+
+.f4Card {
+  width: 100%;
+  background: #ffffff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.f4CardAccepted {
+  border-color: #bfdbfe;
+}
+
+.f4GreenGlow {
+  position: absolute;
+  inset: 0;
+  background: rgba(34, 197, 94, 0.12);
+  pointer-events: none;
+}
+
+.f4Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.f4AttemptText {
+  font-size: 10px;
+  font-family: "Courier New", Courier, monospace;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.f4BadgeRejected {
+  font-size: 9px;
+  background: #fee2e2;
+  color: #b91c1c;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.f4BadgeAccepted {
+  font-size: 9px;
+  background: #dcfce7;
+  color: #15803d;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.f4BadgeIcon {
+  width: 11px;
+  height: 11px;
+}
+
+.f4ScoreRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 8px;
+}
+
+.f4ScoreBox {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.f4ScoreLabel {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  margin-bottom: 2px;
+}
+
+.f4ScoreVal {
+  font-size: 16px;
+  font-weight: 800;
+  font-family: "Courier New", Courier, monospace;
+  color: var(--color-heading);
+}
+
+.f4ScoreBad .f4ScoreVal {
+  color: #ef4444;
+}
+
+.f4ScoreGood .f4ScoreVal {
+  color: #16a34a;
+}
+
+.f4ArrowIcon {
+  width: 14px;
+  height: 14px;
+  color: var(--color-text-muted);
+  flex: none;
+}
+
+.f4NoteRejected {
+  margin-top: 6px;
+  font-size: 9px;
+  text-align: center;
+  color: #dc2626;
+  background: #fef2f2;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.f4NoteAccepted {
+  margin-top: 6px;
+  font-size: 9px;
+  text-align: center;
+  color: #15803d;
+  background: #f0fdf4;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}

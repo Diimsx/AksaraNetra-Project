@@ -1,0 +1,215 @@
+/*
+  Blue Glow Background Blur Effect
+  Inspired by Billow.so modern atmospheric lighting.
+  Pure CSS modules implementation with multi-layered blur blobs.
+*/
+
+.glowContainer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  contain: paint;
+}
+
+/* =========================================
+   VARIANT: HERO (Luminous central glow)
+   ========================================= */
+
+.heroGlowMain {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(540px, 68vw, 960px);
+  height: clamp(400px, 50vw, 680px);
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.28) 0%, rgba(59, 130, 246, 0.18) 50%, rgba(37, 99, 235, 0) 70%);
+  border-radius: 9999px;
+  filter: blur(110px);
+  will-change: transform, opacity;
+  animation: pulseMain 12s ease-in-out infinite alternate;
+}
+
+.heroGlowCyan {
+  position: absolute;
+  top: 30%;
+  left: 32%;
+  transform: translate(-50%, -50%);
+  width: clamp(420px, 52vw, 720px);
+  height: clamp(320px, 40vw, 560px);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.28) 0%, rgba(14, 165, 233, 0.16) 45%, rgba(56, 189, 248, 0) 70%);
+  border-radius: 9999px;
+  filter: blur(95px);
+  will-change: transform;
+  animation: floatCyan 14s ease-in-out infinite alternate;
+}
+
+.heroGlowIndigo {
+  position: absolute;
+  top: 44%;
+  left: 68%;
+  transform: translate(-50%, -50%);
+  width: clamp(460px, 56vw, 760px);
+  height: clamp(360px, 44vw, 600px);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.24) 0%, rgba(79, 70, 229, 0.14) 45%, rgba(99, 102, 241, 0) 70%);
+  border-radius: 9999px;
+  filter: blur(125px);
+  will-change: transform;
+  animation: floatIndigo 16s ease-in-out infinite alternate;
+}
+
+.heroGlowCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(380px, 46vw, 640px);
+  height: clamp(280px, 34vw, 440px);
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.24) 0%, rgba(147, 197, 253, 0.12) 50%, rgba(96, 165, 250, 0) 70%);
+  border-radius: 9999px;
+  filter: blur(85px);
+}
+
+/* =========================================
+   VARIANT: AMBIENT (Side-drifting clouds)
+   ========================================= */
+
+.ambientBlobLeft {
+  position: absolute;
+  top: 20%;
+  left: -8%;
+  width: clamp(400px, 45vw, 680px);
+  height: clamp(400px, 45vw, 680px);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.16) 0%, rgba(37, 99, 235, 0.08) 50%, transparent 70%);
+  border-radius: 9999px;
+  filter: blur(120px);
+  animation: floatCyan 18s ease-in-out infinite alternate;
+}
+
+.ambientBlobRight {
+  position: absolute;
+  top: 45%;
+  right: -10%;
+  width: clamp(450px, 50vw, 750px);
+  height: clamp(450px, 50vw, 750px);
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.18) 0%, rgba(99, 102, 241, 0.10) 50%, transparent 70%);
+  border-radius: 9999px;
+  filter: blur(130px);
+  animation: floatIndigo 20s ease-in-out infinite alternate;
+}
+
+/* =========================================
+   VARIANT: GLOBAL (Fixed across all pages)
+   ========================================= */
+
+.glowGlobalContainer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  contain: paint;
+}
+
+.globalTopCenter {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(600px, 75vw, 1100px);
+  height: clamp(450px, 55vw, 750px);
+  background: radial-gradient(
+    circle,
+    rgba(56, 189, 248, 0.10) 0%,
+    rgba(37, 99, 235, 0.07) 40%,
+    rgba(99, 102, 241, 0.03) 60%,
+    transparent 75%
+  );
+  border-radius: 9999px;
+  filter: blur(120px);
+  animation: pulseMain 14s ease-in-out infinite alternate;
+}
+
+.globalMidRight {
+  position: absolute;
+  top: 40%;
+  right: -12%;
+  width: clamp(450px, 50vw, 750px);
+  height: clamp(450px, 50vw, 750px);
+  background: radial-gradient(
+    circle,
+    rgba(37, 99, 235, 0.09) 0%,
+    rgba(99, 102, 241, 0.05) 45%,
+    transparent 70%
+  );
+  border-radius: 9999px;
+  filter: blur(130px);
+  animation: floatIndigo 18s ease-in-out infinite alternate;
+}
+
+.globalBottomLeft {
+  position: absolute;
+  bottom: 8%;
+  left: -10%;
+  width: clamp(450px, 45vw, 700px);
+  height: clamp(450px, 45vw, 700px);
+  background: radial-gradient(
+    circle,
+    rgba(56, 189, 248, 0.08) 0%,
+    rgba(37, 99, 235, 0.04) 50%,
+    transparent 70%
+  );
+  border-radius: 9999px;
+  filter: blur(120px);
+  animation: floatCyan 16s ease-in-out infinite alternate;
+}
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes pulseMain {
+  0% {
+    transform: translate(-50%, -50%) scale(0.95);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 1;
+  }
+}
+
+@keyframes floatCyan {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) translate(-24px, 18px) rotate(4deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(16px, -12px) rotate(-3deg);
+  }
+}
+
+@keyframes floatIndigo {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) translate(28px, -20px) rotate(-4deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(-18px, 14px) rotate(3deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroGlowMain,
+  .heroGlowCyan,
+  .heroGlowIndigo,
+  .ambientBlobLeft,
+  .ambientBlobRight {
+    animation: none;
+  }
+}

@@ -69,61 +69,56 @@ function AuditCard({
 
   return (
     <article className={styles.auditCard}>
-      <div className={styles.cardTop}>
-        <div className={styles.domainBlock}>
-          <h3>{item.title || host(item.sourceUrl)}</h3>
-          <p title={item.sourceUrl}>{item.sourceUrl}</p>
+      {/* Kolom 1: Informasi Situs & Status */}
+      <div className={styles.cardDomainCol}>
+        <div className={styles.titleRow}>
+          <h3 className={styles.itemTitle}>{item.title || host(item.sourceUrl)}</h3>
+          <span className={`${styles.status} ${styles[item.status]}`}>
+            {statusLabel(item)}
+          </span>
         </div>
-        <span className={`${styles.status} ${styles[item.status]}`}>
-          {statusLabel(item)}
-        </span>
+        <p className={styles.itemUrl} title={item.sourceUrl}>{item.sourceUrl}</p>
       </div>
 
-      <dl className={styles.cardMeta}>
-        <div>
-          <dt>Diperiksa</dt>
-          <dd>{readableDate(item.createdAt)}</dd>
-        </div>
-        <div>
-          <dt>Tahap terakhir</dt>
-          <dd>{item.stage}</dd>
-        </div>
-      </dl>
+      {/* Kolom 2: Metadata Diperiksa */}
+      <div className={styles.metaCol}>
+        <span className={styles.metaLabel}>DIPERIKSA</span>
+        <span className={styles.metaValue}>{readableDate(item.createdAt)}</span>
+      </div>
 
-      {active && (
-        <div className={styles.progressBlock}>
-          <div className={styles.progressLabel}>
-            <span>Kemajuan pemeriksaan</span>
-            <strong>{item.progress}%</strong>
+      {/* Kolom 3: Metadata Tahap Terakhir */}
+      <div className={styles.metaCol}>
+        <span className={styles.metaLabel}>TAHAP TERAKHIR</span>
+        <span className={styles.metaValue}>{item.stage}</span>
+        {active && (
+          <div className={styles.miniProgress}>
+            <progress
+              className={styles.progress}
+              max="100"
+              value={item.progress}
+            >
+              {item.progress}%
+            </progress>
+            <span className={styles.progressPct}>{item.progress}%</span>
           </div>
-          <progress
-            className={styles.progress}
-            max="100"
-            value={item.progress}
-          >
-            {item.progress}%
-          </progress>
-        </div>
-      )}
+        )}
+      </div>
 
+      {/* Kolom 4: Tombol Aksi */}
       <div className={styles.cardActions}>
         <Link className="btn btn-primary" href={resultHref}>
           {active
-            ? "Lanjutkan pemeriksaan"
+            ? "Lanjutkan"
             : completed
               ? "Baca hasil"
-              : "Lihat keterangan"}
+              : "Keterangan"}
         </Link>
         <Link
           className="btn btn-secondary"
-          href={`/?url=${encodeURIComponent(item.sourceUrl)}`}
+          href={`/periksa?url=${encodeURIComponent(item.sourceUrl)}`}
         >
           Periksa ulang
         </Link>
-        {/*
-          Hanya ikon tong sampah, tetapi tetap punya nama yang dibacakan
-          pembaca layar dan keterangan singkat saat kursor berhenti di atasnya.
-        */}
         <button
           className={styles.removeButton}
           type="button"
@@ -134,8 +129,8 @@ function AuditCard({
           <svg
             aria-hidden="true"
             focusable="false"
-            width="20"
-            height="20"
+            width="18"
+            height="18"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -143,10 +138,9 @@ function AuditCard({
             strokeLinecap="round"
             strokeLinejoin="round"
           >
-            <path d="M4 7h16" />
-            <path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7" />
-            <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12" />
-            <path d="M10 11v6M14 11v6" />
+            <path d="M3 6h18" />
+            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
           </svg>
         </button>
       </div>
@@ -306,17 +300,17 @@ export default function RiwayatAuditPage() {
 
   return (
     <main className={styles.main} aria-busy={loading}>
-      <div className={`${styles.heroWrap} texture-grid`}>
+      <div className={styles.heroWrap}>
         <section className={`container ${styles.hero}`}>
           <div>
-            <p className="eyebrow">Riwayat</p>
+            <span className="mono-pill">Riwayat</span>
             <h1>Pemeriksaan tujuh hari terakhir</h1>
             <p className={styles.heroLead}>
               Catatan ini hanya tersimpan di perangkat ini. Lanjutkan pemeriksaan
               yang masih berjalan, atau baca hasil yang sudah siap.
             </p>
           </div>
-          <Link href="/" className="btn btn-primary">
+          <Link href="/periksa" className="btn btn-primary">
             Periksa halaman baru
           </Link>
         </section>
@@ -345,8 +339,8 @@ export default function RiwayatAuditPage() {
               Setelah satu halaman diperiksa, catatannya muncul di sini dan bisa
               dibuka kembali selama tujuh hari.
             </p>
-            <Link href="/" className="btn btn-primary">
-              Mulai dari beranda
+            <Link href="/periksa" className="btn btn-primary">
+              Periksa halaman pertama
             </Link>
           </section>
         ) : (

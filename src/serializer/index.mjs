@@ -21,9 +21,8 @@ async function extract(page, strippedTags, maxCardLevels) {
     }
 
     for (const meta of doc.querySelectorAll("meta[http-equiv]")) meta.remove();
-    for (const link of doc.querySelectorAll("link[rel~='stylesheet']")) link.remove();
     for (const style of doc.querySelectorAll("style")) {
-      if (/@import|javascript\s*:|vbscript\s*:|expression\s*\(|url\s*\(/i.test(style.textContent || "")) {
+      if (/@import|javascript\s*:|vbscript\s*:|expression\s*\(/i.test(style.textContent || "")) {
         style.remove();
       }
     }
@@ -266,6 +265,17 @@ async function extract(page, strippedTags, maxCardLevels) {
         const width = Number(node.getAttribute("width") || node.naturalWidth || 0);
         const height = Number(node.getAttribute("height") || node.naturalHeight || 0);
         if (!src || (width > 0 && width <= 2) || (height > 0 && height <= 2)) continue;
+
+        // Jangan ekstrak ikon media sosial, tombol tutup, ikon bahasa, atau gambar duplikat sebagai blok gambar artikel
+        const isIconOrSocial = node.closest("button, [class*='icon'], [class*='social'], [class*='widget'], [aria-hidden='true']");
+        const altText = clean(node.getAttribute("alt"));
+        const srcLower = src.toLowerCase();
+        const isDecorativeIcon = /twitter|facebook|instagram|youtube|close|lang|flag|search|arrow|icon|social|\bx\b/i.test(srcLower) || /twitter|facebook|instagram|youtube|tutup|icon|sosial/i.test(altText);
+
+        if (isIconOrSocial && isDecorativeIcon) continue;
+        if (seenLink.has(src)) continue;
+        seenLink.add(src);
+
         blocks.push({ type: "image", src, alt: node.getAttribute("alt") || "" });
         continue;
       }
@@ -306,7 +316,7 @@ function wrapPatchedPage({ html, disclaimer, sourceUrl }) {
     `${escapeHtml(disclaimer)} ` +
     `<a href="${escapeHtml(sourceUrl)}" rel="noopener noreferrer" style="color:#0b3d91">Buka halaman aslinya</a>` +
     `</div>`;
-  const head = `<meta http-equiv="Content-Security-Policy" content="${SNAPSHOT_CSP}">`;
+  const head = `<meta http-equiv="Content-Security-Policy" content="${SNAPSHOT_CSP}"><style>img,svg,video{max-width:100%;height:auto;}body{margin:0;font-family:system-ui,-apple-system,sans-serif;}</style>`;
   let output = html.replace(/<head([^>]*)>/i, `<head$1>${head}`);
   output = output.replace(/<body([^>]*)>/i, `<body$1>${banner}`);
   return `<!DOCTYPE html>\n${output}`;

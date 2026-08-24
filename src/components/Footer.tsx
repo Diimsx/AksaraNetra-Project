@@ -1,43 +1,46 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./Footer.module.css";
-
-/**
- * Footer editorial.
- *
- * Isinya tiga hal saja: identitas singkat, navigasi cepat, dan keterangan
- * tentang status alat ini. Navigasi di sini mengulang navbar dengan sengaja,
- * karena pengguna yang sudah membaca sampai bawah tidak perlu naik lagi.
- *
- * Tahun dihitung dari tanggal berjalan, bukan ditulis manual, supaya tidak
- * pernah lagi tertinggal seperti sebelumnya.
- */
 
 const tautan = [
   { href: "/", label: "Beranda" },
   { href: "/katalog", label: "Riwayat" },
-  { href: "/cara-kerja", label: "Cara Kerja" },
-  { href: "/about", label: "Tentang" },
+  { href: "/periksa", label: "Mulai Periksa" },
 ];
 
 export default function Footer() {
   const tahun = new Date().getFullYear();
 
   return (
-    <footer className={`${styles.footer} texture-grid`} role="contentinfo">
+    <footer className={styles.footer} role="contentinfo">
       <div className={styles.footerContainer}>
-        <div className={styles.identitas}>
-          <p className={styles.merek}>AksaraNetra</p>
-          <p className={styles.ringkas}>
-            Memeriksa hambatan pada halaman publik, mencoba perbaikannya, lalu
-            menyiapkan versi yang lebih mudah dibaca.
-          </p>
-          <span className={styles.garisAksen} aria-hidden="true" />
+        {/* Kolom Kiri: Logo + Identitas Merek */}
+        <div className={styles.identitasWrapper}>
+          <Link href="/" className={styles.brandIconCard} aria-label="AksaraNetra, kembali ke beranda">
+            <Image
+              src="/AN - Nav Icon.png"
+              alt="AksaraNetra Logo"
+              width={42}
+              height={42}
+              className={styles.brandIconImg}
+            />
+          </Link>
+
+          <div className={styles.identitasContent}>
+            <p className={styles.merek}>AksaraNetra</p>
+            <p className={styles.ringkas}>
+              Memeriksa hambatan pada halaman publik, mencoba perbaikannya, lalu
+              menyiapkan versi yang lebih mudah dibaca.
+            </p>
+            <span className={styles.garisAksen} aria-hidden="true" />
+          </div>
         </div>
 
+        {/* Kolom Kanan: Navigasi (3 Tombol dengan Divider & Panah) */}
         <nav className={styles.navigasi} aria-label="Navigasi footer">
-          <p className={styles.navJudul}>Navigasi</p>
+          <p className={styles.navJudul}>NAVIGASI</p>
           <ul className={styles.navDaftar}>
             {tautan.map((item) => (
               <li key={item.href}>
@@ -66,6 +69,7 @@ export default function Footer() {
         </nav>
       </div>
 
+      {/* Baris Bawah / Hak Cipta & Penafian */}
       <div className={styles.barisBawah}>
         <div className={styles.barisBawahIsi}>
           <p className={styles.copyright}>&copy; {tahun} AksaraNetra</p>

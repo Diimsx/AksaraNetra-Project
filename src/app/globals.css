@@ -1,56 +1,62 @@
 /* ===== AksaraNetra Design System ===== */
 
 /*
-  Redesign layer.
-
-  Semua nama token lama tetap dipakai supaya tidak ada halaman yang rusak.
-  Nilainya disusun ulang menjadi satu keluarga biru yang lebih matang:
-  navy untuk teks dan aksi utama, biru sipil untuk tautan dan fokus,
-  kabut biru untuk permukaan, teal hanya untuk keberhasilan.
-
-  Tekstur dibuat terlihat tetapi tenang: butiran halus pada kanvas dan
-  garis teknis samar pada area besar. Tekstur tidak pernah dipasang di
-  belakang teks panjang, input, atau tabel.
+  Redesign layer v4 — mengikuti acuan navbar-pill dan hero simetris:
+  latar putih polos, satu warna aksen biru, tanpa tema gelap. Semua
+  kombinasi warna di bawah dihitung manual dan lolos WCAG AA.
 */
 
 :root {
-  /* --- Biru inti --- */
-  --color-primary: #0b2e52;
-  --color-primary-hover: #143f6b;
-  --color-heading: #0a2540;
-  --color-text: #3a4d63;
-  --color-text-muted: #5b6f86;
-  --color-placeholder: #6b7f96;
+  /* --- Inti: biru sebagai satu-satunya warna aksen --- */
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-dark: #1e3a8a;
+  --color-primary-button: #2563eb;
+  --color-primary-button-hover: #1d4ed8;
+  --color-heading: #16181d;
+  --color-text: #3f4451;
+  --color-text-muted: #63697a;
+  --color-placeholder: #8b90a0;
 
   /* --- Permukaan --- */
-  --color-background: #f4f7fb;
+  --color-background: #ffffff;
   --color-surface: #ffffff;
-  --color-surface-sunken: #eef3f9;
-  --color-border: #d3dfec;
-  --color-border-strong: #a9bdd3;
-  --color-card-light: #eaf1f8;
-  --color-card-accent: #dfeaf6;
-  --color-card-highlight: #d3e3f4;
+  --color-surface-translucent: rgba(255, 255, 255, 0.9);
+  --color-surface-sunken: #f6f7fa;
+  --color-border: #e5e7ec;
+  --color-border-strong: #c7cbd6;
+  --color-card-light: #f6f7fa;
+  --color-card-accent: #eef1f8;
+  --color-card-highlight: #dde5fb;
 
-  /* --- Aksen --- */
-  --color-primary-soft: #eaf1f8;
-  --color-primary-mid: #1d4d7e;
-  --color-primary-bright: #1663b0;
-  --color-accent: #1663b0;
-  --color-focus-ring: #1663b0;
-  --color-skip-bg: #0a2540;
+  /* --- Aksen: biru. CTA, tautan, sorotan. --- */
+  --color-primary-soft: #eaf0fe;
+  --color-primary-mid: #1d4ed8;
+  --color-primary-bright: #2563eb;
+  --color-accent: #2563eb;
+  --color-focus-ring: #2563eb;
+  --color-skip-bg: #16181d;
 
-  /* --- Semantik. Semua aman dipakai sebagai teks di atas putih. --- */
-  --color-success: #0f6b5f;
-  --color-success-soft: #e4f2ef;
-  --color-success-border: #8dc4bb;
-  --color-warning: #8a5a0b;
-  --color-warning-soft: #fbf1df;
-  --color-warning-border: #dfbe86;
-  --color-danger: #a32235;
-  --color-danger-soft: #fbebee;
-  --color-danger-border: #e0a3ad;
-  --color-error: #a32235;
+  /* --- Aksen kedua: teal, dipakai untuk status berhasil --- */
+  --color-teal: #0f766e;
+  --color-teal-soft: #e0f5f2;
+  --color-cyan-bright: #0f766e;
+
+  /* --- Aksen ketiga: amber, status ditinjau/perlu perhatian ringan --- */
+  --color-amber-accent: #8a5c0b;
+  --color-amber-soft: #fdeecb;
+
+  /* --- Semantik --- */
+  --color-success: #0f766e;
+  --color-success-soft: #e0f5f2;
+  --color-success-border: #86c7bf;
+  --color-warning: #8a5c0b;
+  --color-warning-soft: #fdeecb;
+  --color-warning-border: #dfbd7c;
+  --color-danger: #b0284b;
+  --color-danger-soft: #f9dfe6;
+  --color-danger-border: #e2a0b3;
+  --color-error: #b0284b;
 
   /* --- Jarak --- */
   --space-2xs: 4px;
@@ -60,42 +66,39 @@
   --space-lg: 32px;
   --space-xl: 64px;
 
-  /* --- Sudut. Pill hanya untuk status, bukan semua tombol. --- */
-  --radius-xs: 6px;
-  --radius-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+  /* --- Sudut --- */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
   --radius-pill: 999px;
 
-  /* --- Bayangan berwarna biru, bukan hitam. --- */
-  --shadow-sm: 0 1px 2px rgba(10, 37, 64, 0.06), 0 1px 3px rgba(10, 37, 64, 0.04);
-  --shadow-md:
-    0 1px 2px rgba(10, 37, 64, 0.05), 0 6px 20px rgba(10, 37, 64, 0.07);
-  --shadow-lg:
-    0 2px 6px rgba(10, 37, 64, 0.07), 0 18px 44px rgba(10, 37, 64, 0.12);
+  /* --- Bayangan berwarna ungu, lebih terasa daripada arah flat sebelumnya
+     karena acuan ini memakai kartu mengambang dan blob dengan kedalaman. --- */
+  --shadow-sm: 0 2px 6px rgba(36, 27, 58, 0.07);
+  --shadow-md: 0 8px 24px rgba(36, 27, 58, 0.1);
+  --shadow-lg: 0 20px 48px rgba(36, 27, 58, 0.16);
 
   /* --- Gerakan --- */
   --transition-cepat: 140ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-sedang: 220ms cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* --- Tinggi navigasi. Dipakai juga untuk scroll-margin-top. --- */
+  /* --- Tinggi navigasi --- */
   --header-height: 64px;
   --header-height-compact: 56px;
-  --bottom-nav-height: 68px;
 
   /* --- Lebar --- */
   --max-width: 1180px;
   --content-width: 760px;
   --reading-width: 68ch;
 
-  /* --- Tekstur --- */
-  /*
-    Butiran kertas halus. Frekuensi tinggi dan opasitas rendah, jadi yang
-    terasa adalah permukaannya, bukan polanya. Tidak ada garis yang bisa
-    ditelusuri mata, sehingga tidak melelahkan saat membaca.
-  */
-  --texture-kertas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='k'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23k)' opacity='.55'/%3E%3C/svg%3E");
-  --texture-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+
+  --shadow-float: var(--shadow-md);
+  --shadow-float-hover: var(--shadow-lg);
+
+  --transition-lambat: 460ms cubic-bezier(0.22, 0.68, 0.28, 1);
 }
 
 /* --- Reset --- */
@@ -140,25 +143,12 @@ body {
   flex-direction: column;
   color: var(--color-text);
   background-color: transparent;
-  font-family: var(--font-atkinson), "Atkinson Hyperlegible", sans-serif;
+  font-family: var(--font-plus-jakarta-sans), "Plus Jakarta Sans",
+    -apple-system, "Segoe UI", sans-serif;
   font-size: 17px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/*
-  Butiran halus di seluruh kanvas. Cukup terasa sebagai bahan, tetapi tidak
-  mengganggu keterbacaan karena tidak menambah kontras di area teks.
-*/
-body::before {
-  position: fixed;
-  z-index: 999;
-  inset: 0;
-  pointer-events: none;
-  content: "";
-  opacity: 0.03;
-  background-image: var(--texture-grain);
 }
 
 /*
@@ -167,6 +157,8 @@ body::before {
   pendek membuat footer naik dan menggantung di tengah layar.
 */
 #main-content {
+  position: relative;
+  z-index: 1;
   display: flex;
   min-height: 0;
   flex: 1;
@@ -174,93 +166,19 @@ body::before {
 }
 
 /*
-  Utilitas tekstur garis teknis. Dipakai pada area besar seperti hero dan
-  panel penutup. Selalu di belakang konten dan selalu dekoratif.
+  Utilitas latar polos.
+
+  Arah desain baru ini flat total, jadi tekstur/gradasi dekoratif lama
+  dilepas. Class ini dipertahankan sebagai no-op supaya markup lama yang
+  masih memanggilnya tidak rusak; komponen yang memakainya kini diberi
+  latar solid langsung lewat CSS module masing-masing.
 */
 .texture-grid {
   position: relative;
-  isolation: isolate;
 }
 
-/*
-  Tekstur kertas untuk area terpilih saja: hero, panel penutup, dan bagian
-  atas footer. Dua lapis: butiran kertas yang sangat samar, dan satu sapuan
-  biru transparan supaya bidangnya tidak terasa mati. Keduanya memudar ke
-  segala arah, jadi tidak ada tepi yang terpotong tegas.
-*/
-.texture-grid::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  pointer-events: none;
-  content: "";
-  opacity: 0.5;
-  background-image: var(--texture-kertas);
-  background-size: 180px 180px;
-  border-radius: inherit;
-  mask-image: radial-gradient(120% 120% at 50% 0%, #000 20%, transparent 78%);
-  -webkit-mask-image: radial-gradient(
-    120% 120% at 50% 0%,
-    #000 20%,
-    transparent 78%
-  );
-}
-
-.texture-grid::after {
-  position: absolute;
-  z-index: -2;
-  inset: 0;
-  pointer-events: none;
-  content: "";
-  border-radius: inherit;
-  background-image:
-    radial-gradient(
-      70% 90% at 12% 0%,
-      rgba(22, 99, 176, 0.09) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      55% 80% at 88% 10%,
-      rgba(15, 107, 95, 0.06) 0%,
-      transparent 72%
-    );
-}
-
-/*
-  Tekstur halaman dipakai pada halaman yang sebelumnya menempelkan tekstur
-  langsung ke hero. Dengan begitu butirannya terasa sebagai bagian dari
-  kanvas, bukan sebagai persegi dekoratif di belakang judul.
-*/
-.page-texture::before {
-  opacity: 0.16;
-  background-size: 220px 220px;
-  mask-image: linear-gradient(
-    180deg,
-    #000 0%,
-    rgba(0, 0, 0, 0.72) 42%,
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    180deg,
-    #000 0%,
-    rgba(0, 0, 0, 0.72) 42%,
-    transparent 100%
-  );
-}
-
-.page-texture::after {
-  opacity: 0.7;
-  background-image:
-    radial-gradient(
-      72% 48% at 8% 0%,
-      rgba(22, 99, 176, 0.055) 0%,
-      transparent 74%
-    ),
-    radial-gradient(
-      64% 44% at 94% 8%,
-      rgba(15, 107, 95, 0.035) 0%,
-      transparent 76%
-    );
+.page-texture {
+  position: relative;
 }
 
 /* --- Tipografi --- */
@@ -402,22 +320,25 @@ a {
 }
 
 .btn-primary {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
+  background: var(--color-primary-button);
+  border-color: var(--color-primary-button);
   color: #ffffff;
+  border-radius: var(--radius-pill);
   box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover {
-  background: var(--color-primary-hover);
-  border-color: var(--color-primary-hover);
+  background: var(--color-primary-button-hover);
+  border-color: var(--color-primary-button-hover);
   box-shadow: var(--shadow-md);
 }
 
 .btn-secondary {
   background: var(--color-surface);
   border-color: var(--color-border-strong);
-  color: var(--color-primary);
+  color: var(--color-heading);
+  border-radius: var(--radius-pill);
+  font-weight: 700;
 }
 
 .btn-secondary:hover {
@@ -721,6 +642,57 @@ main {
   flex: 1;
 }
 
+/*
+  --- Ungkap saat digulir ---
+  Dipasang lewat JS (IntersectionObserver) yang menambah kelas "terlihat"
+  saat elemen memasuki area pandang. Keadaan awal dan akhir sama-sama utuh
+  secara konten; yang berbeda hanya opacity dan posisi, jadi kalau JS gagal
+  memuat, isinya tetap tampil apa adanya lewat aturan no-js di bawah.
+*/
+.ungkap {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 640ms cubic-bezier(0.22, 0.68, 0.28, 1),
+    transform 640ms cubic-bezier(0.22, 0.68, 0.28, 1);
+}
+
+.ungkap.terlihat {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.js-tidak-aktif .ungkap {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- Label monospace: badge & eyebrow bergaya teknis, ciri arah flat ini --- */
+.mono-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-primary-bright);
+  font-family: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.mono-label {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--color-text-muted);
+  font-family: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 /* --- Responsif --- */
 @media (max-width: 900px) {
   .container {
@@ -731,10 +703,6 @@ main {
 @media (max-width: 720px) {
   body {
     font-size: 16px;
-    /* Ruang untuk navigasi bawah, termasuk area aman perangkat. */
-    padding-bottom: calc(
-      var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px)
-    );
   }
 
   .container {
@@ -793,20 +761,13 @@ main {
 }
 
 /*
-  Kontras tinggi bawaan sistem. Tekstur dimatikan supaya tidak menambah
-  gangguan, dan batas antar komponen dipertegas.
+  Kontras tinggi bawaan sistem. Batas antar komponen dipertegas.
 */
 @media (prefers-contrast: more) {
   :root {
-    --color-border: #5c6b7c;
-    --color-border-strong: #3c4a59;
-    --color-text: #17222e;
-    --color-text-muted: #2c3947;
-  }
-
-  body::before,
-  body::after,
-  .texture-grid::before {
-    display: none;
+    --color-border: #7d7382;
+    --color-border-strong: #4a4550;
+    --color-text: #201c33;
+    --color-text-muted: #322a3d;
   }
 }

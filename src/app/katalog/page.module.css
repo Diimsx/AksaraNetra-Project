@@ -1,6 +1,5 @@
 /*
   Riwayat pemeriksaan.
-
   Kartu dibuat rata dan tenang. Status ditandai lewat teks, latar, dan garis
   kiri, jadi tidak bergantung pada warna saja.
 */
@@ -11,12 +10,8 @@
 }
 
 .heroWrap {
-  border-bottom: 1px solid var(--color-border);
-  background: linear-gradient(
-    180deg,
-    var(--color-surface) 0%,
-    var(--color-background) 100%
-  );
+  border-bottom: none;
+  background: transparent;
 }
 
 /* --- Kepala halaman --- */
@@ -26,12 +21,12 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  padding-top: clamp(36px, 5vw, 56px);
-  padding-bottom: clamp(32px, 4vw, 48px);
+  padding-top: clamp(48px, 6vw, 76px);
+  padding-bottom: 0;
 }
 
 .hero h1 {
-  margin: 10px 0 12px;
+  margin: 14px 0 12px;
   max-width: 24ch;
   font-size: clamp(26px, 3.4vw, 38px);
 }
@@ -43,8 +38,8 @@
 }
 
 .content {
-  padding-top: clamp(28px, 4vw, 40px);
-  padding-bottom: clamp(32px, 4vw, 48px);
+  padding-top: clamp(40px, 5vw, 60px);
+  padding-bottom: clamp(72px, 10vw, 130px);
 }
 
 /* --- Peringatan lunak --- */
@@ -65,9 +60,9 @@
   display: flex;
   align-items: center;
   gap: 18px;
-  padding: 30px 26px;
+  padding: 32px 28px;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-xl);
   background: var(--color-surface);
   box-shadow: var(--shadow-sm);
 }
@@ -100,9 +95,9 @@
   align-items: center;
   flex-direction: column;
   gap: 12px;
-  padding: clamp(40px, 6vw, 64px) 26px;
+  padding: clamp(48px, 6vw, 72px) 28px;
   border: 1px dashed var(--color-border-strong);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   background: var(--color-surface);
   box-shadow: var(--shadow-sm);
   text-align: center;
@@ -143,7 +138,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .sectionHeading h2 {
@@ -165,22 +160,24 @@
 }
 
 .auditList {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 16px;
-}
-
-/* --- Kartu --- */
-
-.auditCard {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 22px;
+  gap: 14px;
+  width: 100%;
+}
+
+/* --- Kartu Riwayat Horizontal Memanjang & Rapi Sejajar --- */
+
+.auditCard {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.8fr) minmax(130px, 0.9fr) minmax(170px, 1.1fr) auto;
+  align-items: center;
+  gap: clamp(16px, 2.5vw, 32px);
+  padding: 18px 24px;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-xl);
   background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
   transition:
     transform var(--transition-sedang),
     border-color var(--transition-cepat),
@@ -190,36 +187,54 @@
 .auditCard:hover {
   border-color: var(--color-border-strong);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-float);
 }
 
-.cardTop {
+/* Kolom 1: Domain, Judul, & Status */
+.cardDomainCol {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 14px;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
 }
 
-.domainBlock h3 {
-  margin-bottom: 4px;
-  font-size: 19px;
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.itemTitle {
+  margin: 0;
+  color: var(--color-heading);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
   overflow-wrap: anywhere;
 }
 
-.domainBlock p {
+.itemUrl {
+  margin: 0;
   color: var(--color-text-muted);
-  font-size: 14px;
+  font-size: 13px;
   overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 /* --- Lencana status --- */
 
 .status {
+  display: inline-flex;
+  align-items: center;
   flex: none;
-  padding: 5px 12px;
+  padding: 3px 10px;
   border: 1px solid transparent;
   border-radius: var(--radius-pill);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
   white-space: nowrap;
 }
@@ -249,284 +264,177 @@
   color: var(--color-text-muted);
 }
 
-/* --- Keterangan --- */
+/* --- Kolom Metadata Terstruktur --- */
 
-.cardMeta {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  padding: 14px 0;
-  border-block: 1px solid var(--color-border);
-  margin: 0;
+.metaCol {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
 }
 
-.cardMeta dt {
+.metaLabel {
   color: var(--color-text-muted);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.cardMeta dd {
-  margin: 3px 0 0;
+.metaValue {
   color: var(--color-heading);
-  font-size: 15px;
-  font-weight: 700;
-}
-
-/* --- Kemajuan --- */
-
-.progressBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.progressLabel {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  color: var(--color-text-muted);
   font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
 }
 
-.progressLabel strong {
-  color: var(--color-primary);
-  font-size: 16px;
-  font-variant-numeric: tabular-nums;
+.miniProgress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
 }
 
-.progressBlock progress,
-.progress {
-  width: 100%;
-  height: 10px;
+.miniProgress progress {
+  width: 90px;
+  height: 6px;
+  border-radius: var(--radius-pill);
   appearance: none;
-  border: none;
-  border-radius: var(--radius-pill);
   background: var(--color-surface-sunken);
-  overflow: hidden;
 }
 
-.progressBlock progress::-webkit-progress-bar {
-  background: var(--color-surface-sunken);
-  border-radius: var(--radius-pill);
+.progressPct {
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 800;
 }
 
-.progressBlock progress::-webkit-progress-value {
-  background: var(--color-primary-bright);
-  border-radius: var(--radius-pill);
-  transition: width var(--transition-sedang);
-}
+/* --- Kolom Tindakan --- */
 
-.progressBlock progress::-moz-progress-bar {
-  background: var(--color-primary-bright);
-  border-radius: var(--radius-pill);
-}
-
-/* --- Tindakan --- */
-
-/*
-  Aksi utama di kiri, aksi hapus di kanan. Aksi utama boleh membungkus saat
-  layar sempit, tetapi ikon hapus tidak pernah ikut turun sendirian karena
-  lebarnya tetap kecil dan tidak menuntut ruang.
-*/
 .cardActions {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
-  margin-top: auto;
+  gap: 8px;
+  flex: none;
 }
 
 .cardActions :global(.btn) {
-  min-height: 44px;
-  padding: 10px 18px;
-  font-size: 15px;
+  min-height: 38px;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-/*
-  Tombol hapus berupa ikon tong sampah di ujung kanan. Ukurannya tetap 44px
-  supaya nyaman disentuh, dan namanya tetap tersedia bagi pembaca layar lewat
-  aria-label di komponennya.
-*/
 .removeButton {
   display: inline-flex;
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   flex: none;
   align-items: center;
   justify-content: center;
   padding: 0;
-  margin-left: auto;
   border: 1px solid var(--color-danger-border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   background: var(--color-danger-soft);
   color: var(--color-danger);
-  font: inherit;
   cursor: pointer;
   transition:
     background var(--transition-cepat),
     border-color var(--transition-cepat),
-    color var(--transition-cepat);
+    transform var(--transition-cepat);
 }
 
 .removeButton:hover {
-  border-color: var(--color-danger);
   background: var(--color-danger);
   color: #ffffff;
+  transform: scale(1.05);
 }
 
-.removeButton svg {
-  display: block;
-}
-
-/* --- Konfirmasi hapus --- */
+/* --- Dialog Konfirmasi Hapus --- */
 
 .dialogLapis {
   position: fixed;
-  z-index: 400;
   inset: 0;
-  display: grid;
-  place-items: center;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
-  background: rgba(10, 37, 64, 0.44);
-  animation: fadeIn 0.16s ease-out;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
 }
 
 .dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   width: 100%;
-  max-width: 460px;
-  padding: 26px;
-  border-radius: var(--radius-lg);
+  max-width: 440px;
+  padding: 28px;
+  border-radius: var(--radius-xl);
   background: var(--color-surface);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-xl);
 }
 
 .dialog h2 {
-  margin-bottom: 10px;
-  font-size: 22px;
+  margin: 0;
+  font-size: 20px;
+  color: var(--color-heading);
 }
 
 .dialog p {
-  color: var(--color-text);
-  font-size: 16px;
-}
-
-.dialog strong {
-  color: var(--color-heading);
-  overflow-wrap: anywhere;
+  margin: 0;
+  font-size: 15px;
+  color: var(--color-text-muted);
+  line-height: 1.5;
 }
 
 .dialogActions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 22px;
-}
-
-/* --- Pesan urungkan --- */
-
-.snackbar {
-  position: fixed;
-  z-index: 300;
-  bottom: 24px;
-  left: 50%;
-  display: flex;
   align-items: center;
-  gap: 18px;
-  width: calc(100% - 40px);
-  max-width: 520px;
-  padding: 14px 16px 14px 20px;
-  border-radius: var(--radius-md);
-  background: var(--color-heading);
-  box-shadow: var(--shadow-lg);
-  transform: translateX(-50%);
-  animation: fadeIn 0.2s ease-out;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
 }
 
-.snackbar p {
-  color: #ffffff;
-  font-size: 15px;
-  overflow-wrap: anywhere;
-}
-
-.undoButton {
-  min-height: 44px;
-  flex: none;
-  padding: 8px 16px;
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: #ffffff;
-  font: inherit;
-  font-size: 15px;
-  font-weight: 800;
-  cursor: pointer;
-  transition:
-    background var(--transition-cepat),
-    border-color var(--transition-cepat);
-}
-
-.undoButton:hover {
-  border-color: #ffffff;
-  background: rgba(255, 255, 255, 0.14);
-}
-
-.undoButton:focus-visible {
-  outline: 3px solid #ffffff;
-  outline-offset: 2px;
+.dialogActions :global(.btn) {
+  min-height: 40px;
+  padding: 8px 18px;
+  font-size: 14px;
 }
 
 /* --- Responsif --- */
 
-@media (max-width: 900px) {
-  .hero {
-    align-items: flex-start;
+@media (max-width: 960px) {
+  .auditCard {
+    display: flex;
     flex-direction: column;
-    gap: 18px;
+    align-items: stretch;
+    gap: 16px;
+    padding: 20px;
   }
 
-  .auditList {
-    grid-template-columns: 1fr;
+  .metaCol {
+    padding-top: 4px;
+  }
+
+  .cardActions {
+    width: 100%;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-border);
+    justify-content: flex-start;
   }
 }
 
 @media (max-width: 720px) {
   .content {
-    padding: 22px 16px 8px;
+    padding: 32px 16px clamp(64px, 10vw, 100px);
   }
 
   .hero :global(.btn) {
     width: 100%;
-  }
-
-  .auditCard {
-    padding: 18px;
-  }
-
-  .cardTop {
-    align-items: flex-start;
-    flex-direction: column-reverse;
-    gap: 10px;
-  }
-
-  .cardMeta {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .cardActions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .cardActions :global(.btn) {
-    width: 100%;
-  }
-
-  .removeButton {
-    margin-left: 0;
   }
 
   .dialogActions {
@@ -535,118 +443,5 @@
 
   .dialogActions :global(.btn) {
     width: 100%;
-  }
-
-  /* Pesan urungkan naik di atas navigasi bawah. */
-  .snackbar {
-    bottom: calc(
-      var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px) + 12px
-    );
-    align-items: stretch;
-    flex-direction: column;
-    gap: 12px;
-    padding: 16px;
-  }
-
-  .undoButton {
-    width: 100%;
-  }
-}
-
-/* --- Gerak halaman --- */
-@keyframes snackbarMasuk {
-  from {
-    opacity: 0;
-    transform: translate(-50%, 26px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-}
-
-@keyframes dialogMasuk {
-  from {
-    opacity: 0;
-    transform: translateY(18px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.hero,
-.warning {
-  animation: munculNaik 480ms cubic-bezier(0.22, 0.68, 0.28, 1) both;
-}
-
-.auditCard {
-  animation: munculNaik 460ms cubic-bezier(0.22, 0.68, 0.28, 1) both;
-}
-
-.auditCard:nth-child(2) {
-  animation-delay: 70ms;
-}
-
-.auditCard:nth-child(3) {
-  animation-delay: 140ms;
-}
-
-.auditCard:nth-child(n + 4) {
-  animation-delay: 200ms;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .auditCard {
-    transition:
-      transform var(--transition-sedang),
-      box-shadow var(--transition-sedang),
-      border-color var(--transition-cepat);
-  }
-
-  .auditCard:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--color-border-strong);
-  }
-}
-
-.snackbar {
-  animation: snackbarMasuk 260ms cubic-bezier(0.22, 0.68, 0.28, 1) both;
-}
-
-.dialog {
-  animation: dialogMasuk 220ms cubic-bezier(0.22, 0.68, 0.28, 1) both;
-}
-
-/* Bar proses berdenyut halus selama pemeriksaan masih berjalan. */
-.progress::-webkit-progress-value {
-  animation: denyutLembut 2.2s ease-in-out infinite;
-}
-
-.progress::-moz-progress-bar {
-  animation: denyutLembut 2.2s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero,
-  .warning,
-  .auditCard,
-  .dialog {
-    animation: none;
-  }
-
-  .snackbar {
-    animation: none;
-  }
-
-  .auditCard:hover {
-    transform: none;
-  }
-
-  .progress::-webkit-progress-value,
-  .progress::-moz-progress-bar {
-    animation: none;
   }
 }

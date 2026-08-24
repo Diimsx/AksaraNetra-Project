@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
-import { Atkinson_Hyperlegible } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import NotificationBar from "@/components/NotificationBar";
+import ViewportBlur from "@/components/ViewportBlur";
+import BlueGlow from "@/components/BlueGlow";
 
-const atkinson = Atkinson_Hyperlegible({
-  variable: "--font-atkinson",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -31,7 +34,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     // data-scroll-behavior memberi tahu Next bahwa scroll-behavior: smooth di
     // CSS memang disengaja, sehingga peringatan di konsol berhenti muncul.
-    <html lang="id" className={atkinson.variable} data-scroll-behavior="smooth">
+    <html
+      lang="id"
+      className={plusJakartaSans.variable}
+      data-scroll-behavior="smooth"
+    >
       {/*
         suppressHydrationWarning hanya dipasang di body, bukan di seluruh
         pohon. Alasannya sempit dan spesifik: ekstensi browser seperti
@@ -45,11 +52,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a href="#main-content" className="skip-link">
           Langsung ke konten utama
         </a>
+        <BlueGlow variant="global" />
+        <ViewportBlur />
         <Header />
         <div id="main-content" tabIndex={-1}>
           {children}
         </div>
         <Footer />
+        <NotificationBar />
       </body>
     </html>
   );

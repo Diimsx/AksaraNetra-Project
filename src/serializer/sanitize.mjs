@@ -23,8 +23,8 @@ export const STRIPPED_TAGS = Object.freeze([
 export const SNAPSHOT_CSP = [
   "default-src 'none'",
   "img-src https: http: data:",
-  "style-src 'unsafe-inline'",
-  "font-src 'none'",
+  "style-src 'unsafe-inline' https: http:",
+  "font-src https: http: data:",
   "base-uri 'none'",
   "form-action 'none'",
   "frame-ancestors 'self'",
