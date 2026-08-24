@@ -68,13 +68,40 @@ export class JobStore {
 
   recoverInterrupted() {
     const now = this.now();
-    this.db.prepare(`UPDATE jobs SET status = CASE WHEN attempts < 2 THEN 'queued' ELSE 'failed' END,
-      stage = CASE WHEN attempts < 2 THEN 'Dipulihkan setelah server restart' ELSE 'Gagal setelah server restart' END,
-      progress = CASE WHEN attempts < 2 THEN 0 ELSE progress END,
-      error_code = CASE WHEN attempts < 2 THEN NULL ELSE 'server-restarted' END,
-      error_message = CASE WHEN attempts < 2 THEN NULL ELSE 'Audit terputus dua kali karena server restart.' END,
-      updated_at = ?, finished_at = CASE WHEN attempts < 2 THEN NULL ELSE ? END
-      WHERE status = 'running'`).run(now, now);
+    const runningJobs = this.db.prepare("SELECT id, artifact_dir, attempts, progress FROM jobs WHERE status = 'running'").all();
+
+    for (const job of runningJobs) {
+      const snapshotPath = path.join(job.artifact_dir, "snapshot.json");
+      const hasCheckpoint = fs.existsSync(snapshotPath);
+      const shouldRetry = job.attempts < 2;
+
+      if (hasCheckpoint) {
+        // Jika snapshot sudah ada, job sudah 90% selesai. Pulihkan ke antrean dengan progress 90%
+        this.db.prepare(`UPDATE jobs SET status = 'queued',
+          stage = 'Melanjutkan finalisasi dari checkpoint tersimpan',
+          progress = 90,
+          error_code = NULL,
+          error_message = NULL,
+          updated_at = ?, finished_at = NULL
+          WHERE id = ?`).run(now, job.id);
+      } else if (shouldRetry) {
+        this.db.prepare(`UPDATE jobs SET status = 'queued',
+          stage = 'Dipulihkan setelah server restart',
+          progress = 0,
+          error_code = NULL,
+          error_message = NULL,
+          updated_at = ?, finished_at = NULL
+          WHERE id = ?`).run(now, job.id);
+      } else {
+        this.db.prepare(`UPDATE jobs SET status = 'failed',
+          stage = 'Gagal setelah server restart',
+          progress = progress,
+          error_code = 'server-restarted',
+          error_message = 'Audit terputus dua kali karena server restart.',
+          updated_at = ?, finished_at = ?
+          WHERE id = ?`).run(now, now, job.id);
+      }
+    }
   }
 
   createJob(job) {

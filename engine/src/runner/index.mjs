@@ -262,7 +262,7 @@ export async function auditPage({
 // Nilai ini dibiarkan longgar (halaman umum tetap tertangkap penuh) tapi
 // mencegah kasus ekstrem (halaman arsip/listing yang sangat panjang) dari
 // membuat container OOM hanya demi satu gambar pratinjau.
-const MAX_SCREENSHOT_HEIGHT_PX = 6000;
+const MAX_SCREENSHOT_HEIGHT_PX = 2400;
 
 async function captureBoundedScreenshot(page) {
   if (process.env.CHROMIUM_LOW_RESOURCE_MODE !== "1") {
