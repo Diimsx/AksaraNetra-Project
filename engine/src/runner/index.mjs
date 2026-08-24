@@ -85,16 +85,16 @@ const CONTAINER_LAUNCH_ARGS = [
   "--mute-audio",
   "--no-first-run",
   "--renderer-process-limit=1",
-  "--js-flags=--max-old-space-size=192",
+  "--js-flags=--max-old-space-size=160",
 ];
 
 function resolveLaunchArgs() {
-  // Default: OFF. Baru aktif kalau eksplisit di-set lewat env var, supaya
-  // tidak diam-diam mengubah perilaku Playwright di lokal atau di lingkungan
-  // yang resource-nya sudah cukup.
-  return process.env.CHROMIUM_LOW_RESOURCE_MODE === "1"
-    ? CONTAINER_LAUNCH_ARGS
-    : [];
+  // Aktif bila CHROMIUM_LOW_RESOURCE_MODE=1 atau di lingkungan production container
+  const isLowResource =
+    process.env.CHROMIUM_LOW_RESOURCE_MODE === "1" ||
+    process.env.NODE_ENV === "production";
+
+  return isLowResource ? CONTAINER_LAUNCH_ARGS : [];
 }
 
 export async function withBrowser(task, { headless = true, signal = null } = {}) {
@@ -116,32 +116,32 @@ export async function withBrowser(task, { headless = true, signal = null } = {})
 }
 
 /**
- * Menunggu halaman tenang, lalu menggulir sampai bawah.
+ * Menunggu halaman tenang, lalu menggulir terukur.
  *
- * Banyak konten pemerintah baru dimuat saat digulir. Tanpa langkah ini audit
- * hanya melihat sebagian halaman.
+ * Menggulir memicu lazy-loaded kartu berita di viewport tanpa meledakkan DOM
+ * ke puluhan ribu node pada portal berita tak terbatas (infinite scroll).
  */
 export async function settlePage(page) {
-  await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
-  await page.waitForTimeout(8_000);
+  await page.waitForLoadState("domcontentloaded", { timeout: 10_000 }).catch(() => {});
+  await page.waitForTimeout(2_000);
 
   await page.evaluate(async () => {
     await new Promise((resolve) => {
       let position = 0;
-      const maximum = Math.max(document.body.scrollHeight, 1);
+      const targetMax = Math.min(document.body.scrollHeight || 3000, 3600);
       const timer = setInterval(() => {
-        window.scrollBy(0, 600);
-        position += 600;
-        if (position >= maximum) {
+        window.scrollBy(0, 800);
+        position += 800;
+        if (position >= targetMax) {
           clearInterval(timer);
           window.scrollTo(0, 0);
           resolve();
         }
-      }, 200);
+      }, 150);
     });
   });
 
-  await page.waitForTimeout(2_000);
+  await page.waitForTimeout(1_000);
 }
 
 /**
