@@ -210,13 +210,17 @@ function useSmoothProgress(targetProgress: number) {
 function ProgressPanel({
   job,
   onCancel,
+  isReconnecting = false,
 }: {
   job: AuditJob | null;
   onCancel: () => void;
+  isReconnecting?: boolean;
 }) {
   const rawProgress = count(job?.progress);
   const smoothProgress = useSmoothProgress(rawProgress);
-  const stage = friendlyStage(job?.stage, job?.status);
+  const stage = isReconnecting
+    ? "Menghubungkan kembali ke layanan..."
+    : friendlyStage(job?.stage, job?.status);
 
   return (
     <section className={styles.statusCard} aria-labelledby="status-title">
@@ -224,9 +228,11 @@ function ProgressPanel({
         <div className={styles.stageColumn}>
           <p className={styles.statusLabel}>
             <span className={styles.activeDot} aria-hidden="true" />
-            {job?.status === "queued"
-              ? "Menunggu giliran"
-              : "Pemeriksaan berjalan"}
+            {isReconnecting
+              ? "Menunggu server siap..."
+              : job?.status === "queued"
+                ? "Menunggu giliran"
+                : "Pemeriksaan berjalan"}
           </p>
           <div className={styles.stageArea}>
             <h1 id="status-title" key={stage}>
@@ -256,17 +262,13 @@ function ProgressPanel({
 
       <div className={styles.statusMeta}>
         <span>
-          {job?.queuePosition
-            ? `Urutan Anda saat ini: ${job.queuePosition}`
-            : "Satu halaman diperiksa pada satu waktu"}
+          {isReconnecting
+            ? "Server sedang memulihkan koneksi, proses akan otomatis berlanjut..."
+            : job?.queuePosition
+              ? `Urutan Anda saat ini: ${job.queuePosition}`
+              : "Hasil akan otomatis terbuka begitu selesai"}
         </span>
-        <span>Percobaan {Math.max(job?.attempts ?? 1, 1)} dari 2</span>
       </div>
-
-      <p className={styles.statusNote}>
-        Halaman ini boleh ditutup. Pemeriksaan tetap berjalan, dan hasilnya bisa
-        dibuka lagi dari halaman Riwayat.
-      </p>
 
       {job?.canCancel && (
         <button className="btn btn-secondary" type="button" onClick={onCancel}>
@@ -558,6 +560,15 @@ function ResultPageContent() {
   const [token, setToken] = useState<string | null>(null);
   const [job, setJob] = useState<AuditJob | null>(null);
   const [result, setResult] = useState<AuditResult | null>(null);
+  const [targetUrl, setTargetUrl] = useState<string>(() => {
+    if (urlParam) return urlParam;
+    if (jobParam) {
+      const rec = findRecentAudit(jobParam);
+      if (rec?.sourceUrl) return rec.sourceUrl;
+    }
+    return "";
+  });
+  const [isReconnecting, setIsReconnecting] = useState(false);
   const [cacheInfo, setCacheInfo] = useState<{
     capturedAt: string | null;
     expiresAt: string | null;
@@ -565,16 +576,21 @@ function ResultPageContent() {
   const [failure, setFailureState] = useState<Failure>({
     title: "Pemeriksaan belum berhasil",
     message: "Terjadi kendala yang tidak terduga.",
-    actionLabel: "Kembali ke beranda",
-    actionHref: "/",
+    actionLabel: "Coba periksa lagi",
+    actionHref: "/periksa",
   });
   const [liveStage, setLiveStage] = useState("");
   const creatingAudit = useRef(false);
   const lastStage = useRef("");
+  const consecutiveErrors = useRef(0);
 
   const fail = useCallback((error: unknown) => {
     const presented = presentAuditError(error);
-    setFailureState(presented);
+    setFailureState({
+      ...presented,
+      actionLabel: "Coba periksa lagi",
+    });
+    setIsReconnecting(false);
     setPhase("error");
   }, []);
 
@@ -600,19 +616,19 @@ function ResultPageContent() {
     [fail],
   );
 
-  const beginAudit = useCallback(
-    async (reuseExisting: boolean) => {
-      if (!urlParam || creatingAudit.current) return;
+  const beginAuditForUrl = useCallback(
+    async (urlToAudit: string, reuseExisting: boolean) => {
+      if (!urlToAudit || creatingAudit.current) return;
       creatingAudit.current = true;
       setPhase("creating");
       try {
-        const created = await createAudit(urlParam, reuseExisting);
+        const created = await createAudit(urlToAudit, reuseExisting);
         const now = new Date().toISOString();
         saveJobToken(created.jobId, created.accessToken);
         saveRecentAudit({
           version: RECENT_AUDIT_VERSION,
           jobId: created.jobId,
-          sourceUrl: urlParam,
+          sourceUrl: urlToAudit,
           status: created.status,
           stage: "Menyiapkan halaman",
           progress: 0,
@@ -622,6 +638,9 @@ function ResultPageContent() {
         });
         setJobId(created.jobId);
         setToken(created.accessToken);
+        setTargetUrl(urlToAudit);
+        consecutiveErrors.current = 0;
+        setIsReconnecting(false);
         setPhase("tracking");
         router.replace(`/result?job=${encodeURIComponent(created.jobId)}`);
       } catch (error) {
@@ -629,8 +648,52 @@ function ResultPageContent() {
         fail(error);
       }
     },
-    [fail, router, urlParam],
+    [fail, router],
   );
+
+  const beginAudit = useCallback(
+    async (reuseExisting: boolean) => {
+      const activeUrl = targetUrl || urlParam;
+      if (activeUrl) {
+        await beginAuditForUrl(activeUrl, reuseExisting);
+      }
+    },
+    [beginAuditForUrl, targetUrl, urlParam],
+  );
+
+  const handleDirectRetry = () => {
+    const candidateUrl =
+      targetUrl ||
+      urlParam ||
+      job?.url ||
+      (jobId ? findRecentAudit(jobId)?.sourceUrl : null);
+
+    if (candidateUrl) {
+      creatingAudit.current = false;
+      consecutiveErrors.current = 0;
+      setIsReconnecting(false);
+      setTargetUrl(candidateUrl);
+      setPhase("checking-cache");
+      checkAuditCache(candidateUrl)
+        .then((cache) => {
+          if (cache.available) {
+            setCacheInfo(cache);
+            setPhase("cache-choice");
+          } else {
+            void beginAuditForUrl(candidateUrl, false);
+          }
+        })
+        .catch(() => {
+          void beginAuditForUrl(candidateUrl, false);
+        });
+    } else if (jobId && token) {
+      consecutiveErrors.current = 0;
+      setIsReconnecting(false);
+      setPhase("tracking");
+    } else {
+      router.push("/periksa");
+    }
+  };
 
   useEffect(() => {
     if (jobParam) {
@@ -650,6 +713,8 @@ function ResultPageContent() {
       }
       setJobId(jobParam);
       setToken(saved);
+      const recent = findRecentAudit(jobParam);
+      if (recent?.sourceUrl) setTargetUrl(recent.sourceUrl);
       if (directOpen) {
         void loadResult(jobParam, saved);
       } else {
@@ -671,6 +736,7 @@ function ResultPageContent() {
       return;
     }
 
+    setTargetUrl(urlParam);
     let active = true;
     setPhase("checking-cache");
     checkAuditCache(urlParam)
@@ -680,7 +746,7 @@ function ResultPageContent() {
           setCacheInfo(cache);
           setPhase("cache-choice");
         } else {
-          void beginAudit(false);
+          void beginAuditForUrl(urlParam, false);
         }
       })
       .catch((error) => {
@@ -690,7 +756,7 @@ function ResultPageContent() {
     return () => {
       active = false;
     };
-  }, [beginAudit, directOpen, fail, jobParam, loadResult, urlParam]);
+  }, [beginAuditForUrl, directOpen, fail, jobParam, loadResult, urlParam]);
 
   useEffect(() => {
     if (phase !== "tracking" || !jobId || !token) return;
@@ -701,7 +767,10 @@ function ResultPageContent() {
       try {
         const response = await getAudit(jobId, token);
         if (!active) return;
+        consecutiveErrors.current = 0;
+        setIsReconnecting(false);
         setJob(response.job);
+        if (response.job.url) setTargetUrl(response.job.url);
         saveRecentAudit(
           recentAuditFromJob(response.job, findRecentAudit(jobId)),
         );
@@ -734,7 +803,19 @@ function ResultPageContent() {
         }
         timer = setTimeout(poll, 1500);
       } catch (error) {
-        if (active) fail(error);
+        if (!active) return;
+        consecutiveErrors.current += 1;
+        // Jika server sedang restart / 502 / koneksi terputus sementara:
+        // Beri toleransi hingga 15 kali coba ulang (~45 detik) sambil menunggu server bangun kembali
+        if (consecutiveErrors.current <= 15) {
+          setIsReconnecting(true);
+          const reconnectMsg = "Sedang menghubungkan kembali ke layanan audit...";
+          setLiveStage(reconnectMsg);
+          timer = setTimeout(poll, 3000);
+        } else {
+          setIsReconnecting(false);
+          fail(error);
+        }
       }
     };
 
@@ -804,7 +885,11 @@ function ResultPageContent() {
       )}
 
       {phase === "tracking" && (
-        <ProgressPanel job={job} onCancel={() => void stopAudit()} />
+        <ProgressPanel
+          job={job}
+          onCancel={() => void stopAudit()}
+          isReconnecting={isReconnecting}
+        />
       )}
 
       {phase === "ready" && (
@@ -847,9 +932,13 @@ function ResultPageContent() {
           <h1>{failure.title}</h1>
           <p>{failure.message}</p>
           <div className={styles.choiceActions}>
-            <Link href={failure.actionHref} className="btn btn-primary">
-              {failure.actionLabel}
-            </Link>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleDirectRetry}
+            >
+              {failure.actionLabel || "Coba periksa lagi"}
+            </button>
             <Link href="/katalog" className="btn btn-secondary">
               Kembali ke riwayat
             </Link>
